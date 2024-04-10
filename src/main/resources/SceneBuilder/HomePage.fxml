@@ -10,72 +10,77 @@
 <?import javafx.scene.text.Font?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #F4CE90;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1280.0" style="-fx-background-color: #F4CE90;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="123.0" pickOnBounds="true" stroke="BLACK" strokeType="INSIDE" width="711.0" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="132.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1280.0" />
+      <ImageView fitHeight="124.0" fitWidth="122.0" layoutX="8.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../Downloads/logo-placeholder-image.png" />
+            <Image url="@../Images/Main/libgenlogo.png" />
          </image>
       </ImageView>
-      <Label layoutX="167.0" layoutY="29.0" text="LibraHub">
+      <Label layoutX="175.0" layoutY="15.0" text="LibraHub">
          <font>
-            <Font size="44.0" />
+            <Font size="80.0" />
          </font>
       </Label>
-      <ImageView fitHeight="150.0" fitWidth="698.0" layoutX="-5.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 45%;">
+      <Button layoutX="553.0" layoutY="41.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Account" />
+      <Button layoutX="708.0" layoutY="41.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Catalog" />
+      <Button layoutX="863.0" layoutY="41.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="About Us" />
+      <ImageView fitHeight="59.0" fitWidth="90.0" layoutX="1206.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../Downloads/004-interiors.jpg" />
+            <Image url="@../Images/Main/cart.png" />
          </image>
       </ImageView>
-      <TextField layoutX="132.0" layoutY="202.0" prefHeight="25.0" prefWidth="351.0" promptText="Search up a title" />
-      <Label layoutX="133.0" layoutY="148.0" text="What can we help you find?" textFill="WHITE" underline="true">
+      <Label layoutX="1164.0" layoutY="6.0" text="Log In" underline="true">
          <font>
-            <Font name="Arial Black" size="28.0" />
+            <Font size="13.0" />
          </font>
       </Label>
-      <Button layoutX="483.0" layoutY="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Search" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6da6c5" height="100.0" layoutY="464.0" stroke="BLACK" strokeType="INSIDE" width="687.0" />
-      <Label layoutX="41.0" layoutY="476.0" text="Hours:" />
-      <Label layoutX="228.0" layoutY="476.0" text="Contact Us:" />
-      <Label layoutX="450.0" layoutY="476.0" text="Find Us:" />
-      <Label layoutX="27.0" layoutY="282.0" text="Featured Books:" />
-      <Pane layoutX="14.0" layoutY="282.0" prefHeight="159.0" prefWidth="656.0">
-         <children>
-            <ImageView fitHeight="123.0" fitWidth="105.0" layoutX="14.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Downloads/edu.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="123.0" fitWidth="105.0" layoutX="119.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Downloads/hp.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="123.0" fitWidth="105.0" layoutX="223.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Downloads/soul.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="123.0" fitWidth="105.0" layoutX="328.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Downloads/edu.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="123.0" fitWidth="105.0" layoutX="433.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Downloads/hp.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="123.0" fitWidth="105.0" layoutX="537.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../Downloads/soul.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-      <Button layoutX="368.0" layoutY="49.0" mnemonicParsing="false" text="Catalog" />
-      <Button layoutX="424.0" layoutY="49.0" mnemonicParsing="false" text="About" />
-      <Button layoutX="473.0" layoutY="49.0" mnemonicParsing="false" text="Account" />
+      <ImageView fitHeight="413.0" fitWidth="1308.0" layoutX="-18.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/HomePage/banner.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="31.0" layoutY="210.0" text="What can we help you find?" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
+      <TextField layoutX="31.0" layoutY="304.0" prefHeight="35.0" prefWidth="567.0" promptText="Type a title, author, etc. here" />
+      <Button layoutX="598.0" layoutY="304.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Search" />
+      <ImageView fitHeight="225.0" fitWidth="192.0" layoutX="130.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../MediaCovers/Dune.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="254.0" fitWidth="149.0" layoutX="972.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../MediaCovers/HarryPotterandtheCursedChild.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="225.0" fitWidth="183.0" layoutX="763.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../MediaCovers/PJChaliceoftheGods.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="225.0" fitWidth="166.0" layoutX="560.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../MediaCovers/Soul.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="225.0" fitWidth="163.0" layoutX="348.0" layoutY="625.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../MediaCovers/TheOutsider.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="505.0" layoutY="552.0" text="Popular Books" underline="true">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6da6c5" height="118.0" layoutY="962.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="1280.0" />
+      <Label layoutX="102.0" layoutY="990.0" text="Hours" />
+      <Label layoutX="525.0" layoutY="982.0" text="Contact Us" />
+      <Label layoutX="991.0" layoutY="990.0" text="Find Us:" />
    </children>
 </Pane>
