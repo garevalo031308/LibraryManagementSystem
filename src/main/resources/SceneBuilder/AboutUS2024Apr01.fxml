@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Box?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F4CE90;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Box depth="100" height="185.0" layoutX="151.0" layoutY="-90.0" style="-fx-cursor: #FF5A5F;" width="485.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="117.0" />
+      <Box depth="100" height="60.0" layoutX="328.0" layoutY="220.0" width="195.0" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="307.0" />
+      <ImageView fitHeight="85.0" fitWidth="71.0" layoutX="499.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Downloads/Images%20By%20Maestra%20Anita%20🍎%20On%20Dibujos%20Clips%20%200DA.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="75.0" fitWidth="87.0" layoutX="23.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Downloads/Revitalizing%20a%20Classroom%20Library%20!.jpeg" />
+         </image>
+      </ImageView>
+      <MenuBar layoutX="60.0" layoutY="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Home">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About Us" />
+                  <MenuItem mnemonicParsing="false" text="Contact Us" />
+                  <MenuItem mnemonicParsing="false" text="Home" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem mnemonicParsing="false" text="EXIT" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Text layoutX="217.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="About Us" wrappingWidth="118.306640625">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Text>
+      <Text layoutX="81.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Our Library! We're your community's go-to resource for information, learning, and connection. With a wide-ranging collection of books, magazines, multimedia resources, and digital materials, we're here to support your educational and recreational needs. Our dedicated team of librarians and staff are ready to assist you in finding what you're looking for, whether it's a specific book, research material, or guidance on using our resources effectively. Beyond our collections, we offer various programs and services for all ages, from storytime sessions for children to technology workshops for adults. We're also a gathering place for community events and discussions. We're committed to providing equitable access to information and promoting literacy in our community. Come visit us and discover all that our library has to offer! Sincerely, Library Staff" wrappingWidth="474.13671875" />
+      <Text layoutX="81.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone: (860)989-9898" wrappingWidth="212.13671875" />
+      <Text layoutX="81.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: ourlibrary@amail.com" wrappingWidth="203.662109375" />
+      <Text layoutX="81.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hours: Monday-Friday 8AM - 6PM" />
+   </children>
+</AnchorPane>

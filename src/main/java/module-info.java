@@ -1,10 +1,8 @@
-module com.lms.librarymangementsystem {
+module HomePage {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
 
-    requires com.dlsc.formsfx;
-
-    opens com.lms.librarymangementsystem to javafx.fxml, javafx.graphics;
-    exports com.lms.librarymangementsystem;
+    opens HomePage to javafx.fxml, javafx.graphics;
+    exports HomePage;
 }
