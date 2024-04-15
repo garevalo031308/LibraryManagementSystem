@@ -30,8 +30,8 @@ public class HomePage extends Application {
         header.setFill(Paint.valueOf("#FF5A5F"));
 
         ImageView logo = new ImageView(); //new image view
-        Image image = new Image("file:libgenlogo.png");
-        logo.setImage(image);
+        //Image image = new Image("file:libgenlogo.png");
+        //logo.setImage(image);
         logo.setFitHeight(124);
         logo.setFitWidth(122);
         logo.setLayoutX(8);
@@ -73,15 +73,15 @@ public class HomePage extends Application {
         loginLabel.setUnderline(true);
 
         ImageView cartimage = new ImageView();
-        Image cart = new Image("C://Users//minig//IntelliJ//LibraryMangementSystem//src//main//resources//Images//Main//cart.png");
-        cartimage.setImage(cart);
+        //Image cart = new Image("C://Users//minig//IntelliJ//LibraryMangementSystem//src//main//resources//Images//Main//cart.png");
+        //cartimage.setImage(cart);
         cartimage.setFitWidth(90);
         cartimage.setFitHeight(59);
         cartimage.setLayoutX(1206);
 
         ImageView banner = new ImageView();
-        Image imgbanner = new Image("C://Users//minig//IntelliJ//LibraryMangementSystem//src//main//resources//Images//HomePage//banner.jpg");
-        banner.setImage(imgbanner);
+        //Image imgbanner = new Image("C://Users//minig//IntelliJ//LibraryMangementSystem//src//main//resources//Images//HomePage//banner.jpg");
+        //banner.setImage(imgbanner);
         banner.setFitWidth(1308);
         banner.setFitHeight(413);
         banner.setLayoutX(-18);
