@@ -1,4 +1,4 @@
-package HomePage;
+package Main;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -12,9 +12,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.net.URL;
 
 public class HomePage extends Application {
     public static void main(String[] args){
