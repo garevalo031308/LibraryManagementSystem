@@ -97,7 +97,6 @@ public class CreateAccountPage extends Application {
         CreateAccountDescription.setLayoutX(400);
         CreateAccountDescription.setLayoutY(245);
         CreateAccountDescription.setFont(Font.font("System", FontPosture.ITALIC, 20));
-        //TODO: Change color to a lighter shade of grey but not too light
         CreateAccountDescription.setTextFill(Paint.valueOf("#707070"));
 
         //Email label
