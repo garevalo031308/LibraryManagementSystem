@@ -66,8 +66,5 @@ public class AdminPage extends Application{
         searchbar.setLayoutY(51);
         searchbar.setPrefWidth(273);
         searchbar.setPrefHeight(47);
-
-
-
     }
 }
