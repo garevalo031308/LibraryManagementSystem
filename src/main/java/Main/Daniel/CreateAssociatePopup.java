@@ -11,8 +11,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import java.sql.Statement;
-import com.pos.pos.Admin.CustomerFolder.CreateCustomerPopup;
-import com.pos.pos.Pages.StartPage;
+
 
 public class CreateAssociatePopup extends Application {
     public static void main(String[] args) {
