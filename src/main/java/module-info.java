@@ -2,6 +2,7 @@ module Main {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires java.sql;
 
     opens Main to javafx.fxml, javafx.graphics;
     exports Main;
