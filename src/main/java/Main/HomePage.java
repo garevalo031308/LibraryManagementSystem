@@ -117,6 +117,7 @@ public class HomePage extends Application {
         popularLabel.setLayoutY(552);
 
         stage.setTitle("Library Management System");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, cartimage, banner, helpLabel, searchbar, searchbutton); //adds header to the root (children are the modules)
         root.getChildren().addAll(popularLabel);
         stage.setScene(scene);
