@@ -3,10 +3,7 @@ package Main.Sukeer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -66,5 +63,18 @@ public class AdminPage extends Application{
         searchbar.setLayoutY(51);
         searchbar.setPrefWidth(273);
         searchbar.setPrefHeight(47);
+
+        TableView admin = new TableView<>();
+        admin.setLayoutX(29);
+        admin.setLayoutY(142);
+        admin.setPrefWidth(1238);
+        admin.setPrefHeight(516);
+
+        
+
+        stage.setTitle("Library Management System");// sets current scene
+        root.getChildren().addAll(header, title, account, catalog, aboutus, searchbar,admin); //adds header to the root (children are the modules)
+        stage.setScene(scene);
+        stage.show();
     }
 }
