@@ -73,7 +73,7 @@
                 <executions>
                     <execution>
                         <!-- Default configuration for running with: mvn clean javafx:run -->
-                        <id>default-cli</id>
+                        <bookid>default-cli</bookid>
                         <configuration>
                             <mainClass>com.lms.librarymangementsystem/com.lms.librarymangementsystem.HelloApplication
                             </mainClass>

@@ -7,6 +7,7 @@ module Main {
     requires org.mongodb.bson;
     requires org.mongodb.driver.sync.client;
 
+
     opens Main to javafx.fxml, javafx.graphics;
     exports Main;
     exports Main.Sukeer;
