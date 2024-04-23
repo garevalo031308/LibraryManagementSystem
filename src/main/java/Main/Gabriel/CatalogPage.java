@@ -1,18 +1,34 @@
 package Main.Gabriel;
 
+import Main.HomePage;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.bson.codecs.configuration.CodecProvider;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 
+import java.util.ArrayList;
 import java.util.Objects;
+
+import static Main.HomePage.connectionString;
+import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
+import static com.mongodb.client.model.Filters.eq;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class CatalogPage extends Application {
 
@@ -201,13 +217,100 @@ public class CatalogPage extends Application {
         genreSep.setPrefWidth(200);
         genreSep.setPrefHeight(19);
 
+        Button filterButton = new Button("Set Filter");
+        filterButton.setLayoutX(66);
+        filterButton.setLayoutY(737);
+        filterButton.setPrefSize(67.3, 25);
+
+        AnchorPane ap = new AnchorPane();
+        ap.setPrefSize(1082, 770);
+        ap.setStyle("-fx-background-color: #F4CE90");
+
+        ScrollPane sp = new ScrollPane(ap);
+        sp.setPrefSize(1082, 769);
+        sp.setLayoutX(200);
+        sp.setLayoutY(132);
+        sp.setFitToWidth(true);
+        sp.setFitToHeight(false);
+
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
-        root.getChildren().addAll(filterPane, header, logo, title, cartimage, account, catalog, aboutus, loginLabel); //add all the elements to the root
-        filterPane.getChildren().addAll(sortByLabel, titleButton, authorButton, dateNewButton, dateOldButton, sortmediasep);
+        root.getChildren().addAll(filterPane,sp, header, logo, title, cartimage, account, catalog, aboutus, loginLabel); //add all the elements to the root
+        filterPane.getChildren().addAll(sortByLabel, filterButton, titleButton, authorButton, dateNewButton, dateOldButton, sortmediasep);
         filterPane.getChildren().addAll(mediaLabel, bookCheck, eBookCheck, videoCheck, audioCheck, mediaSep);
         filterPane.getChildren().addAll(genreLabel, fictionCheck, scienceFictionCheck, fantasyCheck, mysteryCheck, horrorCheck, dramaCheck, MythologyCheck, nonFictionCheck, genreSep);
         stage.setTitle("Catalog");
         stage.setScene(scene);
         stage.show();
+
+        createBookBox(ap);
+    }
+
+    // Method that creates a book "box"
+    // Need to get book info from database
+    public static void createBookBox(AnchorPane anchorPane){
+        ArrayList<Books> books = bookDatabase(); // List of books in database
+
+        for (int i = 0; i < books.size(); i++){
+
+            ImageView cover = new ImageView();
+            Image coverImage = new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream(books.get(i).image)));
+            cover.setImage(coverImage);
+            cover.setPreserveRatio(true);
+            cover.setFitHeight(229);
+            cover.setFitWidth(169);
+            cover.setLayoutX(14);
+            cover.setLayoutY(14 + (i*294));
+
+            Label genre = new Label("Genre: " + books.get(i).genre);
+            genre.setFont(Font.font(14));
+            genre.setLayoutX(14);
+            genre.setLayoutY(243 + (i*294));
+
+            Label type = new Label("Type: " + books.get(i).type);
+            type.setFont(Font.font(12));
+            type.setLayoutX(14);
+            type.setLayoutY(265 + (i*294));
+
+            Label borrowed = new Label("Borrowed: " + books.get(i).borrowed);
+            borrowed.setFont(Font.font(12));
+            borrowed.setLayoutX(14);
+            borrowed.setLayoutY(285 + (i*294));
+
+            Label title = new Label(books.get(i).title);
+            title.setFont(Font.font(22));
+            title.setStyle("-fx-font-weight: bold");
+            title.prefHeight(32);
+            title.setLayoutX(175);
+            title.setLayoutY(14 + (i*294));
+
+            Label author = new Label(books.get(i).author);
+            author.setFont(Font.font(16));
+            author.setStyle("-fx-font-weight: bold");
+            author.setLayoutX(175);
+            author.setLayoutY(41 + (i*294));
+
+            Label description = new Label(books.get(i).description);
+            description.setWrapText(true);
+            description.setFont(Font.font(12));
+            description.setLayoutX(175);
+            description.setLayoutY(62 + (i*292));
+            description.setPrefSize(878, 240);
+
+            anchorPane.getChildren().addAll(cover, genre, type, borrowed, title, author, description);
+        }
+    }
+
+    private static ArrayList<Books> bookDatabase() {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+
+        ArrayList<Books> books = new ArrayList<>();
+        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
+            MongoDatabase database = mongoClient.getDatabase("LibraHub").withCodecRegistry(pojoCodecRegistry);
+            MongoCollection<Books> collection = database.getCollection("Books", Books.class);
+            collection.find().into(books);
+        }
+
+        return books;
     }
 }
