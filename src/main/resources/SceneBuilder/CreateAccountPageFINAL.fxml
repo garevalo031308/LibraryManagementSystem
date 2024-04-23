@@ -22,7 +22,7 @@
             <Font size="60.0" />
          </font>
       </Text>
-      <Text fill="#35363180" layoutX="232.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an account below to checkout media materials from the libary" textAlignment="CENTER">
+      <Text fill="#35363180" layoutX="232.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an account below to checkout books materials from the libary" textAlignment="CENTER">
          <font>
             <Font size="30.0" />
          </font>
