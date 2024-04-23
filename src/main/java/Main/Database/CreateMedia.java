@@ -96,16 +96,16 @@ public class CreateMedia {
             try {
                 InsertOneResult result = collection.insertOne(new Document()
                         .append("_id", new ObjectId())
-                        .append("ID", createRandomID())
-                        .append("Title", title)
-                        .append("Author", author)
-                        .append("Genre", genre)
-                        .append("Type", type)
-                        .append("Date", date)
-                        .append("Publisher", publisher)
-                        .append("Description", description)
-                        .append("Image","/"+ image)
-                        .append("Borrowed", false));
+                        .append("bookid", createRandomID())
+                        .append("title", title)
+                        .append("author", author)
+                        .append("genre", genre)
+                        .append("type", type)
+                        .append("date", date)
+                        .append("publisher", publisher)
+                        .append("description", description)
+                        .append("image","/"+ image)
+                        .append("borrowed", false));
                 System.out.println("Inserted: " + result);
             } catch (Exception e){
                 e.printStackTrace();
