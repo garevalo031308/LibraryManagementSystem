@@ -264,23 +264,23 @@ public class CatalogPage extends Application {
             addIfSelected(types, audioCheck, "Audio");
 
             if (titleButton.isSelected()) {
-                createBookBox(ap, "Title", genres, types);
+                createBookBox(stage, ap, "Title", genres, types);
             } else if (authorButton.isSelected()) {
-                createBookBox(ap, "Author", genres, types);
+                createBookBox(stage, ap, "Author", genres, types);
             } else if (dateNewButton.isSelected()) {
-                createBookBox(ap, "Date (Newest)", genres, types);
+                createBookBox(stage, ap, "Date (Newest)", genres, types);
             } else if (dateOldButton.isSelected()) {
-                createBookBox(ap, "Date (Oldest)", genres, types);
+                createBookBox(stage, ap, "Date (Oldest)", genres, types);
             }
         });
 
-        createBookBox(ap, "Title", genres, types);
+        createBookBox(stage, ap, "Title", genres, types);
 
     }
 
     // Method that creates a book "box"
     // Need to get book info from database
-    public static void createBookBox(AnchorPane anchorPane, String sort, ArrayList<String> genreFilter, ArrayList<String> typeFilter){
+    public static void createBookBox(Stage stage, AnchorPane anchorPane, String sort, ArrayList<String> genreFilter, ArrayList<String> typeFilter){
         ArrayList<Books> books = bookDatabase(); // List of books in database
         books.sort((b1, b2) -> switch (sort) {
             case "Title" -> b1.title.compareTo(b2.title);
@@ -339,8 +339,9 @@ public class CatalogPage extends Application {
             description.setPrefSize(878, 240);
 
             anchorPane.getChildren().addAll(cover, genre, type, borrowed, title, author, description);
+            int finalI = i;
             cover.setOnMouseClicked(e->{
-                System.out.println("Book Clicked");
+                BookPopUp.bookPopUp(stage, books.get(finalI));
             });
         }
     }
