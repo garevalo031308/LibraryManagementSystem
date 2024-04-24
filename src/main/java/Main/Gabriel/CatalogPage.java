@@ -250,14 +250,12 @@ public class CatalogPage extends Application {
             ap.getChildren().clear();
             genres.clear();
             types.clear();
-            addIfSelected(genres, fictionCheck, "Fiction");
-            addIfSelected(genres, scienceFictionCheck, "Science Fiction");
-            addIfSelected(genres, fantasyCheck, "Fantasy");
-            addIfSelected(genres, mysteryCheck, "Mystery");
-            addIfSelected(genres, horrorCheck, "Horror");
-            addIfSelected(genres, dramaCheck, "Drama");
-            addIfSelected(genres, MythologyCheck, "Mythology");
-            addIfSelected(genres, nonFictionCheck, "Non-Fiction");
+            addIfSelected(genres, fictionCheck, scienceFictionCheck, "Science Fiction");
+            addIfSelected(genres, fictionCheck, fantasyCheck, "Fantasy");
+            addIfSelected(genres, fictionCheck, mysteryCheck, "Mystery");
+            addIfSelected(genres, fictionCheck, horrorCheck, "Horror");
+            addIfSelected(genres, fictionCheck, dramaCheck, "Drama");
+            addIfSelected(genres, fictionCheck, MythologyCheck, "Mythology");
 
             addIfSelected(types, bookCheck, "Book");
             addIfSelected(types, eBookCheck, "E-Book");
@@ -286,8 +284,8 @@ public class CatalogPage extends Application {
         books.sort((b1, b2) -> switch (sort) {
             case "Title" -> b1.title.compareTo(b2.title);
             case "Author" -> b1.author.compareTo(b2.author);
-            case "Date (Newest)" -> b1.date.compareTo(b2.date);
-            case "Date (Oldest)" -> b2.date.compareTo(b1.date);
+            case "Date (Newest)" -> b2.date.compareTo(b1.date);
+            case "Date (Oldest)" -> b1.date.compareTo(b2.date);
             default -> 0;
         });
 
@@ -358,6 +356,12 @@ public class CatalogPage extends Application {
         }
 
         return books;
+    }
+
+    private void addIfSelected(ArrayList<String> list, CheckBox mainCheckBox, CheckBox checkBox, String value) {
+        if (mainCheckBox.isSelected() || checkBox.isSelected()) {
+            list.add(value);
+        }
     }
 
     private void addIfSelected(ArrayList<String> list, CheckBox checkBox, String value) {
