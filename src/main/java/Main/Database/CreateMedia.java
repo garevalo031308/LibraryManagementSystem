@@ -50,7 +50,10 @@ public class CreateMedia {
                 case "0" -> "Fiction";
                 default -> "None";
             };
+        } else{
+            genre = "Non-Fiction";
         }
+
 
         System.out.println("Enter the type of media: 1 - Book, 2 - E-Book");
         String type = scanner.nextLine();
