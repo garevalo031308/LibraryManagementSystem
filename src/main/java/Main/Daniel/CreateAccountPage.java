@@ -14,6 +14,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class CreateAccountPage extends Application {
     public static void main(String[] args){
         Application.launch(args); // needed to launch the application. It will run the code in the "public void start()"
@@ -32,8 +34,7 @@ public class CreateAccountPage extends Application {
 
         //LibraHub logo
         ImageView logo = new ImageView();
-        //TODO Figure out how to get the image to show up
-        Image image = new Image("https://github.com/garevalo031308/LibraryMangementSystem/blob/ac0fbfd91aae86a2d204f75a0fc0337a75683193/src/main/resources/Images/Main/libgenlogo.png");
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")));
         logo.setImage(image);
         logo.setFitHeight(120);
         logo.setFitWidth(118);
@@ -176,6 +177,7 @@ public class CreateAccountPage extends Application {
 
 
         stage.setTitle("Library Management System");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(header, logo, title, account, catalog,
                                   aboutus, loginLabel, CreateAccountLabel,CreateAccountDescription,emailLabel,
                                   emailTextField, usernameLabel,usernameTextField, passwordLabel, passwordTextField,
