@@ -22,6 +22,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static Main.HomePage.connectionString;
@@ -242,13 +243,55 @@ public class CatalogPage extends Application {
         stage.setScene(scene);
         stage.show();
 
-        createBookBox(ap);
+        ArrayList<String> genres = new ArrayList<>();
+        ArrayList<String> types = new ArrayList<>();
+
+        filterButton.setOnAction(e -> {
+            ap.getChildren().clear();
+            genres.clear();
+            types.clear();
+            addIfSelected(genres, fictionCheck, "Fiction");
+            addIfSelected(genres, scienceFictionCheck, "Science Fiction");
+            addIfSelected(genres, fantasyCheck, "Fantasy");
+            addIfSelected(genres, mysteryCheck, "Mystery");
+            addIfSelected(genres, horrorCheck, "Horror");
+            addIfSelected(genres, dramaCheck, "Drama");
+            addIfSelected(genres, MythologyCheck, "Mythology");
+            addIfSelected(genres, nonFictionCheck, "Non-Fiction");
+
+            addIfSelected(types, bookCheck, "Book");
+            addIfSelected(types, eBookCheck, "E-Book");
+            addIfSelected(types, videoCheck, "Video");
+            addIfSelected(types, audioCheck, "Audio");
+
+            if (titleButton.isSelected()) {
+                createBookBox(ap, "Title", genres, types);
+            } else if (authorButton.isSelected()) {
+                createBookBox(ap, "Author", genres, types);
+            } else if (dateNewButton.isSelected()) {
+                createBookBox(ap, "Date (Newest)", genres, types);
+            } else if (dateOldButton.isSelected()) {
+                createBookBox(ap, "Date (Oldest)", genres, types);
+            }
+        });
+
+        createBookBox(ap, "Title", genres, types);
+
     }
 
     // Method that creates a book "box"
     // Need to get book info from database
-    public static void createBookBox(AnchorPane anchorPane){
+    public static void createBookBox(AnchorPane anchorPane, String sort, ArrayList<String> genreFilter, ArrayList<String> typeFilter){
         ArrayList<Books> books = bookDatabase(); // List of books in database
+        books.sort((b1, b2) -> switch (sort) {
+            case "Title" -> b1.title.compareTo(b2.title);
+            case "Author" -> b1.author.compareTo(b2.author);
+            case "Date (Newest)" -> b1.date.compareTo(b2.date);
+            case "Date (Oldest)" -> b2.date.compareTo(b1.date);
+            default -> 0;
+        });
+
+        books.removeIf(book -> (!genreFilter.isEmpty() && !genreFilter.contains(book.genre)) || (!typeFilter.isEmpty() && !typeFilter.contains(book.type)));
 
         for (int i = 0; i < books.size(); i++){
 
@@ -297,6 +340,9 @@ public class CatalogPage extends Application {
             description.setPrefSize(878, 240);
 
             anchorPane.getChildren().addAll(cover, genre, type, borrowed, title, author, description);
+            cover.setOnMouseClicked(e->{
+                System.out.println("Book Clicked");
+            });
         }
     }
 
@@ -312,5 +358,11 @@ public class CatalogPage extends Application {
         }
 
         return books;
+    }
+
+    private void addIfSelected(ArrayList<String> list, CheckBox checkBox, String value) {
+        if (checkBox.isSelected()) {
+            list.add(value);
+        }
     }
 }
