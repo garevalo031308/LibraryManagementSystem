@@ -1,5 +1,6 @@
 package Main.Database;
 
+import Main.Gabriel.Books;
 import Main.HomePage;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -7,10 +8,19 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.InsertOneResult;
 import org.bson.Document;
+import org.bson.codecs.configuration.CodecProvider;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+
+import static Main.HomePage.connectionString;
+import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 // This is separate to the creating media page
 public class CreateMedia {
@@ -28,7 +38,7 @@ public class CreateMedia {
 
 
         if (genre.equals("1")){
-            System.out.println("Enter the subgenre of the media: 1 - Science Fiction, 2 - Fantasy, 3 - Mystery, 4 - Horror, 5 - Drama, 6 - Mythology");
+            System.out.println("Enter the subgenre of the media: 1 - Science Fiction, 2 - Fantasy, 3 - Mystery, 4 - Horror, 5 - Drama, 6 - Mythology, 0 - for none");
             genre = scanner.nextLine();
             genre = switch (genre) {
                 case "1" -> "Science Fiction";
@@ -37,9 +47,13 @@ public class CreateMedia {
                 case "4" -> "Horror";
                 case "5" -> "Drama";
                 case "6" -> "Mythology";
+                case "0" -> "Fiction";
                 default -> "None";
             };
+        } else{
+            genre = "Non-Fiction";
         }
+
 
         System.out.println("Enter the type of media: 1 - Book, 2 - E-Book");
         String type = scanner.nextLine();
@@ -85,6 +99,12 @@ public class CreateMedia {
             Random rand = new Random();
             ID.append(rand.nextInt(0,9));
         }
+        ArrayList<Books> books = bookDatabase();
+        for (Books book : books) {
+            if (book.getBookid().contentEquals(ID.toString())) {
+                createRandomID();
+            }
+        }
         return ID.toString();
     }
 
@@ -112,4 +132,19 @@ public class CreateMedia {
             }
         }
     }
+
+    private static ArrayList<Books> bookDatabase() {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+
+        ArrayList<Books> books = new ArrayList<>();
+        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
+            MongoDatabase database = mongoClient.getDatabase("LibraHub").withCodecRegistry(pojoCodecRegistry);
+            MongoCollection<Books> collection = database.getCollection("Books", Books.class);
+            collection.find().into(books);
+        }
+
+        return books;
+    }
+
 }
