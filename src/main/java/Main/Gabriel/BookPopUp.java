@@ -108,5 +108,13 @@ public class BookPopUp{
         popup.showAndWait();
         popup.getIcons().add(new Image(String.valueOf(Objects.requireNonNull(BookPopUp.class.getResource("/Images/Main/libgenlogo.png")))));
 
+
+
     }
+
+    // TODO check to see if customer has an account
+    // TODO check to see if customer already has a checkout "document", if so append book to it, else create a new one
+
+    private void addToCheckoutDatabase(String ID){}
+
 }
