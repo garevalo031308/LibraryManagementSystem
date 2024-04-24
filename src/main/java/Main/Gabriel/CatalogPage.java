@@ -256,6 +256,7 @@ public class CatalogPage extends Application {
             addIfSelected(genres, fictionCheck, horrorCheck, "Horror");
             addIfSelected(genres, fictionCheck, dramaCheck, "Drama");
             addIfSelected(genres, fictionCheck, MythologyCheck, "Mythology");
+            addIfSelected(genres, nonFictionCheck, "Non-Fiction");
 
             addIfSelected(types, bookCheck, "Book");
             addIfSelected(types, eBookCheck, "E-Book");
