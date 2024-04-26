@@ -45,6 +45,7 @@ public class HomePage extends Application {
         try (MongoClient mongoClient = MongoClients.create(settings)) {
             try {
                 // Send a ping to confirm a successful connection
+                // TODO make database a public static variable so it can be accessed from other classes
                 MongoDatabase database = mongoClient.getDatabase("LibraHub");
                 database.runCommand(new Document("ping", 1));
                 System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
