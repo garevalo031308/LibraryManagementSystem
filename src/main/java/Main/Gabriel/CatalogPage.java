@@ -356,7 +356,6 @@ public class CatalogPage extends Application {
             MongoCollection<Books> collection = database.getCollection("Books", Books.class);
             collection.find().into(books);
         }
-
         return books;
     }
 
