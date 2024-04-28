@@ -13,6 +13,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class UserLookupPage extends Application {
     public static void main(String[] args){
         Application.launch(args); // needed to launch the application. It will run the code in the "public void start()"
@@ -29,13 +31,31 @@ public class UserLookupPage extends Application {
         header.setHeight(132); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
 
-        ImageView logo = new ImageView(); //new image view
-        Image image = new Image("file:libgenlogo.png");
+        //LibraHub logo
+        ImageView logo = new ImageView();
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")));
         logo.setImage(image);
-        logo.setFitHeight(124);
-        logo.setFitWidth(122);
+        logo.setFitHeight(120);
+        logo.setFitWidth(118);
         logo.setLayoutX(8);
         logo.setLayoutY(6);
+
+        //LibraHub logo
+        ImageView bookPhoto = new ImageView();
+        Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/Books_UserLookupPage.jpeg")));
+        bookPhoto.setImage(image2);
+        bookPhoto.setFitHeight(350);
+        bookPhoto.setFitWidth(700);
+        bookPhoto.setLayoutX(0);
+        bookPhoto.setLayoutY(550);
+
+        ImageView bookPhoto2 = new ImageView();
+        Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/Books_UserLookupPage.jpeg")));
+        bookPhoto2.setImage(image2);
+        bookPhoto2.setFitHeight(350);
+        bookPhoto2.setFitWidth(700);
+        bookPhoto2.setLayoutX(700);
+        bookPhoto2.setLayoutY(550);
 
         Label title = new Label("LibraHub");
         title.setLayoutX(175);
@@ -72,21 +92,6 @@ public class UserLookupPage extends Application {
         loginLabel.setFont(Font.font(13));
         loginLabel.setUnderline(true);
 
-       // ImageView cartimage = new ImageView();
-        //Image cart = new Image("C://Users//minig//IntelliJ//LibraryMangementSystem//src//main//resources//Images//Main//cart.png");
-        //cartimage.setImage(cart);
-        //cartimage.setFitWidth(90);
-        //cartimage.setFitHeight(59);
-        //cartimage.setLayoutX(1206);
-
-        //ImageView books = new ImageView();
-        //Image bookImage = new Image("//C://Users//wccaw//Downloads//cricut photos//R.jpeg");
-        //books.setImage(bookImage);
-        //books.setFitWidth(1308);
-        //books.setFitHeight(413);
-        //books.setLayoutX(100);
-        //books.setLayoutY(100);
-
         Label helpLabel = new Label("Library User Lookup");
         helpLabel.setUnderline(true);
         helpLabel.setTextFill(Paint.valueOf("Black"));
@@ -122,7 +127,7 @@ public class UserLookupPage extends Application {
         searchbuttonTwo.setPrefWidth(130);
 
         stage.setTitle("Library Management System");// sets current scene
-        root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, helpLabel, searchbarTwo, searchbar, searchbutton, searchbuttonTwo); //adds header to the root (children are the modules)
+        root.getChildren().addAll(header, logo, bookPhoto, bookPhoto2, title, account, catalog, aboutus, loginLabel, helpLabel, searchbarTwo, searchbar, searchbutton, searchbuttonTwo); //adds header to the root (children are the modules)
         stage.setScene(scene);
         stage.show();
     }

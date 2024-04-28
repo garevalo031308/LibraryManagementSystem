@@ -13,6 +13,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class AboutUsPage extends Application {
     public static void main(String[] args){
         Application.launch(args); // needed to launch the application. It will run the code in the "public void start()"
@@ -29,11 +31,12 @@ public class AboutUsPage extends Application {
         header.setHeight(132); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
 
-        ImageView logo = new ImageView(); //new image view
-        Image image = new Image("file:libgenlogo.png");
+        //LibraHub logo
+        ImageView logo = new ImageView();
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")));
         logo.setImage(image);
-        logo.setFitHeight(124);
-        logo.setFitWidth(122);
+        logo.setFitHeight(120);
+        logo.setFitWidth(118);
         logo.setLayoutX(8);
         logo.setLayoutY(6);
 
