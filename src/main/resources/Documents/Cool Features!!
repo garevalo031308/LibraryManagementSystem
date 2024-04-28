@@ -1,4 +1,4 @@
-HomePage:
+com.lms.librarymangementsystem.Main.Main:
 - Clickable books to bring to their page
 - Click on logo/title to get back to home page
 - Popular books decided by how many times it gets clicked on/visited

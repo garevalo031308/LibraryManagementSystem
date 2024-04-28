@@ -1,10 +1,21 @@
-module com.lms.librarymangementsystem {
+module Main {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires java.sql;
+    requires org.mongodb.driver.core;
+    requires org.mongodb.bson;
+    requires org.mongodb.driver.sync.client;
 
-    requires com.dlsc.formsfx;
 
-    opens com.lms.librarymangementsystem to javafx.fxml, javafx.graphics;
-    exports com.lms.librarymangementsystem;
+    opens Main to javafx.fxml, javafx.graphics;
+    exports Main;
+    exports Main.Sukeer;
+    opens Main.Sukeer to javafx.fxml, javafx.graphics;
+    exports Main.Chris;
+    opens Main.Chris to javafx.fxml, javafx.graphics;
+    exports Main.Daniel;
+    opens Main.Daniel to javafx.fxml, javafx.graphics;
+    exports Main.Gabriel;
+    opens Main.Gabriel to javafx.fxml, javafx.graphics;
 }

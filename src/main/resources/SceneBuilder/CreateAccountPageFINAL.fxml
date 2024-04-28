@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5000.0" prefWidth="1280.0" style="-fx-background-color: #F4CE90;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="200.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+      <Text layoutX="270.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LibraHub">
+         <font>
+            <Font size="60.0" />
+         </font>
+      </Text>
+      <Text layoutX="403.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Account" textAlignment="CENTER">
+         <font>
+            <Font size="60.0" />
+         </font>
+      </Text>
+      <Text fill="#35363180" layoutX="232.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an account below to checkout books materials from the libary" textAlignment="CENTER">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <TextField layoutX="425.0" layoutY="551.0" prefHeight="67.0" prefWidth="425.0" promptText="Email" text="BarryAllen123@Gmail.com">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </TextField>
+      <Text layoutX="425.0" layoutY="537.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <TextField layoutX="425.0" layoutY="751.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="TheFlashFastAsfBoy">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </TextField>
+      <Text layoutX="425.0" layoutY="737.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <TextField layoutX="425.0" layoutY="951.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Fl@shI$TheB3sT">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </TextField>
+      <Text layoutX="425.0" layoutY="937.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <TextField layoutX="425.0" layoutY="1151.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Fl@shI$TheB3st">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </TextField>
+      <Text layoutX="425.0" layoutY="1137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <Button layoutX="425.0" layoutY="1300.0" mnemonicParsing="false" style="-fx-background-color: #6DA6C5;" text="Create Your Account">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="250.0" fitWidth="250.0" layoutX="10.0" layoutY="-6.0">
+         <image>
+            <Image url="@../../../../../libgenlogo_transparent.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

@@ -1,39 +1,33 @@
-package com.lms.librarymangementsystem;
+package Main.Sukeer;
 
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+//import javafx.scene.text.FontPosture;
+//import javafx.scene.text.FontWeight;
+//import javafx.scene.image.Image;
+//import javafx.scene.image.ImageView;
 
-public class HomePage extends Application {
-    public static void main(String[] args){
-        launch(args); // needed to launch the application. It will run the code in the "public void start()"
+public class AdminPage extends Application{
+    public static void main(String[] args) {
+        Application.launch(args);
     }
-
-
+    @Override
     public void start(Stage stage) {
-        Group root = new Group(); //group is groups of module(containers, test fields)
-        Scene scene = new Scene(root, 1280,  800); //scene of page, creating width, and height (x,y value)
-        scene.setFill(Paint.valueOf("#F4CE90")); //set
+        Group root = new Group();
+        Scene scene = new Scene(root, 1280, 900);
+        scene.setFill(Paint.valueOf("#F4CE90"));
 
         Rectangle header = new Rectangle();//new rectangle within the stage
         header.setWidth(1280); //set width
         header.setHeight(132); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
-
-        ImageView logo = new ImageView(); //new image view
-        // TODO figure out this logo shit
-        logo.setFitHeight(124);
-        logo.setFitWidth(122);
-        logo.setLayoutX(8);
-        logo.setLayoutY(6);
 
         Label title = new Label("LibraHub");
         title.setLayoutX(175);
@@ -64,14 +58,23 @@ public class HomePage extends Application {
         aboutus.setLayoutX(863);
         aboutus.setLayoutY(41);
 
+        TextField searchbar = new TextField("Search:");
+        searchbar.setLayoutX(1000);
+        searchbar.setLayoutY(51);
+        searchbar.setPrefWidth(273);
+        searchbar.setPrefHeight(47);
+
+        TableView admin = new TableView<>();
+        admin.setLayoutX(29);
+        admin.setLayoutY(142);
+        admin.setPrefWidth(1238);
+        admin.setPrefHeight(516);
+
+        
 
         stage.setTitle("Library Management System");// sets current scene
-        root.getChildren().addAll(header, logo, title, account, catalog, aboutus); //adds header to the root (children are the modules)
+        root.getChildren().addAll(header, title, account, catalog, aboutus, searchbar,admin); //adds header to the root (children are the modules)
         stage.setScene(scene);
         stage.show();
-
-        catalog.setOnAction(e->{
-            System.out.println("Hello");
-        });
     }
 }
