@@ -3,9 +3,6 @@ module Main {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.sql;
-    requires org.mongodb.driver.core;
-    requires org.mongodb.bson;
-    requires org.mongodb.driver.sync.client;
 
 
     opens Main to javafx.fxml, javafx.graphics;
