@@ -23,26 +23,30 @@ public class AboutUsPage extends Application {
     @Override
     public void start(Stage stage) {
         Group root = new Group(); //group is groups of module(containers, test fields)
-        Scene scene = new Scene(root, 1280,  900); //scene of page, creating width, and height (x,y value)
+        Scene scene = new Scene(root, 1280,  1600); //scene of page, creating width, and height (x,y value)
         scene.setFill(Paint.valueOf("#F4CE90")); //set
 
-        Rectangle header = new Rectangle();//new rectangle within the stage
-        header.setWidth(1280); //set width
-        header.setHeight(132); //set height
+        //Red rectangle header
+        Rectangle header = new Rectangle();
+        header.setWidth(1480); //1280 width doesnt take up all the horizontal space when full screen
+        header.setHeight(150); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
 
-        ImageView logo = new ImageView(); //new image view
+        //LibraHub logo
+        ImageView logo = new ImageView();
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")));
         logo.setImage(image);
-        logo.setFitHeight(124);
-        logo.setFitWidth(122);
+        logo.setFitHeight(120);
+        logo.setFitWidth(118);
         logo.setLayoutX(8);
         logo.setLayoutY(6);
 
+        //Label for page header
         Label title = new Label("LibraHub");
         title.setLayoutX(175);
-        title.setLayoutY(15);
-        title.setFont(Font.font(80));
+        title.setLayoutY(30);
+        title.setFont(Font.font(60));
+        title.setTextFill(Paint.valueOf("Black"));
 
         Button account = new Button("Account");
         account.setLayoutX(553);
@@ -117,6 +121,7 @@ public class AboutUsPage extends Application {
         searchbuttonTwo.setPrefWidth(130);
 
         stage.setTitle("Library Management System");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, helpLabel, searchbar, searchbutton, searchbuttonTwo); //adds header to the root (children are the modules)
         stage.setScene(scene);
         stage.show();
