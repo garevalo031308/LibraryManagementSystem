@@ -12,6 +12,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 public class LoginPage extends Application{
@@ -28,6 +30,14 @@ public class LoginPage extends Application{
         header.setWidth(1280); //set width
         header.setHeight(132); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
+
+        ImageView logo = new ImageView(); //new image view
+        //Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo_transparent.png"))); //get image from the path
+        //logo.setImage(img); //set image
+        logo.setFitHeight(124);
+        logo.setFitWidth(122);
+        logo.setLayoutX(8);
+        logo.setLayoutY(6);
 
         Label title = new Label("LibraHub");
         title.setLayoutX(175);
@@ -63,12 +73,6 @@ public class LoginPage extends Application{
         searchbar.setLayoutY(51);
         searchbar.setPrefWidth(273);
         searchbar.setPrefHeight(47);
-
-        //Label loginLabel = new Label("Log In");
-        //loginLabel.setLayoutX(1164);
-        //loginLabel.setLayoutY(6);
-        //loginLabel.setFont(Font.font(13));
-        //loginLabel.setUnderline(true);
 
         Rectangle middle = new Rectangle();//new rectangle at the middle of the page
         middle.setWidth(351); //set width
