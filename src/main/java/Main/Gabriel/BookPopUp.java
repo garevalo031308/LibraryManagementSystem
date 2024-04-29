@@ -1,11 +1,7 @@
 package Main.Gabriel;
 
+
 import Main.HomePage;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.InsertOneResult;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -18,16 +14,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.bson.Document;
-import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Random;
 
-import static com.mongodb.client.model.Filters.eq;
 
-public class BookPopUp{
+public class BookPopUp {
 
     public static void bookPopUp(Stage stage, Books book){
         Stage popup = new Stage();
@@ -101,7 +98,7 @@ public class BookPopUp{
         type.setLayoutX(10.0);
         type.setLayoutY(449.0);
 
-        Label bookID = new Label("BookID: " + book.bookid);
+        Label bookID = new Label("BookID: " + book.id);
         bookID.setLayoutX(10.0);
         bookID.setLayoutY(466.0);
 
@@ -119,7 +116,7 @@ public class BookPopUp{
         popup.show();
         popup.getIcons().add(new Image(String.valueOf(Objects.requireNonNull(BookPopUp.class.getResource("/Images/Main/libgenlogo.png")))));
 
-        addToCartButton.setOnAction(e -> checkCartID("1234567"));
+        addToCartButton.setOnAction(e->addToCheckoutDatabase("2011176", Integer.valueOf(book.id), book.title));
 
     }
 
@@ -127,54 +124,75 @@ public class BookPopUp{
     // TODO check to see if customer already has a checkout "document", if so append book to it, else create a new one
     // TODO add book to checkout database
     // TODO remove cart when user logs out/application is closed
-    private static void addToCheckoutDatabase(String ID){
-        System.out.println("Test");
-    }
+    private static void addToCheckoutDatabase(String ID, Integer BookID, String BookTitle){
+        if (checkIfHasCart(ID)){
+            try (Connection connection = HomePage.getConnection()){
+                String sql = "SELECT media1ID, media2ID, media3ID FROM cart WHERE userID = ?";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, ID);
+                ResultSet resultSet = statement.executeQuery();
 
-    // TODO check to see if customer has a cart in database
-    private static boolean checkIfHasCart(String ID){
-        try (MongoClient mongoClient = MongoClients.create(HomePage.connectionString)){
-            MongoDatabase database = mongoClient.getDatabase("LibraHub");
-            MongoCollection<Document> collection = database.getCollection("cart");
+                if (resultSet.next()) {
+                    String updateSql = null;
+                    if (resultSet.getObject("media1ID") == null) {
+                        updateSql = "UPDATE cart SET media1 = ?, media1ID = ? WHERE userID = ?";
+                    } else if (resultSet.getObject("media2ID") == null) {
+                        updateSql = "UPDATE cart SET media2 = ?, media2ID = ? WHERE userID = ?";
+                    } else if (resultSet.getObject("media3ID") == null) {
+                        updateSql = "UPDATE cart SET media3 = ?, media3ID = ? WHERE userID = ?";
+                    }
 
-            Document doc = collection.find(eq("userid", ID)).first();
-            if (doc == null){
-                return false;
-            } else {
-                return true;
-            }
-        }
-    }
-
-    private static boolean checkCartID(String cartID){
-        System.out.println("Test");
-        try (MongoClient mongoClient = MongoClients.create(HomePage.connectionString)){
-            MongoDatabase database = mongoClient.getDatabase("LibraHub");
-            MongoCollection<Document> collection = database.getCollection("cart");
-
-            System.out.println(collection);
-            return true;
-        }
-    }
-
-    private static void createUserCart(String ID, String media1){
-        try (MongoClient mongoClient = MongoClients.create(HomePage.connectionString)){
-            MongoDatabase database = mongoClient.getDatabase("LibraHub");
-            MongoCollection<Document> collection = database.getCollection("cart");
-
-            try {
-                InsertOneResult result = collection.insertOne(new Document()
-                        .append("_id", new ObjectId())
-                        .append("cartid", createRandomID())
-                        .append("userid", ID)
-                        .append("media1", media1)
-                        .append("media2", "")
-                        .append("media3", ""));
-            } catch (Exception e){
+                    if (updateSql != null) {
+                        PreparedStatement updateStatement = connection.prepareStatement(updateSql);
+                        updateStatement.setString(1, BookTitle);
+                        updateStatement.setInt(2, BookID);
+                        updateStatement.setString(3, ID);
+                        updateStatement.executeUpdate();
+                        System.out.println("Book added to cart.");
+                    } else {
+                        System.out.println("Cart is full. Cannot add more items.");
+                    }
+                }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+    }
 
+    // TODO check to see if customer has a cart in database
+    private static boolean checkIfHasCart(String userID){
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT COUNT(*) FROM cart WHERE userID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                if (count > 0) {
+                    return true;
+                } else {
+                    createUserCart(userID);
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    private static void createUserCart(String userID){
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "INSERT INTO cart (userID, cartID) VALUES (?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            statement.setString(2, createRandomID());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static String createRandomID(){
@@ -184,7 +202,28 @@ public class BookPopUp{
             Random rand = new Random();
             ID.append(rand.nextInt(0,9));
         }
+        if (checkCartID(ID.toString())){
+            createRandomID();
+        }
         return ID.toString();
+    }
+
+    private static boolean checkCartID(String cartID){
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT COUNT(*) FROM cart WHERE cartID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, cartID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 }
