@@ -4,15 +4,12 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-//import javafx.scene.text.FontPosture;
-//import javafx.scene.text.FontWeight;
-//import javafx.scene.image.Image;
-//import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class AdminPage extends Application{
     public static void main(String[] args) {
@@ -28,6 +25,14 @@ public class AdminPage extends Application{
         header.setWidth(1280); //set width
         header.setHeight(132); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
+
+        ImageView logo = new ImageView(); //new image view
+        //Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo_transparent.png")));
+        //logo.setImage(img); //set image
+        logo.setFitHeight(124);
+        logo.setFitWidth(122);
+        logo.setLayoutX(8);
+        logo.setLayoutY(6);
 
         Label title = new Label("LibraHub");
         title.setLayoutX(175);

@@ -31,6 +31,14 @@ public class LoginPage extends Application{
         header.setHeight(132); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
 
+        ImageView logo = new ImageView(); //new image view
+        //Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo_transparent.png"))); //get image from the path
+        //logo.setImage(img); //set image
+        logo.setFitHeight(124);
+        logo.setFitWidth(122);
+        logo.setLayoutX(8);
+        logo.setLayoutY(6);
+
         Label title = new Label("LibraHub");
         title.setLayoutX(175);
         title.setLayoutY(15);
