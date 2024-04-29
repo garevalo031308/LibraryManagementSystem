@@ -1,10 +1,6 @@
 package Main.Gabriel;
 
-import Main.HomePage;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,19 +13,18 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.bson.codecs.configuration.CodecProvider;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.PojoCodecProvider;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static Main.HomePage.connectionString;
-import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
-import static com.mongodb.client.model.Filters.eq;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
+import static Main.HomePage.getConnection;
+
 
 public class CatalogPage extends Application {
 
@@ -241,7 +236,6 @@ public class CatalogPage extends Application {
         filterPane.getChildren().addAll(genreLabel, fictionCheck, scienceFictionCheck, fantasyCheck, mysteryCheck, horrorCheck, dramaCheck, MythologyCheck, nonFictionCheck, genreSep);
         stage.setTitle("Catalog");
         stage.setScene(scene);
-        stage.show();
 
         ArrayList<String> genres = new ArrayList<>();
         ArrayList<String> types = new ArrayList<>();
@@ -275,6 +269,7 @@ public class CatalogPage extends Application {
         });
 
         createBookBox(stage, ap, "Title", genres, types);
+        stage.show();
 
     }
 
@@ -347,17 +342,33 @@ public class CatalogPage extends Application {
     }
 
     private static ArrayList<Books> bookDatabase() {
-        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-
         ArrayList<Books> books = new ArrayList<>();
-        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-            MongoDatabase database = mongoClient.getDatabase("LibraHub").withCodecRegistry(pojoCodecRegistry);
-            MongoCollection<Books> collection = database.getCollection("Books", Books.class);
-            collection.find().into(books);
+
+        try (Connection connection = getConnection()) {
+            String sql = "SELECT * FROM Books";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Books book = new Books();
+                book.setID(String.valueOf(resultSet.getInt("id")));
+                book.setTitle(resultSet.getString("title"));
+                book.setAuthor(resultSet.getString("author"));
+                book.setDescription(resultSet.getString("description"));
+                book.setGenre(resultSet.getString("genre"));
+                book.setType(resultSet.getString("type"));
+                book.setBorrowed(resultSet.getBoolean("borrowed"));
+                book.setImage(resultSet.getString("image"));
+                book.setDate(resultSet.getString("date"));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return books;
     }
+
 
     private void addIfSelected(ArrayList<String> list, CheckBox mainCheckBox, CheckBox checkBox, String value) {
         if (mainCheckBox.isSelected() || checkBox.isSelected()) {
