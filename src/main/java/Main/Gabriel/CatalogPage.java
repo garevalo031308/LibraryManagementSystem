@@ -26,14 +26,9 @@ import java.util.Objects;
 import static Main.HomePage.getConnection;
 
 
-public class CatalogPage extends Application {
+public class CatalogPage {
 
-    public static void main(String[] args){
-        Application.launch(args);
-    }
-
-    @Override
-    public void start(Stage stage){
+    public static void catalogPage(Stage stage, String searchQuery){
         Group root = new Group(); //group is groups of module(containers, test fields)
         Scene scene = new Scene(root, 1280,  900); //scene of page, creating width, and height (x,y value)
         scene.setFill(Paint.valueOf("#F4CE90")); //set
@@ -44,7 +39,7 @@ public class CatalogPage extends Application {
         header.setFill(Paint.valueOf("#FF5A5F"));
 
         ImageView logo = new ImageView(); //new image view
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
+        Image img = new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
         logo.setImage(img); //set image
         logo.setFitHeight(124);
         logo.setFitWidth(122);
@@ -87,7 +82,7 @@ public class CatalogPage extends Application {
         loginLabel.setUnderline(true);
 
         ImageView cartimage = new ImageView();
-        Image cart = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/cart.png")));
+        Image cart = new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream("/Images/Main/cart.png")));
         cartimage.setImage(cart);
         cartimage.setFitWidth(90);
         cartimage.setFitHeight(59);
@@ -229,7 +224,7 @@ public class CatalogPage extends Application {
         sp.setFitToWidth(true);
         sp.setFitToHeight(false);
 
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
+        stage.getIcons().add(new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(filterPane,sp, header, logo, title, cartimage, account, catalog, aboutus, loginLabel); //add all the elements to the root
         filterPane.getChildren().addAll(sortByLabel, filterButton, titleButton, authorButton, dateNewButton, dateOldButton, sortmediasep);
         filterPane.getChildren().addAll(mediaLabel, bookCheck, eBookCheck, videoCheck, audioCheck, mediaSep);
@@ -258,24 +253,24 @@ public class CatalogPage extends Application {
             addIfSelected(types, audioCheck, "Audio");
 
             if (titleButton.isSelected()) {
-                createBookBox(stage, ap, "Title", genres, types);
+                createBookBox(stage, ap, "Title", genres, types, searchQuery);
             } else if (authorButton.isSelected()) {
-                createBookBox(stage, ap, "Author", genres, types);
+                createBookBox(stage, ap, "Author", genres, types, searchQuery);
             } else if (dateNewButton.isSelected()) {
-                createBookBox(stage, ap, "Date (Newest)", genres, types);
+                createBookBox(stage, ap, "Date (Newest)", genres, types, searchQuery);
             } else if (dateOldButton.isSelected()) {
-                createBookBox(stage, ap, "Date (Oldest)", genres, types);
+                createBookBox(stage, ap, "Date (Oldest)", genres, types, searchQuery);
             }
         });
 
-        createBookBox(stage, ap, "Title", genres, types);
+        createBookBox(stage, ap, "Title", genres, types, searchQuery);
         stage.show();
 
     }
 
     // Method that creates a book "box"
     // Need to get book info from database
-    public static void createBookBox(Stage stage, AnchorPane anchorPane, String sort, ArrayList<String> genreFilter, ArrayList<String> typeFilter){
+    public static void createBookBox(Stage stage, AnchorPane anchorPane, String sort, ArrayList<String> genreFilter, ArrayList<String> typeFilter, String searchQuery){
         ArrayList<Books> books = bookDatabase(); // List of books in database
         books.sort((b1, b2) -> switch (sort) {
             case "Title" -> b1.title.compareTo(b2.title);
@@ -285,8 +280,9 @@ public class CatalogPage extends Application {
             default -> 0;
         });
 
-        books.removeIf(book -> (!genreFilter.isEmpty() && !genreFilter.contains(book.genre)) || (!typeFilter.isEmpty() && !typeFilter.contains(book.type)));
-
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            books.removeIf(book -> !book.title.toLowerCase().contains(searchQuery.toLowerCase()) && !book.author.toLowerCase().contains(searchQuery.toLowerCase()));
+        }
         for (int i = 0; i < books.size(); i++){
 
             ImageView cover = new ImageView();
@@ -345,7 +341,7 @@ public class CatalogPage extends Application {
         ArrayList<Books> books = new ArrayList<>();
 
         try (Connection connection = getConnection()) {
-            String sql = "SELECT * FROM Books";
+            String sql = "SELECT * FROM books";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
 
@@ -370,13 +366,13 @@ public class CatalogPage extends Application {
     }
 
 
-    private void addIfSelected(ArrayList<String> list, CheckBox mainCheckBox, CheckBox checkBox, String value) {
+    private static void addIfSelected(ArrayList<String> list, CheckBox mainCheckBox, CheckBox checkBox, String value) {
         if (mainCheckBox.isSelected() || checkBox.isSelected()) {
             list.add(value);
         }
     }
 
-    private void addIfSelected(ArrayList<String> list, CheckBox checkBox, String value) {
+    private static void addIfSelected(ArrayList<String> list, CheckBox checkBox, String value) {
         if (checkBox.isSelected()) {
             list.add(value);
         }
