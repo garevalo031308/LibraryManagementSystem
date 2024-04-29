@@ -1,7 +1,7 @@
 package Main.Gabriel;
 
 public class Books {
-    String bookid;
+    String id;
     String title;
     String author;
     String genre;
@@ -12,12 +12,12 @@ public class Books {
     String image;
     Boolean borrowed;
 
-    public String getBookid() {
-        return bookid;
+    public String getID() {
+        return id;
     }
 
-    public void setBookid(String bookid) {
-        this.bookid = bookid;
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -94,6 +94,6 @@ public class Books {
 
     @Override
     public String toString(){
-        return "ID: " + bookid + "\nTitle: " + title + "\nAuthor: " + author + "\nGenre: " + genre + "\nType: " + type + "\nDate: " + date + "\nPublisher: " + publisher + "\nDescription: " + description + "\nImageURL: " + image + "\nBorrowed: " + borrowed;
+        return "ID: " + id + "\nTitle: " + title + "\nAuthor: " + author + "\nGenre: " + genre + "\nType: " + type + "\nDate: " + date + "\nPublisher: " + publisher + "\nDescription: " + description + "\nImageURL: " + image + "\nBorrowed: " + borrowed;
     }
 }

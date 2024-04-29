@@ -1,9 +1,5 @@
 package Main;
 
-import com.mongodb.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -16,44 +12,38 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.bson.Document;
 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class HomePage extends Application {
 
-    public static String connectionString = "mongodb+srv://garevalo031308:20BlueLuna03!@librahub.mgdhjt4.mongodb.net/?retryWrites=true&w=majority&appName=LibraHub";
+    public static String url = "jdbc:mysql://localhost:3306/librahub";
 
-    public static void main(String[] args){
-        if (connectToDB()) {
+public static void main(String[] args){
+    try {
+        if (getConnection() != null) {
             Application.launch(args); // needed to launch the application. It will run the code in the "public void start()"
         } else {
+            System.out.println("Cannot connect to the database!");
             System.exit(1);
-            System.out.println("Failed to connect to the database.");
         }
-
+    } catch (SQLException e) {
+        System.out.println("Cannot connect to the database!");
+        e.printStackTrace();
+        System.exit(1);
     }
+}
 
-    public static boolean connectToDB(){ // This connects to Mongo database
-        ServerApi serverAPI = ServerApi.builder().version(ServerApiVersion.V1).build();
 
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString(connectionString))
-                .serverApi(serverAPI)
-                .build();
+    public static Connection getConnection() throws SQLException {
+        String username = "sa";
+        String password = "20Gabriel03!";
 
-        try (MongoClient mongoClient = MongoClients.create(settings)) {
-            try {
-                // Send a ping to confirm a successful connection
-                MongoDatabase database = mongoClient.getDatabase("LibraHub");
-                database.runCommand(new Document("ping", 1));
-                System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
-                return true;
-            } catch (MongoException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
+        return DriverManager.getConnection(url, username, password);
     }
 
     @Override
@@ -198,4 +188,5 @@ public class HomePage extends Application {
 
 
     }
+
 }
