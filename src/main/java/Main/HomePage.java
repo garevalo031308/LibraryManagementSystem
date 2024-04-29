@@ -29,11 +29,13 @@ import java.util.Objects;
 // TODO search bar on all pages
 // TODO change cart image with each time they add something to cart
 
+
 // TODO Fix admin, librarian, and customer database
 // TODO Database for borrowed books that is linked to user that contains the book, return date, etc.
 // TODO database that contains transaction history of user
 
 // TODO - CreateAccountPage: allow users to create an account through application
+// TODO - Catalog Page: Fix filters, allow for searcing by title, author, genre, etc. on the page, and resetting of filters
 // TODO - Login page: allow users to login with their credentials or create an account
 // TODO - Admin page: create users, have some type of button that allows admins to login with their credentials and open something up
 // TODO - Updating Media Page: allow librarians to update media information (extra button if logged in as librarian?)
@@ -41,6 +43,7 @@ import java.util.Objects;
 // TODO - AboutUs Page: add some extra fluff like a google maps thing or whatever
 // TODO - UserLookUp Page: allow librarians to look up users and see what they have checked out
 // TODO - User Page: allow users to see what they have checked out (Need to make in scene builder)
+
 public class HomePage extends Application {
 
     public static String url = "jdbc:mysql://localhost:3306/librahub";
