@@ -1,5 +1,7 @@
 package Main;
 
+import Main.Gabriel.CatalogPage;
+import Main.Gabriel.CheckoutPage;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -123,6 +125,7 @@ public static void main(String[] args){
         helpLabel.setLayoutX(31);
         helpLabel.setLayoutY(210);
 
+        // TODO - search bar that looks up title or author when search bar is hit
         TextField searchbar = new TextField();
         searchbar.setPromptText("Type a title, author, etc. here");
         searchbar.setPrefWidth(567);
@@ -187,6 +190,16 @@ public static void main(String[] args){
         stage.show();
 
 
+        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
+
+        searchbutton.setOnAction(e -> {
+            String searchQuery = searchbar.getText();
+            CatalogPage.catalogPage(stage, searchQuery);
+        });
+
+        cartimage.setOnMouseClicked(e -> {
+            CheckoutPage.checkoutPage(stage, "2011176");
+        });
     }
 
 }
