@@ -2,25 +2,16 @@ package Main.Database;
 
 import Main.Gabriel.Books;
 import Main.HomePage;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.InsertOneResult;
-import org.bson.Document;
-import org.bson.codecs.configuration.CodecProvider;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.PojoCodecProvider;
-import org.bson.types.ObjectId;
 
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import static Main.HomePage.connectionString;
-import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 // This is separate to the creating media page
 public class CreateMedia {
@@ -101,7 +92,7 @@ public class CreateMedia {
         }
         ArrayList<Books> books = bookDatabase();
         for (Books book : books) {
-            if (book.getBookid().contentEquals(ID.toString())) {
+            if (book.getID().contentEquals(ID.toString())) {
                 createRandomID();
             }
         }
@@ -109,39 +100,49 @@ public class CreateMedia {
     }
 
     private static void createMediaEntry(String title, String author, String genre, String type, String date, String publisher, String description, String image){
-        try (MongoClient mongoClient = MongoClients.create(HomePage.connectionString)) {
-            MongoDatabase db = mongoClient.getDatabase("LibraHub");
-            MongoCollection<Document> collection = db.getCollection("Books");
-
-            try {
-                InsertOneResult result = collection.insertOne(new Document()
-                        .append("_id", new ObjectId())
-                        .append("bookid", createRandomID())
-                        .append("title", title)
-                        .append("author", author)
-                        .append("genre", genre)
-                        .append("type", type)
-                        .append("date", date)
-                        .append("publisher", publisher)
-                        .append("description", description)
-                        .append("image","/"+ image)
-                        .append("borrowed", false));
-                System.out.println("Inserted: " + result);
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "INSERT INTO Books (id, title, author, genre, type, date, publisher, description, image, borrowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, createRandomID());
+            statement.setString(2, title);
+            statement.setString(3, author);
+            statement.setString(4, genre);
+            statement.setString(5, type);
+            statement.setString(6, date);
+            statement.setString(7, publisher);
+            statement.setString(8, description);
+            statement.setString(9, "/" + image);
+            statement.setBoolean(10, false);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     private static ArrayList<Books> bookDatabase() {
-        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-
         ArrayList<Books> books = new ArrayList<>();
-        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-            MongoDatabase database = mongoClient.getDatabase("LibraHub").withCodecRegistry(pojoCodecRegistry);
-            MongoCollection<Books> collection = database.getCollection("Books", Books.class);
-            collection.find().into(books);
+
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT * FROM Books";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Books book = new Books();
+                book.setID(String.valueOf(resultSet.getInt("id")));
+                book.setTitle(resultSet.getString("title"));
+                book.setAuthor(resultSet.getString("author"));
+                book.setGenre(resultSet.getString("genre"));
+                book.setType(resultSet.getString("type"));
+                book.setDate(resultSet.getString("date"));
+                book.setPublisher(resultSet.getString("publisher"));
+                book.setDescription(resultSet.getString("description"));
+                book.setImage(resultSet.getString("image"));
+                book.setBorrowed(resultSet.getBoolean("borrowed"));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return books;
