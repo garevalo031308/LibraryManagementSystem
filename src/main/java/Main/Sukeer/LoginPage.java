@@ -12,6 +12,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 public class LoginPage extends Application{
@@ -63,12 +65,6 @@ public class LoginPage extends Application{
         searchbar.setLayoutY(51);
         searchbar.setPrefWidth(273);
         searchbar.setPrefHeight(47);
-
-        //Label loginLabel = new Label("Log In");
-        //loginLabel.setLayoutX(1164);
-        //loginLabel.setLayoutY(6);
-        //loginLabel.setFont(Font.font(13));
-        //loginLabel.setUnderline(true);
 
         Rectangle middle = new Rectangle();//new rectangle at the middle of the page
         middle.setWidth(351); //set width
