@@ -1,9 +1,7 @@
 package Main;
 
-import com.mongodb.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
+import Main.Gabriel.CatalogPage;
+import Main.Gabriel.CheckoutPage;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -16,44 +14,61 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.bson.Document;
 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Objects;
+
+// TODO link up all pages together
+// TODO log in and save user while they are browsing
+// TODO logout function
+// TODO Remove cart from user when they log out/close application
+// TODO make sure all buttons do something
+// TODO search bar on all pages
+// TODO change cart image with each time they add something to cart
+
+
+// TODO Fix admin, librarian, and customer database
+// TODO Database for borrowed books that is linked to user that contains the book, return date, etc.
+// TODO database that contains transaction history of user
+
+// TODO - CreateAccountPage: allow users to create an account through application
+// TODO - Catalog Page: Fix filters, allow for searcing by title, author, genre, etc. on the page, and resetting of filters
+// TODO - Login page: allow users to login with their credentials or create an account
+// TODO - Admin page: create users, have some type of button that allows admins to login with their credentials and open something up
+// TODO - Updating Media Page: allow librarians to update media information (extra button if logged in as librarian?)
+// TODO /\ a functions page that allows them to do certain things depending on their role, then a button that gets added on home page to access it
+// TODO - AboutUs Page: add some extra fluff like a google maps thing or whatever
+// TODO - UserLookUp Page: allow librarians to look up users and see what they have checked out
+// TODO - User Page: allow users to see what they have checked out (Need to make in scene builder)
 
 public class HomePage extends Application {
 
-    public static String connectionString = "mongodb+srv://garevalo031308:20BlueLuna03!@librahub.mgdhjt4.mongodb.net/?retryWrites=true&w=majority&appName=LibraHub";
+    public static String url = "jdbc:mysql://localhost:3306/librahub";
 
-    public static void main(String[] args){
-        if (connectToDB()) {
+public static void main(String[] args){
+    try {
+        if (getConnection() != null) {
             Application.launch(args); // needed to launch the application. It will run the code in the "public void start()"
         } else {
+            System.out.println("Cannot connect to the database!");
             System.exit(1);
-            System.out.println("Failed to connect to the database.");
         }
-
+    } catch (SQLException e) {
+        System.out.println("Cannot connect to the database!");
+        e.printStackTrace();
+        System.exit(1);
     }
+}
 
-    public static boolean connectToDB(){ // This connects to Mongo database
-        ServerApi serverAPI = ServerApi.builder().version(ServerApiVersion.V1).build();
 
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString(connectionString))
-                .serverApi(serverAPI)
-                .build();
+    public static Connection getConnection() throws SQLException {
+        String username = "sa";
+        String password = "20Gabriel03!";
 
-        try (MongoClient mongoClient = MongoClients.create(settings)) {
-            try {
-                // Send a ping to confirm a successful connection
-                MongoDatabase database = mongoClient.getDatabase("LibraHub");
-                database.runCommand(new Document("ping", 1));
-                System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
-                return true;
-            } catch (MongoException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
+        return DriverManager.getConnection(url, username, password);
     }
 
     @Override
@@ -133,6 +148,7 @@ public class HomePage extends Application {
         helpLabel.setLayoutX(31);
         helpLabel.setLayoutY(210);
 
+        // TODO - search bar that looks up title or author when search bar is hit
         TextField searchbar = new TextField();
         searchbar.setPromptText("Type a title, author, etc. here");
         searchbar.setPrefWidth(567);
@@ -197,5 +213,16 @@ public class HomePage extends Application {
         stage.show();
 
 
+        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
+
+        searchbutton.setOnAction(e -> {
+            String searchQuery = searchbar.getText();
+            CatalogPage.catalogPage(stage, searchQuery);
+        });
+
+        cartimage.setOnMouseClicked(e -> {
+            CheckoutPage.checkoutPage(stage, "2011176");
+        });
     }
+
 }

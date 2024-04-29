@@ -13,8 +13,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.util.Objects;
-
 public class UserLookupPage extends Application {
     public static void main(String[] args){
         Application.launch(args); // needed to launch the application. It will run the code in the "public void start()"
@@ -32,7 +30,7 @@ public class UserLookupPage extends Application {
         header.setFill(Paint.valueOf("#FF5A5F"));
 
         ImageView logo = new ImageView(); //new image view
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")));
+        Image image = new Image("file:libgenlogo.png");
         logo.setImage(image);
         logo.setFitHeight(124);
         logo.setFitWidth(122);
@@ -124,7 +122,6 @@ public class UserLookupPage extends Application {
         searchbuttonTwo.setPrefWidth(130);
 
         stage.setTitle("Library Management System");// sets current scene
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png"))));
         root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, helpLabel, searchbarTwo, searchbar, searchbutton, searchbuttonTwo); //adds header to the root (children are the modules)
         stage.setScene(scene);
         stage.show();

@@ -1,10 +1,6 @@
 package Main.Gabriel;
 
-import Main.HomePage;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,28 +13,22 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.bson.codecs.configuration.CodecProvider;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.PojoCodecProvider;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static Main.HomePage.connectionString;
-import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
-import static com.mongodb.client.model.Filters.eq;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
-public class CatalogPage extends Application {
+import static Main.HomePage.getConnection;
 
-    public static void main(String[] args){
-        Application.launch(args);
-    }
 
-    @Override
-    public void start(Stage stage){
+public class CatalogPage {
+
+    public static void catalogPage(Stage stage, String searchQuery){
         Group root = new Group(); //group is groups of module(containers, test fields)
         Scene scene = new Scene(root, 1280,  900); //scene of page, creating width, and height (x,y value)
         scene.setFill(Paint.valueOf("#F4CE90")); //set
@@ -49,7 +39,7 @@ public class CatalogPage extends Application {
         header.setFill(Paint.valueOf("#FF5A5F"));
 
         ImageView logo = new ImageView(); //new image view
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
+        Image img = new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
         logo.setImage(img); //set image
         logo.setFitHeight(124);
         logo.setFitWidth(122);
@@ -92,7 +82,7 @@ public class CatalogPage extends Application {
         loginLabel.setUnderline(true);
 
         ImageView cartimage = new ImageView();
-        Image cart = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/cart.png")));
+        Image cart = new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream("/Images/Main/cart.png")));
         cartimage.setImage(cart);
         cartimage.setFitWidth(90);
         cartimage.setFitHeight(59);
@@ -234,14 +224,13 @@ public class CatalogPage extends Application {
         sp.setFitToWidth(true);
         sp.setFitToHeight(false);
 
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
+        stage.getIcons().add(new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(filterPane,sp, header, logo, title, cartimage, account, catalog, aboutus, loginLabel); //add all the elements to the root
         filterPane.getChildren().addAll(sortByLabel, filterButton, titleButton, authorButton, dateNewButton, dateOldButton, sortmediasep);
         filterPane.getChildren().addAll(mediaLabel, bookCheck, eBookCheck, videoCheck, audioCheck, mediaSep);
         filterPane.getChildren().addAll(genreLabel, fictionCheck, scienceFictionCheck, fantasyCheck, mysteryCheck, horrorCheck, dramaCheck, MythologyCheck, nonFictionCheck, genreSep);
         stage.setTitle("Catalog");
         stage.setScene(scene);
-        stage.show();
 
         ArrayList<String> genres = new ArrayList<>();
         ArrayList<String> types = new ArrayList<>();
@@ -264,23 +253,24 @@ public class CatalogPage extends Application {
             addIfSelected(types, audioCheck, "Audio");
 
             if (titleButton.isSelected()) {
-                createBookBox(ap, "Title", genres, types);
+                createBookBox(stage, ap, "Title", genres, types, searchQuery);
             } else if (authorButton.isSelected()) {
-                createBookBox(ap, "Author", genres, types);
+                createBookBox(stage, ap, "Author", genres, types, searchQuery);
             } else if (dateNewButton.isSelected()) {
-                createBookBox(ap, "Date (Newest)", genres, types);
+                createBookBox(stage, ap, "Date (Newest)", genres, types, searchQuery);
             } else if (dateOldButton.isSelected()) {
-                createBookBox(ap, "Date (Oldest)", genres, types);
+                createBookBox(stage, ap, "Date (Oldest)", genres, types, searchQuery);
             }
         });
 
-        createBookBox(ap, "Title", genres, types);
+        createBookBox(stage, ap, "Title", genres, types, searchQuery);
+        stage.show();
 
     }
 
     // Method that creates a book "box"
     // Need to get book info from database
-    public static void createBookBox(AnchorPane anchorPane, String sort, ArrayList<String> genreFilter, ArrayList<String> typeFilter){
+    public static void createBookBox(Stage stage, AnchorPane anchorPane, String sort, ArrayList<String> genreFilter, ArrayList<String> typeFilter, String searchQuery){
         ArrayList<Books> books = bookDatabase(); // List of books in database
         books.sort((b1, b2) -> switch (sort) {
             case "Title" -> b1.title.compareTo(b2.title);
@@ -290,8 +280,9 @@ public class CatalogPage extends Application {
             default -> 0;
         });
 
-        books.removeIf(book -> (!genreFilter.isEmpty() && !genreFilter.contains(book.genre)) || (!typeFilter.isEmpty() && !typeFilter.contains(book.type)));
-
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            books.removeIf(book -> !book.title.toLowerCase().contains(searchQuery.toLowerCase()) && !book.author.toLowerCase().contains(searchQuery.toLowerCase()));
+        }
         for (int i = 0; i < books.size(); i++){
 
             ImageView cover = new ImageView();
@@ -339,33 +330,49 @@ public class CatalogPage extends Application {
             description.setPrefSize(878, 240);
 
             anchorPane.getChildren().addAll(cover, genre, type, borrowed, title, author, description);
+            int finalI = i;
             cover.setOnMouseClicked(e->{
-                System.out.println("Book Clicked");
+                BookPopUp.bookPopUp(stage, books.get(finalI));
             });
         }
     }
 
     private static ArrayList<Books> bookDatabase() {
-        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-
         ArrayList<Books> books = new ArrayList<>();
-        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-            MongoDatabase database = mongoClient.getDatabase("LibraHub").withCodecRegistry(pojoCodecRegistry);
-            MongoCollection<Books> collection = database.getCollection("Books", Books.class);
-            collection.find().into(books);
+
+        try (Connection connection = getConnection()) {
+            String sql = "SELECT * FROM books";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Books book = new Books();
+                book.setID(String.valueOf(resultSet.getInt("id")));
+                book.setTitle(resultSet.getString("title"));
+                book.setAuthor(resultSet.getString("author"));
+                book.setDescription(resultSet.getString("description"));
+                book.setGenre(resultSet.getString("genre"));
+                book.setType(resultSet.getString("type"));
+                book.setBorrowed(resultSet.getBoolean("borrowed"));
+                book.setImage(resultSet.getString("image"));
+                book.setDate(resultSet.getString("date"));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return books;
     }
 
-    private void addIfSelected(ArrayList<String> list, CheckBox mainCheckBox, CheckBox checkBox, String value) {
+
+    private static void addIfSelected(ArrayList<String> list, CheckBox mainCheckBox, CheckBox checkBox, String value) {
         if (mainCheckBox.isSelected() || checkBox.isSelected()) {
             list.add(value);
         }
     }
 
-    private void addIfSelected(ArrayList<String> list, CheckBox checkBox, String value) {
+    private static void addIfSelected(ArrayList<String> list, CheckBox checkBox, String value) {
         if (checkBox.isSelected()) {
             list.add(value);
         }
