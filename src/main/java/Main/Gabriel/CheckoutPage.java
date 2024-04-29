@@ -1,9 +1,12 @@
 package Main.Gabriel;
 
+import Main.HomePage;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,29 +15,31 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class CheckoutPage extends Application {
+public class CheckoutPage {
 
-    public static void main(String[] args){
-        Application.launch(args);
-    }
-
-    @Override
-    public void start(Stage stage){
+    public static void checkoutPage(Stage stage, String ID){
         Group root = new Group(); //group is groups of module(containers, test fields)
-        Scene scene = new Scene(root, 531,  900); //scene of page, creating width, and height (x,y value)
+        Scene scene = new Scene(root, 1280,  900); //scene of page, creating width, and height (x,y value)
         scene.setFill(Paint.valueOf("#F4CE90")); //set
         stage.setResizable(false);
         stage.setFullScreen(false);
 
         Rectangle header = new Rectangle();//new rectangle within the stage
-        header.setWidth(531); //set width
+        header.setWidth(1280); //set width
         header.setHeight(132); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
 
         ImageView logo = new ImageView(); //new image view
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
+        Image img = new Image(Objects.requireNonNull(CheckoutPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
         logo.setImage(img); //set image
         logo.setFitHeight(124);
         logo.setFitWidth(122);
@@ -57,33 +62,6 @@ public class CheckoutPage extends Application {
         checkoutButton.setPrefHeight(50.0);
         checkoutButton.setPrefWidth(176.0);
 
-        ImageView book1 = new ImageView();
-        Image book1Img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/MediaCovers/Dune.jpg")));
-        book1.setImage(book1Img);
-        book1.setFitHeight(150);
-        book1.setFitWidth(200);
-        book1.setLayoutX(57);
-        book1.setLayoutY(235);
-        book1.setPreserveRatio(true);
-
-        ImageView book2 = new ImageView();
-        Image book2Img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/MediaCovers/HarryPotterandtheCursedChild.jpg")));
-        book2.setImage(book2Img);
-        book2.setFitHeight(150);
-        book2.setFitWidth(200);
-        book2.setLayoutX(56);
-        book2.setLayoutY(559);
-        book2.setPreserveRatio(true);
-
-        ImageView book3 = new ImageView();
-        Image book3Img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/MediaCovers/ABriefHistoryofTime.jpg")));
-        book3.setImage(book3Img);
-        book3.setFitHeight(150);
-        book3.setFitWidth(200);
-        book3.setLayoutX(56);
-        book3.setLayoutY(396);
-        book3.setPreserveRatio(true);
-
         Label forUser = new Label("For User:");
         forUser.setLayoutX(55.0);
         forUser.setLayoutY(191.0);
@@ -94,71 +72,150 @@ public class CheckoutPage extends Application {
 
 
         stage.setTitle("Cart");// sets current scene
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
+        stage.getIcons().add(new Image(Objects.requireNonNull(CheckoutPage.class.getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(header, logo, title, forUser, exitButton); //adds all the elements to the root
-        root.getChildren().addAll(shoppingCartLabel, checkoutButton, book1, book2, book3);
+        root.getChildren().addAll(shoppingCartLabel, checkoutButton);
         stage.setScene(scene); //sets the scene
         stage.show(); //shows the stage
 
-        createCart(root);
+        ArrayList<Books> cartItems = getCartItems(ID);
+
+        createCart(root, cartItems, ID, stage);
     }
 
-    public void createCart(Group root){
-        Label title1 = new Label("Title");
-        title1.setLayoutX(175.0);
-        title1.setLayoutY(242.0);
-        title1.setFont(Font.font("System Bold", 28.0));
+    public static void createCart(Group root, ArrayList<Books> cartItems, String ID, Stage stage){
 
-        Label title2 = new Label("Title");
-        title2.setLayoutX(175.0);
-        title2.setLayoutY(396.0);
-        title2.setFont(Font.font("System Bold", 28.0));
+        for (int i = 0; i < cartItems.size(); i++) {
+            ImageView bookview = new ImageView();
+            Image bookImg = new Image(Objects.requireNonNull(CheckoutPage.class.getResourceAsStream(cartItems.get(i).image)));
+            bookview.setImage(bookImg);
+            bookview.setFitWidth(200);
+            bookview.setFitHeight(150);
+            bookview.setLayoutX(57);
+            bookview.setLayoutY(235 + (i*161));
+            bookview.setPreserveRatio(true);
 
-        Label title3 = new Label("Title");
-        title3.setLayoutX(175.0);
-        title3.setLayoutY(559.0);
-        title3.setFont(Font.font("System Bold", 28.0));
+            Label title = new Label(cartItems.get(i).title);
+            title.setLayoutX(175);
+            title.setLayoutY(242 + (i*154));
+            title.setFont(Font.font(28));
 
-        Label author1 = new Label("Author");
-        author1.setLayoutX(175.0);
-        author1.setLayoutY(282.0);
-        author1.setFont(Font.font(19.0));
+            Label author = new Label(cartItems.get(i).author);
+            author.setLayoutX(175);
+            author.setLayoutY(282 + (i*154));
+            author.setFont(Font.font(18));
 
-        Label author2 = new Label("Author");
-        author2.setLayoutX(175.0);
-        author2.setLayoutY(436.0);
-        author2.setFont(Font.font(19.0));
+            Label returnDate = new Label("Return Date: " + getReturnDate());
+            returnDate.setLayoutX(175);
+            returnDate.setLayoutY(324 + (i*147));
 
-        Label author3 = new Label("Author");
-        author3.setLayoutX(175.0);
-        author3.setLayoutY(599.0);
-        author3.setFont(Font.font(19.0));
+            Button removeButton = new Button("Remove");
+            removeButton.setLayoutX(175);
+            removeButton.setLayoutY(354 + (i*157));
+            int finalI = i;
+            removeButton.setOnAction(e -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to remove this book from the cart?", ButtonType.YES, ButtonType.NO);
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == ButtonType.YES) {
+                        removeBookFromCart(ID, cartItems.get(finalI).getID());
+                        checkoutPage(stage, ID);
+                    }
+                });
+            });
 
-        Label returnDate1 = new Label("Return Date:");
-        returnDate1.setLayoutX(175.0);
-        returnDate1.setLayoutY(324.0);
 
-        Label returnDate2 = new Label("Return Date:");
-        returnDate2.setLayoutX(175.0);
-        returnDate2.setLayoutY(471.0);
+            root.getChildren().addAll(bookview, title, author, returnDate, removeButton);
+        }
+    }
 
-        Label returnDate3 = new Label("Return Date:");
-        returnDate3.setLayoutX(175.0);
-        returnDate3.setLayoutY(634.0);
+    public static ArrayList<Books> getCartItems(String userID) {
+        ArrayList<Books> cartItems = new ArrayList<>();
 
-        Button removeButton1 = new Button("Remove");
-        removeButton1.setLayoutX(178.0);
-        removeButton1.setLayoutY(354.0);
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT media1ID, media2ID, media3ID FROM cart WHERE userID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            ResultSet resultSet = statement.executeQuery();
 
-        Button removeButton2 = new Button("Remove");
-        removeButton2.setLayoutX(174.0);
-        removeButton2.setLayoutY(511.0);
+            while (resultSet.next()) {
+                String[] mediaIDs = {resultSet.getString("media1ID"), resultSet.getString("media2ID"), resultSet.getString("media3ID")};
 
-        Button removeButton3 = new Button("Remove");
-        removeButton3.setLayoutX(178.0);
-        removeButton3.setLayoutY(671.0);
+                for (String mediaID : mediaIDs) {
+                    if (mediaID != null) {
+                        sql = "SELECT * FROM Books WHERE id = ?";
+                        statement = connection.prepareStatement(sql);
+                        statement.setString(1, mediaID);
+                        ResultSet bookResultSet = statement.executeQuery();
 
-        root.getChildren().addAll(title1, title2, title3, author1, author2, author3, returnDate1, returnDate2, returnDate3);
-        root.getChildren().addAll(removeButton1, removeButton2, removeButton3);
+                        if (bookResultSet.next()) {
+                            Books book = new Books();
+                            book.setID(String.valueOf(bookResultSet.getInt("id")));
+                            book.setTitle(bookResultSet.getString("title"));
+                            book.setAuthor(bookResultSet.getString("author"));
+                            book.setGenre(bookResultSet.getString("genre"));
+                            book.setType(bookResultSet.getString("type"));
+                            book.setDate(bookResultSet.getString("date"));
+                            book.setPublisher(bookResultSet.getString("publisher"));
+                            book.setDescription(bookResultSet.getString("description"));
+                            book.setImage(bookResultSet.getString("image"));
+                            book.setBorrowed(bookResultSet.getBoolean("borrowed"));
+                            cartItems.add(book);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cartItems;
+    }
+
+    private static String getReturnDate(){
+        LocalDate today = LocalDate.now();
+        LocalDate returnDate = today.plusWeeks(2);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return returnDate.format(formatter);
+    }
+
+    private static void removeBookFromCart(String userID, String bookID) {
+        try (Connection connection = HomePage.getConnection()) {
+            // Get the title of the book using the bookID
+            String sql = "SELECT title FROM Books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, bookID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String bookTitle = resultSet.getString("title");
+
+                // Get the media and mediaIDs from the cart
+                sql = "SELECT media1, media2, media3, media1ID, media2ID, media3ID FROM cart WHERE userID = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, userID);
+                resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    String media1 = resultSet.getString("media1");
+                    String media2 = resultSet.getString("media2");
+                    String media3 = resultSet.getString("media3");
+
+                    // Check if any of the media matches the book title and set it and its corresponding mediaID to NULL
+                    if (bookTitle.equals(media1)) {
+                        sql = "UPDATE cart SET media1 = NULL, media1ID = NULL WHERE userID = ?";
+                    } else if (bookTitle.equals(media2)) {
+                        sql = "UPDATE cart SET media2 = NULL, media2ID = NULL WHERE userID = ?";
+                    } else if (bookTitle.equals(media3)) {
+                        sql = "UPDATE cart SET media3 = NULL, media3ID = NULL WHERE userID = ?";
+                    }
+
+                    statement = connection.prepareStatement(sql);
+                    statement.setString(1, userID);
+                    statement.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
