@@ -2,6 +2,7 @@ package Main;
 
 import Main.Gabriel.CatalogPage;
 import Main.Gabriel.CheckoutPage;
+import Main.Sukeer.LoginPage;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -47,6 +48,7 @@ import java.util.Objects;
 public class HomePage extends Application {
 
     public static String url = "jdbc:mysql://localhost:3306/librahub";
+    public static String currentLoggedInUser = "";
 
 public static void main(String[] args){
     try {
@@ -209,6 +211,7 @@ public static void main(String[] args){
         root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, cartimage, banner, helpLabel, searchbar, searchbutton); //adds header to the root (children are the modules)
         root.getChildren().addAll(popularLabel);
         root.getChildren().addAll(popular1, popular2, popular3, popular4, popular5);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
@@ -223,6 +226,8 @@ public static void main(String[] args){
         cartimage.setOnMouseClicked(e -> {
             CheckoutPage.checkoutPage(stage, "2011176");
         });
+
+        loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
     }
 
 }
