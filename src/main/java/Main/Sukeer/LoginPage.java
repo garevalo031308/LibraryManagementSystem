@@ -20,11 +20,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 
 public class LoginPage{
-
-
     public static void loginPage(Stage stage) {
         Group root = new Group();
         Scene scene = new Scene(root, 1280, 900);
@@ -36,8 +35,8 @@ public class LoginPage{
         header.setFill(Paint.valueOf("#FF5A5F"));
 
         ImageView logo = new ImageView(); //new image view
-        //Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo_transparent.png"))); //get image from the path
-        //logo.setImage(img); //set image
+        Image img = new Image(Objects.requireNonNull(LoginPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
+        logo.setImage(img); //set image
         logo.setFitHeight(124);
         logo.setFitWidth(122);
         logo.setLayoutX(8);
