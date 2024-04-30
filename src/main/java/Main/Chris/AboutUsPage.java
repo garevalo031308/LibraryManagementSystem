@@ -95,7 +95,7 @@ public class AboutUsPage extends Application {
         helpLabel.setTextFill(Paint.valueOf("Black"));
         helpLabel.setFont(Font.font("Bold", 50));
         helpLabel.setPrefSize(650.3173828125, 73);
-        helpLabel.setLayoutX(375);
+        helpLabel.setLayoutX(430);
         helpLabel.setLayoutY(200);
 
         TextField searchbar = new TextField();
