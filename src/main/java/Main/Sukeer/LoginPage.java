@@ -1,5 +1,7 @@
 package Main.Sukeer;
 
+import Main.AccountPage;
+import Main.Daniel.CreateAccountPage;
 import Main.HomePage;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -127,19 +129,29 @@ public class LoginPage{
         createAccount.setUnderline(true);
 
         stage.setTitle("Library Management System");// sets current scene
-        root.getChildren().addAll(header, createAccount, question, title, account, catalog, aboutus, searchbar, middle, loginTitle, username, password, login, remember); //adds header to the root (children are the modules)
+        root.getChildren().addAll(header, title, account, catalog, aboutus, searchbar, middle, loginTitle, username, password, login, createAccount, question ); //adds header to the root (children are the modules)
         stage.setScene(scene);
         stage.show();
 
+        login.setOnAction(e -> {
+            if (loginUser(username.getText(), password.getText())) {
+                AccountPage.accountPage(stage, username.getText());
+            } else {
+                System.out.println("Login failed");
+            }
+        });
+
+        createAccount.setOnMouseClicked(e -> CreateAccountPage.createAccountPage(stage));
+
     }
 
-    public static boolean loginUser(String username, String password) {
+    public static boolean loginUser(String id, String password) {
         boolean loginSuccessful = false;
 
         try (Connection connection = HomePage.getConnection()) {
-            String sql = "SELECT * FROM customer WHERE userid = ? AND password = ?";
+            String sql = "SELECT * FROM customer WHERE id = ? AND password = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, username);
+            statement.setString(1, id);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
 
