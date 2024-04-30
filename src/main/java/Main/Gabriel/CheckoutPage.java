@@ -81,9 +81,78 @@ public class CheckoutPage {
         ArrayList<Books> cartItems = getCartItems(ID);
 
         createCart(root, cartItems, ID, stage);
+
+        checkoutButton.setOnAction(e -> checkoutBooks(ID, cartItems, stage));
     }
 
-    public static void createCart(Group root, ArrayList<Books> cartItems, String ID, Stage stage){
+    private static void checkoutBooks(String ID, ArrayList<Books> cartItems, Stage stage) {
+        if (!canCheckout(ID)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You cannot checkout more than 3 books at a time.", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+        try (Connection connection = HomePage.getConnection()) {
+            // Start a transaction
+            connection.setAutoCommit(false);
+
+            // Get the current date
+            LocalDate today = LocalDate.now();
+            // Calculate the return date
+            LocalDate returnDate = today.plusWeeks(2);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String borrowedDate = today.format(formatter);
+            String returnDateStr = returnDate.format(formatter);
+
+            // Iterate over the items in the cart
+            for (Books book : cartItems) {
+                // Insert a new row into the borrowed_books table
+                String sql = "INSERT INTO borrowed_books (book_id, user_id, borrowed_date, return_date) VALUES (?, ?, ?, ?)";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(book.getID()));
+                statement.setInt(2, Integer.parseInt(ID));
+                statement.setString(3, borrowedDate);
+                statement.setString(4, returnDateStr);
+                statement.executeUpdate();
+
+                // Add a new transaction
+                addTransaction(ID, book.getID(), borrowedDate, returnDateStr, "BORROWED");
+            }
+
+            // Delete the user's cart
+            String sql = "DELETE FROM cart WHERE userID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, ID);
+            statement.executeUpdate();
+
+            // Commit the transaction
+            connection.commit();
+
+            // Set the connection's auto-commit mode back to true
+            connection.setAutoCommit(true);
+
+            // Refresh the page
+            checkoutPage(stage, ID);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static void addTransaction(String userID, String bookID, String borrowDate, String returnDate, String status) {
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "INSERT INTO transactions (user_id, book_id, borrow_date, return_date, status) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            statement.setString(2, bookID);
+            statement.setString(3, borrowDate);
+            statement.setString(4, returnDate);
+            statement.setString(5, status);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void createCart(Group root, ArrayList<Books> cartItems, String ID, Stage stage){
 
         for (int i = 0; i < cartItems.size(); i++) {
             ImageView bookview = new ImageView();
@@ -128,7 +197,40 @@ public class CheckoutPage {
         }
     }
 
-    public static ArrayList<Books> getCartItems(String userID) {
+    private static boolean canCheckout(String userID) {
+        try (Connection connection = HomePage.getConnection()) {
+            // Check the number of books in the cart
+            String sql = "SELECT COUNT(*) AS book_count FROM cart WHERE userID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            int cartBookCount = 0;
+            if (resultSet.next()) {
+                cartBookCount = resultSet.getInt("book_count");
+            }
+
+            // Check the number of books in the borrowed_books table
+            sql = "SELECT COUNT(*) AS book_count FROM borrowed_books WHERE user_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            resultSet = statement.executeQuery();
+
+            int borrowedBookCount = 0;
+            if (resultSet.next()) {
+                borrowedBookCount = resultSet.getInt("book_count");
+            }
+
+            // Return true if the total number of books is less than or equal to 3
+            return (cartBookCount + borrowedBookCount) <= 3;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    private static ArrayList<Books> getCartItems(String userID) {
         ArrayList<Books> cartItems = new ArrayList<>();
 
         try (Connection connection = HomePage.getConnection()) {
