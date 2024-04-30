@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1280.0" style="-fx-background-color: #F4CE90;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="132.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+      <Label layoutX="37.0" layoutY="163.0" text="Welcome to LibraHub" underline="true">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="208.0" prefHeight="81.0" prefWidth="603.0" text="At LibraHub, we believe that access to knowledge is fundamental to human progress. We are dedicated to empowering libraries and their patrons with innovative technology solutions that streamline library management and enhance the user experience." wrapText="true" />
+      <Label layoutX="37.0" layoutY="289.0" text="Our Mission">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="324.0" prefHeight="56.0" prefWidth="603.0" text="Our mission is to revolutionize the way libraries operate and serve their communities by providing cutting-edge library management systems. We strive to make library resources more accessible, efficient, and enjoyable for both library staff and patrons." wrapText="true" />
+      <Label layoutX="33.0" layoutY="380.0" text="What We Do">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="415.0" prefHeight="114.0" prefWidth="603.0" text="LibraHub specializes in developing comprehensive library management software tailored to meet the unique needs of modern libraries. Our platform offers a wide range of features designed to simplify library operations and improve user engagement:&#10;&#10;-Intuitive Catalog Browsing: Our user-friendly interface allows patrons to easily browse the library's catalog, discover new titles, and find the resources they need.&#10;-Streamlined Account Management: Patrons can conveniently access their library accounts, view borrowing history, renew materials, and manage holds with just a few clicks.&#10;-Effortless Sign-Up Process: We have streamlined the registration process, making it quick and hassle-free for new patrons to sign up for library memberships online.&#10;-Seamless Check-Out Experience: With LibraHub, patrons can check out books, eBooks, audiobooks, and other materials seamlessly, whether they're in the library or browsing from home." />
+      <Label layoutX="33.0" layoutY="529.0" text="Our Vision">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="564.0" prefHeight="68.0" prefWidth="603.0" text="At LibraHub, we envision a world where libraries are vibrant hubs of learning and discovery, accessible to all members of the community. By leveraging technology, we aim to empower libraries to fulfill their vital role as centers for education, enrichment, and cultural exchange." wrapText="true" />
+      <Label layoutX="33.0" layoutY="632.0" text="Why Choose LibraHub?">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="667.0" prefHeight="114.0" prefWidth="603.0" text="Expertise: With years of experience in the library technology industry, our team brings unparalleled expertise to every project.&#10;Innovation: We are committed to staying at the forefront of technological innovation, constantly evolving our platform to meet the changing needs of libraries and their patrons.&#10;Customer-Centric Approach: We prioritize customer satisfaction above all else, working closely with libraries to understand their unique requirements and delivering solutions that exceed expectations." wrapText="true" />
+      <Label layoutX="33.0" layoutY="781.0" text="Get In Touch">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="816.0" prefHeight="35.0" prefWidth="603.0" text="Ready to take your library to the next level with LibraHub? We'd love to hear from you! Contact us today to learn more about our products and services." wrapText="true" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a9ddd6" height="649.0" layoutX="697.0" layoutY="189.0" stroke="BLACK" strokeType="INSIDE" width="536.0" />
+      <Label layoutX="708.0" layoutY="200.0" text="Hours:" underline="true">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <Label layoutX="765.0" layoutY="244.0" prefHeight="273.0" prefWidth="400.0" text="Monday: 9:00 AM - 6:00 PM&#10;Tuesday: 9:00 AM - 8:00 PM&#10;Wednesday: 10:00 AM - 6:00 PM&#10;Thursday: 10:00 AM - 8:00 PM&#10;Friday: 9:00 AM - 5:00 PM&#10;Saturday: 10:00 AM - 4:00 PM&#10;Sunday: Closed" wrapText="true">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="708.0" layoutY="522.0" text="Contact Us:" underline="true" wrapText="true">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <Label layoutX="708.0" layoutY="564.0" prefHeight="167.0" prefWidth="518.0" text="Have questions or need assistance? Our dedicated team is here to help! You can reach us by email, phone, or through our online contact form.&#10;&#10;Email: info@librahub.com&#10;Phone: +1 (555) 123-4567&#10;Address: 123 Library Way, Cityville, State, ZIP&#10;&#10;Feel free to contact us during our business hours, and we'll be happy to assist you with any inquiries, technical support, or feedback you may have." wrapText="true" />
+   </children>
+</Pane>
