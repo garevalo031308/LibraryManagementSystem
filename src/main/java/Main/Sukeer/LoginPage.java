@@ -1,5 +1,6 @@
 package Main.Sukeer;
 
+import Main.HomePage;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,13 +16,16 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class LoginPage extends Application{
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
-    @Override
-    public void start(Stage stage) {
+
+public class LoginPage{
+
+
+    public static void loginPage(Stage stage) {
         Group root = new Group();
         Scene scene = new Scene(root, 1280, 900);
         scene.setFill(Paint.valueOf("#F4CE90"));
@@ -86,19 +90,21 @@ public class LoginPage extends Application{
         loginTitle.setLayoutY(244);
         loginTitle.setFont(Font.font("Bold", 32));
 
-        TextField username = new TextField("Username:");
+        TextField username = new TextField();
         username.setLayoutX(492);
         username.setLayoutY(313);
         username.setPrefWidth(304);
         username.setPrefHeight(36);
         username.setFont(Font.font(12));
+        username.setPromptText("Enter Username Here");
 
-        TextField password = new TextField("Password:");
+        TextField password = new TextField();
         password.setLayoutX(492);
         password.setLayoutY(382);
         password.setPrefWidth(304);
         password.setPrefHeight(36);
         username.setFont(Font.font(12));
+        password.setPromptText("Enter Password Here");
 
         Button login = new Button("Log in");
         login.setLayoutX(583);
@@ -112,10 +118,39 @@ public class LoginPage extends Application{
         remember.setPrefWidth(Region.USE_COMPUTED_SIZE);
         remember.setPrefHeight(Region.USE_COMPUTED_SIZE);
 
+        Label question = new Label("Don't have an account?");
+        question.setLayoutX(585);
+        question.setLayoutY(591);
+
+        Label createAccount = new Label("Click here to create one!");
+        createAccount.setLayoutX(583);
+        createAccount.setLayoutY(608);
+        createAccount.setUnderline(true);
+
         stage.setTitle("Library Management System");// sets current scene
-        root.getChildren().addAll(header, title, account, catalog, aboutus, searchbar, middle, loginTitle, username, password, login, remember); //adds header to the root (children are the modules)
+        root.getChildren().addAll(header, createAccount, question, title, account, catalog, aboutus, searchbar, middle, loginTitle, username, password, login, remember); //adds header to the root (children are the modules)
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public static boolean loginUser(String username, String password) {
+        boolean loginSuccessful = false;
+
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT * FROM customer WHERE userid = ? AND password = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                loginSuccessful = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return loginSuccessful;
     }
 }
