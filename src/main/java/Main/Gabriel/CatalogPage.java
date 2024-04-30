@@ -283,6 +283,7 @@ public class CatalogPage {
         if (searchQuery != null && !searchQuery.isEmpty()) {
             books.removeIf(book -> !book.title.toLowerCase().contains(searchQuery.toLowerCase()) && !book.author.toLowerCase().contains(searchQuery.toLowerCase()));
         }
+
         for (int i = 0; i < books.size(); i++){
 
             ImageView cover = new ImageView();
