@@ -1,9 +1,12 @@
 package Main;
 
 import Main.Gabriel.Books;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
@@ -24,6 +27,8 @@ public class AccountPage {
         Group root = new Group(); //group is groups of module(containers, test fields)
         Scene scene = new Scene(root, 1280, 900); //scene of page, creating width, and height (x,y value)
         scene.setFill(Paint.valueOf("#F4CE90")); //set
+
+        String[] userDetails = getUserDetails(ID);
 
         Rectangle header = new Rectangle();//new rectangle within the stage
         header.setWidth(1280); //set width
@@ -48,15 +53,18 @@ public class AccountPage {
         idLabel.setLayoutY(487);
         idLabel.setFont(Font.font(35));
 
-        Label nameLabel = new Label("Name");
+        Label nameLabel = new Label("Name: " + userDetails[0]);
         nameLabel.setLayoutX(41);
         nameLabel.setLayoutY(560);
         nameLabel.setFont(Font.font(35));
 
-        Label emailLabel = new Label("Email");
+        Label emailLabel = new Label("Email: " + userDetails[1]);
         emailLabel.setLayoutX(41);
         emailLabel.setLayoutY(638);
         emailLabel.setFont(Font.font(35));
+        emailLabel.setWrapText(true);
+        emailLabel.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+        emailLabel.setPrefSize(334, 235);
 
 
         ImageView userProfilePic = new ImageView();
@@ -77,12 +85,85 @@ public class AccountPage {
         transactionHistoryLabel.setLayoutY(165);
         transactionHistoryLabel.setFont(Font.font(22));
 
-        root.getChildren().addAll(header, logo, title, nameLabel, emailLabel, idLabel, userProfilePic, borrowedBooksLabel, transactionHistoryLabel);
+        // ----- Table ----- //
+        TableView<Transaction> transactions = new TableView<>();
+        transactions.setPrefSize(469, 638);
+        transactions.setLayoutX(761);
+        transactions.setLayoutY(205);
+
+        TableColumn<Transaction, String> titleColumn = new TableColumn<>("Title");
+        titleColumn.setCellValueFactory(cd -> cd.getValue().titleProperty());
+
+        TableColumn<Transaction, String> authorColumn = new TableColumn<>("Author");
+        authorColumn.setCellValueFactory(cd -> cd.getValue().authorProperty());
+
+        TableColumn<Transaction, String> dateCheckedOutColumn = new TableColumn<>("Date Checked Out");
+        dateCheckedOutColumn.setCellValueFactory(cd -> cd.getValue().dateCheckedOutProperty());
+
+        TableColumn<Transaction, String> dateDueColumn = new TableColumn<>("Date Due");
+        dateDueColumn.setCellValueFactory(cd -> cd.getValue().dateDueProperty());
+
+        TableColumn<Transaction, String> statusColumn = new TableColumn<>("Status");
+        statusColumn.setCellValueFactory(cd -> cd.getValue().statusProperty());
+
+        ArrayList<Transaction> transactionData = getTransactionData(ID);
+        transactions.getItems().addAll(transactionData);
+
+        transactions.getColumns().addAll(titleColumn, authorColumn, dateCheckedOutColumn, dateDueColumn, statusColumn);
+
+        root.getChildren().addAll(transactions, header, logo, title, nameLabel, emailLabel, idLabel, userProfilePic, borrowedBooksLabel, transactionHistoryLabel);
         stage.setTitle("Account Page");
         stage.setScene(scene);
         stage.show();
 
         createBorrowedBooksBox("4440486", root);
+    }
+
+    public static String[] getUserDetails(String userID) {
+        String[] userDetails = new String[2];
+
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT first_name, last_name, email FROM customer WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                userDetails[0] = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+                userDetails[1] = resultSet.getString("email");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userDetails;
+    }
+
+    public static ArrayList<Transaction> getTransactionData(String userID) {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT t.borrow_date, t.return_date, t.status, b.title, b.author " +
+                    "FROM transactions t JOIN books b ON t.book_id = b.id " +
+                    "WHERE t.user_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String author = resultSet.getString("author");
+                String dateCheckedOut = resultSet.getString("borrow_date");
+                String dateDue = resultSet.getString("return_date");
+                String status = resultSet.getString("status");
+
+                transactions.add(new Transaction(title, author, dateCheckedOut, dateDue, new SimpleStringProperty(status)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 
     public static void createBorrowedBooksBox(String ID, Group root) {
