@@ -29,7 +29,7 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <Label layoutX="41.0" layoutY="638.0" text="Email:">
+      <Label alignment="TOP_LEFT" layoutX="41.0" layoutY="638.0" prefHeight="235.0" prefWidth="334.0" text="Email:" wrapText="true">
          <font>
             <Font size="35.0" />
          </font>
