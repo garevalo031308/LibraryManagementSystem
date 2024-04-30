@@ -35,7 +35,8 @@ import java.util.Objects;
 // TODO Database for borrowed books that is linked to user that contains the book, return date, etc.
 // TODO database that contains transaction history of user
 
-// TODO - CreateAccountPage: allow users to create an account through application
+// STRIKE - CreateAccountPage: allow users to create an account through application
+// TODO - CreateAccountPage: after adding a user go to their account page
 // TODO - Catalog Page: Fix filters, allow for searcing by title, author, genre, etc. on the page, and resetting of filters
 // TODO - Login page: allow users to login with their credentials or create an account
 // TODO - Admin page: create users, have some type of button that allows admins to login with their credentials and open something up
@@ -224,7 +225,7 @@ public static void main(String[] args){
         });
 
         cartimage.setOnMouseClicked(e -> {
-            CheckoutPage.checkoutPage(stage, "2011176");
+            CheckoutPage.checkoutPage(stage, "4440486");
         });
 
         loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
