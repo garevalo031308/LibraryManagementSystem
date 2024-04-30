@@ -36,3 +36,19 @@ build/
 
 ### Mac OS ###
 .DS_Store
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105.xml
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105.xml
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105.xml
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/librahub.AU0cMw.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/mysql.osA4Bg.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/librahub.AU0cMw.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/officehub.uQzveQ.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/librahub.AU0cMw.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/sys.zb4BAA.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105/storage_v2/_src_/schema/librahub.AU0cMw.meta
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105.xml
+*.xml
+.idea/dataSources/4b12e922-69f3-4ae5-a150-23c8cef2f105.xml
+*.meta
