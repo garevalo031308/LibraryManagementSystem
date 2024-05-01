@@ -222,7 +222,7 @@ public class CheckoutPage {
 
         for (int i = 0; i < cartItems.size(); i++) {
             ImageView bookview = new ImageView();
-            Image bookImg = new Image(Objects.requireNonNull(CheckoutPage.class.getResourceAsStream(cartItems.get(i).image)));
+            Image bookImg = new Image(Objects.requireNonNull(CheckoutPage.class.getResourceAsStream(cartItems.get(i).getImage())));
             bookview.setImage(bookImg);
             bookview.setFitWidth(200);
             bookview.setFitHeight(150);
@@ -230,12 +230,12 @@ public class CheckoutPage {
             bookview.setLayoutY(235 + (i*161));
             bookview.setPreserveRatio(true);
 
-            Label title = new Label(cartItems.get(i).title);
+            Label title = new Label(cartItems.get(i).getTitle());
             title.setLayoutX(175);
             title.setLayoutY(242 + (i*154));
             title.setFont(Font.font(28));
 
-            Label author = new Label(cartItems.get(i).author);
+            Label author = new Label(cartItems.get(i).getAuthor());
             author.setLayoutX(175);
             author.setLayoutY(282 + (i*154));
             author.setFont(Font.font(18));
