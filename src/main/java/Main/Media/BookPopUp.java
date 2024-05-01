@@ -160,7 +160,7 @@ public class BookPopUp {
     }
 
     // TODO check to see if customer has a cart in database
-    private static boolean checkIfHasCart(String userID){
+    public static boolean checkIfHasCart(String userID){
         try (Connection connection = HomePage.getConnection()) {
             String sql = "SELECT COUNT(*) FROM cart WHERE userID = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -183,7 +183,7 @@ public class BookPopUp {
         return false;
     }
 
-    private static void createUserCart(String userID){
+    public static void createUserCart(String userID){
         try (Connection connection = HomePage.getConnection()) {
             String sql = "INSERT INTO cart (userID, cartID) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -195,7 +195,7 @@ public class BookPopUp {
         }
     }
 
-    private static String createRandomID(){
+    public static String createRandomID(){
         // This will create a random ID for the media
         StringBuilder ID = new StringBuilder();
         for(int i = 0; i < 7; i++){
@@ -208,7 +208,7 @@ public class BookPopUp {
         return ID.toString();
     }
 
-    private static boolean checkCartID(String cartID){
+    public static boolean checkCartID(String cartID){
         try (Connection connection = HomePage.getConnection()) {
             String sql = "SELECT COUNT(*) FROM cart WHERE cartID = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
