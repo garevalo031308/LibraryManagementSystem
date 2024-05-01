@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 
 import static Main.HomePage.currentLoggedInUser;
 
@@ -185,7 +186,26 @@ public class AdminPage extends Application{
                 editUser.setDisable(false);
                 removeUser.setDisable(false);
                 String userid = newSelection.getId();
-                editUser.setOnAction(e -> EditUserPage.editUserPage(stage, userid));
+                String usertype = newSelection.getType();
+
+                editUser.setOnAction(e -> EditUserPage.editUserPage(stage, userid, usertype));
+                removeUser.setOnAction(e -> {
+                    Users selectedUser = users.getSelectionModel().getSelectedItem();
+                    if (selectedUser != null) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Confirmation Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Are you sure you want to remove this user? This action is irreversible.");
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK){
+                            String userId = selectedUser.getId();
+                            String userType = selectedUser.getType();
+                            removeUserFromDatabase(userId, userType);
+                            users.getItems().remove(selectedUser);
+                        }
+                    }
+                });
             } else {
                 editUser.setDisable(true);
                 removeUser.setDisable(true);
@@ -251,5 +271,16 @@ public class AdminPage extends Application{
 
 
         return users;
+    }
+
+    private void removeUserFromDatabase(String userId, String userType) {
+        try (Connection connection = HomePage.getConnection()){
+            String SQL = "DELETE FROM " + userType.toLowerCase() + " WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setString(1, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
