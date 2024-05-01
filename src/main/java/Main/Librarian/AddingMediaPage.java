@@ -1,13 +1,11 @@
-package Main.Daniel;
+package Main.Librarian;
 
 //nessesary import packages
-import Main.AccountPage;
-import Main.Chris.AboutUsPage;
-import Main.Gabriel.CatalogPage;
-import Main.Gabriel.CheckoutPage;
-import Main.LibrarianCatalogPage;
-import Main.Sukeer.LoginPage;
-import javafx.application.Application;
+import Main.*;
+import Main.Media.CatalogPage;
+import Main.User.AccountPage;
+import Main.User.CheckoutPage;
+import Main.User.LoginPage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,7 +17,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Random;
 
 import static Main.HomePage.currentLoggedInUser;
 
@@ -160,6 +163,7 @@ public class AddingMediaPage {
         idField.setPrefWidth(291);
         idField.setDisable(true);
         idField.setFont(Font.font(35));
+        idField.setText(createRandomID());
 
         Text idText = new Text("ID");
         idText.setLayoutX(588);
@@ -361,7 +365,97 @@ public class AddingMediaPage {
             }
         });
 
+        addMediaButton.setOnAction(e -> {
+            String id = idField.getText();
+            String title1 = titleField.getText();
+            String author = authorField.getText();
+            String genre = "";
+            if (nonFictionRadioButton.isSelected()) {
+                genre = nonFictionRadioButton.getText();
+            }
+            if (fictionRadioButton.isSelected()) {
+                RadioButton selectedFiction = (RadioButton) fictionGroup.getSelectedToggle();
+                if (selectedFiction != null) {
+                    genre = selectedFiction.getText();
+                } else {
+                    genre = fictionRadioButton.getText();
+                }
+            }
+            String type = "";
+            if (booksRadioButton.isSelected()) {
+                type = booksRadioButton.getText();
+            } else if (ebooksRadioButton.isSelected()) {
+                type = ebooksRadioButton.getText();
+            }
+            String date = publicationDateField.getText();
+            String publisher = publisherField.getText();
+            String description = descriptionArea.getText();
+            String imageLocation = imageLocationField.getText();
+            addBookToDatabase(id, title1, author, genre, type, date, publisher, description, imageLocation);
+        });
 
-}//end class
+    }
+
+    private static void addBookToDatabase(String id, String title, String author, String genre, String type, String date, String publisher, String description, String imageLocation) {
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "INSERT INTO books (id, title, author, genre, type, date, publisher, description, image, borrowed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id);
+            statement.setString(2, title);
+            statement.setString(3, author);
+            statement.setString(4, genre);
+            statement.setString(5, type);
+            statement.setString(6, date);
+            statement.setString(7, publisher);
+            statement.setString(8, description);
+            statement.setString(9, "/" + imageLocation);
+            statement.setString(10, "0");
+            statement.executeUpdate();
+
+            // Show success alert
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Book was successfully added!");
+            alert.showAndWait();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            // Show error alert
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("An error occurred while adding the book.");
+            alert.showAndWait();
+        }
+    }
+
+    private static String createRandomID(){
+        StringBuilder id = new StringBuilder();
+        for (int i = 0; i < 7; i++) {
+            Random rand = new Random();
+            id.append(rand.nextInt(0, 9));
+        }
+        if (checkBookID(id.toString())){
+            return createRandomID();
+        }
+        return id.toString();
+    }
+
+    private static boolean checkBookID(String bookID){
+        try (Connection connection = HomePage.getConnection()){
+            String SQL = "SELECT COUNT(*) FROM books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setString(1, bookID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }//end package

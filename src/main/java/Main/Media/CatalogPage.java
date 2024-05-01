@@ -1,9 +1,10 @@
-package Main.Gabriel;
+package Main.Media;
 
 
-import Main.AccountPage;
-import Main.Chris.AboutUsPage;
-import Main.Sukeer.LoginPage;
+import Main.AboutUsPage;
+import Main.User.AccountPage;
+import Main.User.LoginPage;
+import Main.User.CheckoutPage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

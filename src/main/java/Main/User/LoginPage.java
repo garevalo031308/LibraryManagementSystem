@@ -1,12 +1,8 @@
-package Main.Sukeer;
+package Main.User;
 
-import Main.AccountPage;
-import Main.Chris.AboutUsPage;
-import Main.Daniel.CreateAccountPage;
-import Main.Gabriel.CatalogPage;
-import Main.Gabriel.CheckoutPage;
+import Main.AboutUsPage;
 import Main.HomePage;
-import javafx.application.Application;
+import Main.Media.CatalogPage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

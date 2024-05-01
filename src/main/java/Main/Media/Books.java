@@ -1,6 +1,4 @@
-package Main.Gabriel;
-
-import javafx.beans.property.StringProperty;
+package Main.Media;
 
 public class Books {
     String id;

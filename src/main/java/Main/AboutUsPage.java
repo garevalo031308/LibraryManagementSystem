@@ -1,10 +1,9 @@
-package Main.Chris;
+package Main;
 
-import Main.AccountPage;
-import Main.Gabriel.CatalogPage;
-import Main.Gabriel.CheckoutPage;
-import Main.Sukeer.LoginPage;
-import javafx.application.Application;
+import Main.Media.CatalogPage;
+import Main.User.AccountPage;
+import Main.User.CheckoutPage;
+import Main.User.LoginPage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package Main;
+package Main.Media;
 
 import javafx.beans.property.StringProperty;
 

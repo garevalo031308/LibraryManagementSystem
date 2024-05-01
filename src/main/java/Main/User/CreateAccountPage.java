@@ -1,12 +1,7 @@
-package Main.Daniel;
+package Main.User;
 
-import Main.AccountPage;
-import Main.Chris.AboutUsPage;
-import Main.Gabriel.CatalogPage;
-import Main.Gabriel.CheckoutPage;
-import Main.HomePage;
-import Main.Sukeer.LoginPage;
-import javafx.application.Application;
+import Main.*;
+import Main.Media.CatalogPage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,7 +14,6 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.sql.Connection;

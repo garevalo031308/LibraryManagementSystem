@@ -1,11 +1,11 @@
-package Main;
+package Main.Librarian;
 
-import Main.Chris.AboutUsPage;
-import Main.Daniel.AddingMediaPage;
-import Main.Daniel.EditingMediaPage;
-import Main.Gabriel.CatalogPage;
-import Main.Gabriel.CheckoutPage;
-import Main.Sukeer.LoginPage;
+import Main.*;
+import Main.Media.BooksProperty;
+import Main.Media.CatalogPage;
+import Main.User.AccountPage;
+import Main.User.CheckoutPage;
+import Main.User.LoginPage;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 
 import static Main.HomePage.currentLoggedInUser;
 // TODO fix table size
@@ -200,11 +201,45 @@ public class LibrarianCatalogPage extends Application {
             if (newSelection != null) {
                 editMedia.setDisable(false);
                 removeMedia.setDisable(false);
+                String bookId = newSelection.getIdProperty();
+                editMedia.setOnAction(e-> EditingMediaPage.editingMediaPage(stage, bookId));
+
+                removeMedia.setOnAction(e -> {
+                    BooksProperty selectedBook = bookTable.getSelectionModel().getSelectedItem();
+                    if (selectedBook.getBorrowedProperty().equals("Yes")) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Warning Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("This book is currently borrowed and cannot be removed.");
+                        alert.showAndWait();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Confirmation Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Are you sure you want to remove this book? This action is irreversible.");
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK){
+                            removeBookFromDatabase(bookId);
+                            bookTable.getItems().remove(selectedBook);
+                        }
+                    }
+                });
             }
         });
 
         addMedia.setOnAction(e-> AddingMediaPage.addingMediaPage(stage));
-        editMedia.setOnAction(e-> EditingMediaPage.editingMediaPage(stage));
+    }
+
+    private void removeBookFromDatabase(String bookId) {
+        try (Connection connection = HomePage.getConnection()){
+            String SQL = "DELETE FROM books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setString(1, bookId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private ArrayList<BooksProperty> getAllBooks() {

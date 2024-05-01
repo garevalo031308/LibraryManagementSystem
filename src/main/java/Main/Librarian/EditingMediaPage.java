@@ -1,12 +1,11 @@
-package Main.Daniel;
+package Main.Librarian;
 
 //nessesary import packages
-import Main.AccountPage;
-import Main.Chris.AboutUsPage;
-import Main.Gabriel.CatalogPage;
-import Main.Gabriel.CheckoutPage;
-import Main.Sukeer.LoginPage;
-import javafx.application.Application;
+import Main.*;
+import Main.Media.CatalogPage;
+import Main.User.AccountPage;
+import Main.User.CheckoutPage;
+import Main.User.LoginPage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,15 +17,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 import static Main.HomePage.currentLoggedInUser;
 
 public class EditingMediaPage {
 
-    public static void editingMediaPage(Stage stage){
+    public static void editingMediaPage(Stage stage, String bookID) {
         Group root = new Group();
-        Scene scene = new Scene(root, 1280,  900);
+        Scene scene = new Scene(root, 1280, 900);
         scene.setFill(Paint.valueOf("#F4CE90"));
 
         Rectangle header = new Rectangle();//new rectangle within the stage
@@ -54,7 +57,7 @@ public class EditingMediaPage {
         account.setPrefHeight(67);
         account.setTextFill(Paint.valueOf("white"));
         account.setStyle("-fx-background-color:  #363732");
-        account.setOnAction(e->{
+        account.setOnAction(e -> {
             if (currentLoggedInUser.isEmpty()) {
                 LoginPage.loginPage(stage);
             } else {
@@ -69,7 +72,7 @@ public class EditingMediaPage {
         catalog.setPrefHeight(67);
         catalog.setLayoutX(708);
         catalog.setLayoutY(41);
-        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
+        catalog.setOnAction(e -> CatalogPage.catalogPage(stage, ""));
 
         Button aboutus = new Button("About Us");
         aboutus.setStyle("-fx-background-color: #363732");
@@ -78,14 +81,14 @@ public class EditingMediaPage {
         aboutus.setPrefWidth(109);
         aboutus.setLayoutX(863);
         aboutus.setLayoutY(41);
-        aboutus.setOnAction(e-> AboutUsPage.aboutUsPage(stage));
+        aboutus.setOnAction(e -> AboutUsPage.aboutUsPage(stage));
 
         Label loginLabel = new Label("Log In");
         loginLabel.setLayoutX(1164);
         loginLabel.setLayoutY(6);
         loginLabel.setFont(Font.font(13));
         loginLabel.setUnderline(true);
-        loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
+        loginLabel.setOnMouseClicked(e -> LoginPage.loginPage(stage));
 
         ImageView cartimage = new ImageView();
         Image cart = new Image(Objects.requireNonNull(AccountPage.class.getResourceAsStream("/Images/Main/cart.png")));
@@ -112,7 +115,6 @@ public class EditingMediaPage {
         });
 
         root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, cartimage, searchBar, searchButton);
-
 
 
         //---Body content for Create Account Page---//
@@ -315,6 +317,11 @@ public class EditingMediaPage {
 
         fictionGroup.selectToggle(scienceFictionRadioButton);
 
+        Button clearSelectionButton = new Button("Clear Selection");
+        clearSelectionButton.setLayoutX(43);
+        clearSelectionButton.setLayoutY(854);
+        clearSelectionButton.setOnAction(e -> fictionGroup.selectToggle(null));
+
         Text typeText = new Text("Type");
         typeText.setLayoutX(779);
         typeText.setLayoutY(576);
@@ -331,7 +338,120 @@ public class EditingMediaPage {
         stage.setScene(scene);
         stage.show();
 
+        fillBookInfo(bookID, titleField, authorField, idField, nonFictionRadioButton, fictionRadioButton, fictionGroup, booksRadioButton, ebooksRadioButton, publicationDateField, publisherField, descriptionArea, imageLocationField);
 
-}//end class
+        mainGenreGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == fictionRadioButton) {
+                scienceFictionRadioButton.setDisable(false);
+                fantasyRadioButton.setDisable(false);
+                mysteryRadioButton.setDisable(false);
+                horrorRadioButton.setDisable(false);
+                dramaRadioButton.setDisable(false);
+                mythologyRadioButton.setDisable(false);
+            } else if (newValue == nonFictionRadioButton) {
+                scienceFictionRadioButton.setDisable(true);
+                fantasyRadioButton.setDisable(true);
+                mysteryRadioButton.setDisable(true);
+                horrorRadioButton.setDisable(true);
+                dramaRadioButton.setDisable(true);
+                mythologyRadioButton.setDisable(true);
+            }
+        });
 
-}//end package
+        addMediaButton.setOnAction(e -> {
+            String titletext = titleField.getText();
+            String author = authorField.getText();
+            String genre = "";
+            if (nonFictionRadioButton.isSelected()) {
+                genre = nonFictionRadioButton.getText();
+            }
+            if (fictionRadioButton.isSelected()) {
+                RadioButton selectedFiction = (RadioButton) fictionGroup.getSelectedToggle();
+                if (selectedFiction != null) {
+                    genre = selectedFiction.getText();
+                } else {
+                    genre = fictionRadioButton.getText();
+                }
+            }
+            String type = "";
+            if (booksRadioButton.isSelected()) {
+                type = booksRadioButton.getText();
+            } else if (ebooksRadioButton.isSelected()) {
+                type = ebooksRadioButton.getText();
+            }
+            String date = publicationDateField.getText();
+            String publisher = publisherField.getText();
+            String description = descriptionArea.getText();
+            String image = imageLocationField.getText();
+            boolean updateSuccessful = updateBookInfo(bookID, titletext, author, genre, type, date, publisher, description, image);
+            Alert alert = new Alert(updateSuccessful ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
+            alert.setTitle(updateSuccessful ? "Success" : "Error");
+            alert.setHeaderText(null);
+            alert.setContentText(updateSuccessful ? "Book information updated successfully." : "An error occurred while updating the book information.");
+            alert.showAndWait();
+        });
+    }
+
+    public static boolean updateBookInfo(String bookId, String title, String author, String genre, String type, String date, String publisher, String description, String image) {
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "UPDATE books SET title = ?, author = ?, genre = ?, type = ?, date = ?, publisher = ?, description = ?, image = ? WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, title);
+            statement.setString(2, author);
+            statement.setString(3, genre);
+            statement.setString(4, type);
+            statement.setString(5, date);
+            statement.setString(6, publisher);
+            statement.setString(7, description);
+            statement.setString(8, image);
+            statement.setString(9, bookId);
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void fillBookInfo(String bookId, TextField titleField, TextField authorField, TextField idField, RadioButton nonFictionRadioButton, RadioButton fictionRadioButton, ToggleGroup fictionGroup, RadioButton booksRadioButton, RadioButton ebooksRadioButton, TextField publicationDateField, TextField publisherField, TextArea descriptionArea, TextField imageLocationField) {
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT * FROM books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, bookId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                titleField.setText(resultSet.getString("title"));
+                authorField.setText(resultSet.getString("author"));
+                idField.setText(resultSet.getString("id"));
+                // Set the genre radio buttons based on the genre from the database
+                String genre = resultSet.getString("genre");
+                if (genre.equals(nonFictionRadioButton.getText())) {
+                    nonFictionRadioButton.setSelected(true);
+                } else {
+                    fictionRadioButton.setSelected(true);
+                    // Set the fictionGroup radio buttons based on the genre
+                    for (Toggle toggle : fictionGroup.getToggles()) {
+                        RadioButton radioButton = (RadioButton) toggle;
+                        if (radioButton.getText().equals(genre)) {
+                            radioButton.setSelected(true);
+                            break;
+                        }
+                    }
+                }
+                // Set the type radio buttons based on the type from the database
+                String type = resultSet.getString("type");
+                if (type.equals(booksRadioButton.getText())) {
+                    booksRadioButton.setSelected(true);
+                } else {
+                    ebooksRadioButton.setSelected(true);
+                }
+                publicationDateField.setText(resultSet.getString("date"));
+                publisherField.setText(resultSet.getString("publisher"));
+                descriptionArea.setText(resultSet.getString("description"));
+                imageLocationField.setText(resultSet.getString("image"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}

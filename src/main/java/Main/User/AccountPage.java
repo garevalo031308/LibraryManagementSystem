@@ -1,10 +1,9 @@
-package Main;
+package Main.User;
 
-import Main.Chris.AboutUsPage;
-import Main.Gabriel.Books;
-import Main.Gabriel.CatalogPage;
-import Main.Gabriel.CheckoutPage;
-import Main.Sukeer.LoginPage;
+import Main.AboutUsPage;
+import Main.HomePage;
+import Main.Media.Books;
+import Main.Media.CatalogPage;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;

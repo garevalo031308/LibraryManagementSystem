@@ -1,11 +1,8 @@
-package Main.Chris;
+package Main.Librarian;
 
-import Main.AccountPage;
-import Main.Gabriel.CatalogPage;
-import Main.Gabriel.CheckoutPage;
-import Main.HomePage;
-import Main.Sukeer.LoginPage;
-import Main.Transaction;
+import Main.*;
+import Main.Media.CatalogPage;
+import Main.User.*;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
