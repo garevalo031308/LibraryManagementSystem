@@ -30,6 +30,7 @@ import java.util.Objects;
 // TODO make sure all buttons do something
 // TODO search bar on all pages
 // TODO change cart image with each time they add something to cart
+// TODO Forget password thingy
 
 
 // TODO Fix admin, librarian, and customer database
