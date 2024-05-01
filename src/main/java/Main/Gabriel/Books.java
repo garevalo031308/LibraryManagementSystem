@@ -1,5 +1,7 @@
 package Main.Gabriel;
 
+import javafx.beans.property.StringProperty;
+
 public class Books {
     String id;
     String title;
