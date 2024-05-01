@@ -3,6 +3,7 @@ module Main {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.sql;
+    requires java.desktop;
 
 
     opens Main to javafx.fxml, javafx.graphics;
