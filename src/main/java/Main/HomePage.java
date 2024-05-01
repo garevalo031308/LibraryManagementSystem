@@ -36,6 +36,10 @@ import java.util.Objects;
 // TODO Fix admin, librarian, and customer database
 // STRIKE Database for borrowed books that is linked to user that contains the book, return date, etc.
 // STRIKE database that contains transaction history of user
+// TODO make sure books database changes status when book is borrowed
+// TODO make sure books database changes status when book is returned
+// TODO possibly change catalog depending on what books are borrowed etc.
+// TODO catalog filter that shows borrowed books, but have them greyed out or something
 
 // STRIKE - CreateAccountPage: allow users to create an account through application
 // STRIKE - CreateAccountPage: after adding a user go to their account page
@@ -45,8 +49,9 @@ import java.util.Objects;
 // TODO - Updating Media Page: allow librarians to update media information (extra button if logged in as librarian?)
 // TODO /\ a functions page that allows them to do certain things depending on their role, then a button that gets added on home page to access it
 // STRIKE - AboutUs Page: add some extra fluff like a google maps thing or whatever
-// TODO - UserLookUp Page: allow librarians to look up users and see what they have checked out
+// STRIKE - UserLookUp Page: allow librarians to look up users and see what they have checked out
 // STRIKE - User Page: allow users to see what they have checked out (Need to make in scene builder)
+// TODO - Librarian Catalog page: table of books in database that they can edit, delete, or add to
 
 public class HomePage extends Application {
 
