@@ -7,12 +7,12 @@ module Main {
 
     opens Main to javafx.fxml, javafx.graphics;
     exports Main;
-    exports Main.Sukeer;
-    opens Main.Sukeer to javafx.fxml, javafx.graphics;
-    exports Main.Chris;
-    opens Main.Chris to javafx.fxml, javafx.graphics;
-    exports Main.Daniel;
-    opens Main.Daniel to javafx.fxml, javafx.graphics;
-    exports Main.Gabriel;
-    opens Main.Gabriel to javafx.fxml, javafx.graphics;
+    exports Main.Admin;
+    opens Main.Admin to javafx.fxml, javafx.graphics;
+    exports Main.Librarian;
+    opens Main.Librarian to javafx.fxml, javafx.graphics;
+    exports Main.User;
+    opens Main.User to javafx.fxml, javafx.graphics;
+    exports Main.Media;
+    opens Main.Media to javafx.fxml, javafx.graphics;
 }
