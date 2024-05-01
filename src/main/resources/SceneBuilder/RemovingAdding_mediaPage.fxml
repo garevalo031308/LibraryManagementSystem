@@ -1,499 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5000.0" prefWidth="1512.0" style="-fx-background-color: #F4CE90;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1280.0" style="-fx-background-color: #F4CE90;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="3013.0" layoutY="1332.0" prefHeight="1500.0" prefWidth="900.0" style="-fx-background-color: F7DFB6;">
-         <children>
-            <Button layoutX="630.0" layoutY="1350.0" mnemonicParsing="false" style="-fx-background-color: #BFDDD8;" text="Add Media">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="200.0" stroke="BLACK" strokeType="INSIDE" width="1512.0" />
-      <ImageView fitHeight="250.0" fitWidth="250.0" layoutY="-16.0">
-         <image>
-            <Image url="@libgenlogo_transparent.png" />
-         </image>
-      </ImageView>
-      <Text layoutX="270.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LibraHub">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="122.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+      <Text layoutX="232.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LibraHub">
          <font>
             <Font size="60.0" />
          </font>
       </Text>
-      <Text layoutX="557.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Media" textAlignment="CENTER">
+      <Text layoutX="494.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Media" textAlignment="CENTER">
          <font>
             <Font size="60.0" />
          </font>
       </Text>
-      <Text fill="#35363180" layoutX="263.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button below to add or remove books to the Library catalog " textAlignment="CENTER">
+      <Text fill="#35363180" layoutX="178.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button below to add or remove books to the Library catalog " textAlignment="CENTER">
          <font>
             <Font size="30.0" />
          </font>
       </Text>
-      <TextField layoutX="260.0" layoutY="955.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="One Hundred Years of Solitude">
+      <TextField layoutX="44.0" layoutY="299.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="One Hundred Years of Solitude">
          <font>
             <Font size="35.0" />
          </font>
       </TextField>
-      <Text layoutX="260.0" layoutY="935.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
+      <Text layoutX="44.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <TextField layoutX="260.0" layoutY="1150.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Gabriel Garcia Marquez">
+      <TextField layoutX="44.0" layoutY="441.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Gabriel Garcia Marquez">
          <font>
             <Font size="35.0" />
          </font>
       </TextField>
-      <Text layoutX="260.0" layoutY="1130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author">
+      <Text layoutX="44.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <TextField layoutX="260.0" layoutY="1345.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="0060883286">
+      <TextField layoutX="588.0" layoutY="299.0" prefHeight="75.0" prefWidth="291.0" promptText="Email" text="0060883286">
          <font>
             <Font size="35.0" />
          </font>
       </TextField>
-      <Text layoutX="260.0" layoutY="1325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN">
+      <Text layoutX="588.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <TextField layoutX="260.0" layoutY="1540.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Magical Realism">
-         <font>
-            <Font size="35.0" />
-         </font>
-      </TextField>
-      <Text layoutX="260.0" layoutY="1520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre">
+      <Text layoutX="44.0" layoutY="573.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <Button layoutX="450.0" layoutY="465.0" mnemonicParsing="false" style="-fx-background-color: #6DA6C5;" text="Add Media">
+      <Button layoutX="847.0" layoutY="661.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="277.0" style="-fx-background-color: #6DA6C5;" text="Add Media">
          <font>
             <Font size="35.0" />
          </font>
       </Button>
-      <Button layoutX="720.0" layoutY="465.0" mnemonicParsing="false" style="-fx-background-color: #FF5A5F;" text="Remove Media">
-         <font>
-            <Font size="35.0" />
-         </font>
-      </Button>
-      <RadioButton layoutX="257.0" layoutY="619.0" mnemonicParsing="false" text="Books">
+      <RadioButton layoutX="879.0" layoutY="542.0" mnemonicParsing="false" text="Books">
          <font>
             <Font size="30.0" />
          </font>
       </RadioButton>
-      <RadioButton layoutX="258.0" layoutY="676.0" mnemonicParsing="false" text="E-books">
+      <RadioButton layoutX="1033.0" layoutY="542.0" mnemonicParsing="false" text="E-books">
          <font>
             <Font size="30.0" />
          </font>
       </RadioButton>
-      <RadioButton layoutX="259.0" layoutY="796.0" mnemonicParsing="false" text="Videos">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </RadioButton>
-      <RadioButton layoutX="257.0" layoutY="740.0" mnemonicParsing="false" text="Music">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </RadioButton>
-      <Text layoutX="260.0" layoutY="1712.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Publication Year">
+      <Text layoutX="945.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Publication Date">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <TextField layoutX="260.0" layoutY="1732.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="1967">
+      <TextField layoutX="945.0" layoutY="299.0" prefHeight="75.0" prefWidth="291.0" promptText="MM/DD/YYYY">
          <font>
             <Font size="35.0" />
          </font>
       </TextField>
-      <Text layoutX="269.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X" />
-      <Text layoutX="260.0" layoutY="1912.0" strokeType="OUTSIDE" strokeWidth="0.0" text="File">
+      <Text layoutX="589.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Publisher">
          <font>
             <Font size="35.0" />
          </font>
       </Text>
-      <Button layoutX="260.0" layoutY="1932.0" mnemonicParsing="false" text="Add File">
+      <TextArea layoutX="265.0" layoutY="601.0" prefHeight="253.0" prefWidth="500.0" />
+      <TextField layoutX="586.0" layoutY="441.0" prefHeight="75.0" prefWidth="291.0" promptText="Email" text="1967">
          <font>
-            <Font size="25.0" />
+            <Font size="35.0" />
          </font>
-      </Button>
-      <Pane layoutX="-1671.0" layoutY="-0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5000.0" prefWidth="1512.0" style="-fx-background-color: #F4CE90;">
-         <children>
-            <Pane layoutX="193.0" layoutY="593.0" prefHeight="1500.0" prefWidth="900.0" style="-fx-background-color: F7DFB6;">
-               <children>
-                  <Button layoutX="630.0" layoutY="1350.0" mnemonicParsing="false" style="-fx-background-color: #BFDDD8;" text="Add Media">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Button>
-               </children>
-            </Pane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="200.0" stroke="BLACK" strokeType="INSIDE" width="1512.0" />
-            <ImageView fitHeight="250.0" fitWidth="250.0" layoutY="-16.0">
-               <image>
-                  <Image url="@libgenlogo_transparent.png" />
-               </image>
-            </ImageView>
-            <Text layoutX="270.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LibraHub">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Text>
-            <Text layoutX="557.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Media" textAlignment="CENTER">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Text>
-            <Text fill="#35363180" layoutX="263.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button below to add or remove books to the Library catalog " textAlignment="CENTER">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="955.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="One Hundred Years of Solitude">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="260.0" layoutY="935.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="1150.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Gabriel Garcia Marquez">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="260.0" layoutY="1130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="1345.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="0060883286">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="260.0" layoutY="1325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="1540.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Magical Realism">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="260.0" layoutY="1520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <Button layoutX="450.0" layoutY="465.0" mnemonicParsing="false" style="-fx-background-color: #6DA6C5;" text="Add Media">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Button>
-            <Button layoutX="720.0" layoutY="465.0" mnemonicParsing="false" style="-fx-background-color: #FF5A5F;" text="Remove Media">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Button>
-            <RadioButton layoutX="257.0" layoutY="619.0" mnemonicParsing="false" text="Books">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </RadioButton>
-            <RadioButton layoutX="258.0" layoutY="676.0" mnemonicParsing="false" text="E-books">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </RadioButton>
-            <RadioButton layoutX="259.0" layoutY="796.0" mnemonicParsing="false" text="Videos">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </RadioButton>
-            <RadioButton layoutX="257.0" layoutY="740.0" mnemonicParsing="false" text="Music">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </RadioButton>
-            <Text layoutX="260.0" layoutY="1712.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Publication Year">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="1732.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="1967">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="269.0" layoutY="642.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-         </children>
-      </Pane>
-      <Pane layoutX="5408.0" layoutY="34.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5000.0" prefWidth="1512.0" style="-fx-background-color: #F4CE90;">
-         <children>
-            <Pane layoutX="193.0" layoutY="593.0" prefHeight="1500.0" prefWidth="900.0" style="-fx-background-color: F7DFB6;">
-               <children>
-                  <Button layoutX="630.0" layoutY="1350.0" mnemonicParsing="false" style="-fx-background-color: #BFDDD8;" text="Add Media">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Button>
-               </children>
-            </Pane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="200.0" stroke="BLACK" strokeType="INSIDE" width="1512.0" />
-            <ImageView fitHeight="250.0" fitWidth="250.0" layoutY="-16.0">
-               <image>
-                  <Image url="@libgenlogo_transparent.png" />
-               </image>
-            </ImageView>
-            <Text layoutX="270.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LibraHub">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Text>
-            <Text layoutX="557.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Media" textAlignment="CENTER">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Text>
-            <Text fill="#35363180" layoutX="263.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button below to add or remove books to the Library catalog " textAlignment="CENTER">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="955.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="One Hundred Years of Solitude">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="260.0" layoutY="935.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="1150.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Gabriel Garcia Marquez">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="260.0" layoutY="1130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="1345.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="0060883286">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="260.0" layoutY="1325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="1540.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Magical Realism">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="260.0" layoutY="1520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <Button layoutX="450.0" layoutY="465.0" mnemonicParsing="false" style="-fx-background-color: #6DA6C5;" text="Add Media">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Button>
-            <Button layoutX="720.0" layoutY="465.0" mnemonicParsing="false" style="-fx-background-color: #FF5A5F;" text="Remove Media">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Button>
-            <RadioButton layoutX="257.0" layoutY="619.0" mnemonicParsing="false" text="Books">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </RadioButton>
-            <RadioButton layoutX="258.0" layoutY="676.0" mnemonicParsing="false" text="E-books">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </RadioButton>
-            <RadioButton layoutX="259.0" layoutY="796.0" mnemonicParsing="false" text="Videos">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </RadioButton>
-            <RadioButton layoutX="257.0" layoutY="740.0" mnemonicParsing="false" text="Music">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </RadioButton>
-            <Text layoutX="260.0" layoutY="1712.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Publication Year">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <TextField layoutX="260.0" layoutY="1732.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="1967">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </TextField>
-            <Text layoutX="269.0" layoutY="703.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X" />
-            <Text layoutX="260.0" layoutY="1912.0" strokeType="OUTSIDE" strokeWidth="0.0" text="File">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Text>
-            <Button layoutX="260.0" layoutY="1932.0" mnemonicParsing="false" text="Add File">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Button>
-            <Pane layoutX="-1671.0" layoutY="-0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5000.0" prefWidth="1512.0" style="-fx-background-color: #F4CE90;">
-               <children>
-                  <Pane layoutX="193.0" layoutY="593.0" prefHeight="1500.0" prefWidth="900.0" style="-fx-background-color: F7DFB6;">
-                     <children>
-                        <Button layoutX="630.0" layoutY="1350.0" mnemonicParsing="false" style="-fx-background-color: #BFDDD8;" text="Add Media">
-                           <font>
-                              <Font size="35.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="200.0" stroke="BLACK" strokeType="INSIDE" width="1512.0" />
-                  <ImageView fitHeight="250.0" fitWidth="250.0" layoutY="-16.0">
-                     <image>
-                        <Image url="@libgenlogo_transparent.png" />
-                     </image>
-                  </ImageView>
-                  <Text layoutX="270.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LibraHub">
-                     <font>
-                        <Font size="60.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="557.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Media" textAlignment="CENTER">
-                     <font>
-                        <Font size="60.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#35363180" layoutX="263.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button below to add or remove books to the Library catalog " textAlignment="CENTER">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Text>
-                  <TextField layoutX="260.0" layoutY="955.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="good kid, m.A.A.d city">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </TextField>
-                  <Text layoutX="260.0" layoutY="935.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Text>
-                  <TextField layoutX="260.0" layoutY="1150.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Gabriel Garcia Marquez">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </TextField>
-                  <Text layoutX="260.0" layoutY="1130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Artist">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Text>
-                  <TextField layoutX="260.0" layoutY="1345.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="0060883286">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </TextField>
-                  <Text layoutX="260.0" layoutY="1325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Text>
-                  <TextField layoutX="260.0" layoutY="1540.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Magical Realism">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </TextField>
-                  <Text layoutX="260.0" layoutY="1520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Text>
-                  <Button layoutX="450.0" layoutY="465.0" mnemonicParsing="false" style="-fx-background-color: #6DA6C5;" text="Add Media">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="720.0" layoutY="465.0" mnemonicParsing="false" style="-fx-background-color: #FF5A5F;" text="Remove Media">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Button>
-                  <RadioButton layoutX="257.0" layoutY="619.0" mnemonicParsing="false" text="Books">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </RadioButton>
-                  <RadioButton layoutX="258.0" layoutY="676.0" mnemonicParsing="false" text="E-books">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </RadioButton>
-                  <RadioButton layoutX="259.0" layoutY="796.0" mnemonicParsing="false" text="Videos">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </RadioButton>
-                  <RadioButton layoutX="257.0" layoutY="740.0" mnemonicParsing="false" text="Music">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </RadioButton>
-                  <Text layoutX="260.0" layoutY="1712.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Release Year">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </Text>
-                  <TextField layoutX="260.0" layoutY="1732.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="1967">
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </TextField>
-                  <Text layoutX="264.0" layoutY="766.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-               </children>
-            </Pane>
-         </children>
-      </Pane>
+      </TextField>
+      <Text layoutX="265.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <Text layoutX="945.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image Location">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <TextField layoutX="945.0" layoutY="441.0" prefHeight="75.0" prefWidth="291.0" promptText="Email" text="1967">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </TextField>
+      <RadioButton layoutX="43.0" layoutY="587.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="187.0" text="Non-Fiction">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="43.0" layoutY="625.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="187.0" text="Fiction">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="72.0" layoutY="668.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="187.0" text="Science Fiction">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="72.0" layoutY="698.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="187.0" text="Fantasy">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="72.0" layoutY="728.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="187.0" text="Mystery">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="72.0" layoutY="758.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="187.0" text="Horror">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="72.0" layoutY="788.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="187.0" text="Drama">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <RadioButton layoutX="72.0" layoutY="818.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="187.0" text="Mythology">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </RadioButton>
+      <Text layoutX="779.0" layoutY="579.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
    </children>
 </Pane>
