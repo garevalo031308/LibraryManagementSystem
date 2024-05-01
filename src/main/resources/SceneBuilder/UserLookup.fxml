@@ -36,7 +36,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="72.0" layoutY="450.0" text="First Name, Last Name">
+      <Label layoutX="72.0" layoutY="450.0" text="First Name, Last Name:">
          <font>
             <Font size="17.0" />
          </font>
@@ -69,6 +69,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="169.0" layoutY="545.0" mnemonicParsing="false" text="Search" />
+      <Button layoutX="110.0" layoutY="543.0" mnemonicParsing="false" text="Search" />
+      <Button layoutX="236.0" layoutY="543.0" mnemonicParsing="false" text="Reset" />
    </children>
 </Pane>
