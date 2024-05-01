@@ -27,10 +27,11 @@ import java.util.Objects;
 
 import static Main.HomePage.currentLoggedInUser;
 
-// TODO - Look up a user in the library system
-// TODO - have a table that lists out all users in system
-// TODO - when double click on user, opens up their account page (maybe as a popup or have a back button)
-// TODO - when click on user, have another table that shows their transactions
+// STRIKE - Look up a user in the library system
+// STRIKE - have a table that lists out all users in system
+// STRIKE - when double click on user, opens up their account page (maybe as a popup or have a back button)
+// STRIKE - when click on user, have another table that shows their transactions
+// TODO - Fix sizing
 
 public class UserLookupPage extends Application {
     public static void main(String[] args){
@@ -107,9 +108,7 @@ public class UserLookupPage extends Application {
         cartimage.setFitWidth(90);
         cartimage.setFitHeight(59);
         cartimage.setLayoutX(1206);
-        cartimage.setOnMouseClicked(e -> {
-            CheckoutPage.checkoutPage(stage, "4440486");
-        });
+        cartimage.setOnMouseClicked(e -> CheckoutPage.checkoutPage(stage, "4440486"));
 
         TextField searchBar = new TextField();
         searchBar.setPromptText("Type a title, author, etc. here");
