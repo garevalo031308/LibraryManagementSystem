@@ -49,7 +49,7 @@ import java.util.Objects;
 // STRIKE - CreateAccountPage: after adding a user go to their account page
 // TODO - Catalog Page: Fix filters, allow for searcing by title, author, genre, etc. on the page, and resetting of filters
 // STRIKE - Login page: allow users to login with their credentials or create an account
-// TODO - Admin page: create users, have some type of button that allows admins to login with their credentials and open something up
+// STRIKE - Admin page: create users, have some type of button that allows admins to login with their credentials and open something up
 // TODO /\ edit users, delete users, etc.
 // STRIKE - Updating Media Page: allow librarians to update media information (extra button if logged in as librarian?)
 // TODO /\ a functions page that allows them to do certain things depending on their role, then a button that gets added on home page to access it
