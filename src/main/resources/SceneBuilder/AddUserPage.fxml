@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1280.0" style="-fx-background-color: #F4CE90;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5a5f" height="122.0" stroke="BLACK" strokeType="INSIDE" width="1280.0" />
+   <Text layoutX="232.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LibraHub">
+      <font>
+         <Font size="60.0" />
+      </font>
+   </Text>
+   <Text layoutX="482.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add User" textAlignment="CENTER">
+      <font>
+         <Font size="60.0" />
+      </font>
+   </Text>
+   <Text fill="#35363180" layoutX="350.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the button below to add the user" textAlignment="CENTER">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </Text>
+   <TextField layoutX="47.0" layoutY="464.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="One Hundred Years of Solitude">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </TextField>
+   <Text layoutX="47.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </Text>
+   <TextField layoutX="47.0" layoutY="606.0" prefHeight="67.0" prefWidth="500.0" promptText="Email" text="Gabriel Garcia Marquez">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </TextField>
+   <Text layoutX="47.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </Text>
+   <TextField layoutX="47.0" layoutY="317.0" prefHeight="75.0" prefWidth="291.0" promptText="Email" text="0060883286">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </TextField>
+   <Text layoutX="47.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </Text>
+   <Button layoutX="446.0" layoutY="754.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="277.0" style="-fx-background-color: #6DA6C5;" text="Add User">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </Button>
+   <Text layoutX="581.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </Text>
+   <TextField layoutX="581.0" layoutY="317.0" prefHeight="75.0" prefWidth="653.0" promptText="MM/DD/YYYY">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </TextField>
+   <Text layoutX="584.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </Text>
+   <TextField layoutX="581.0" layoutY="464.0" prefHeight="75.0" prefWidth="653.0" promptText="Email" text="1967">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </TextField>
+   <Button layoutX="14.0" layoutY="137.0" mnemonicParsing="false" text="Back" />
+   <Text layoutX="584.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type">
+      <font>
+         <Font size="35.0" />
+      </font>
+   </Text>
+   <RadioButton layoutX="584.0" layoutY="621.0" mnemonicParsing="false" text="Customer">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </RadioButton>
+   <RadioButton layoutX="827.0" layoutY="621.0" mnemonicParsing="false" text="Admin">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </RadioButton>
+   <RadioButton layoutX="1055.0" layoutY="621.0" mnemonicParsing="false" text="Librarian">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </RadioButton>
+</Pane>
