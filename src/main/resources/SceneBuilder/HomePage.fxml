@@ -17,14 +17,14 @@
             <Image url="@../Images/Main/libgenlogo.png" />
          </image>
       </ImageView>
-      <Label layoutX="175.0" layoutY="15.0" text="LibraHub">
+      <Label layoutX="154.0" layoutY="7.0" text="LibraHub">
          <font>
             <Font size="80.0" />
          </font>
       </Label>
-      <Button layoutX="553.0" layoutY="41.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Account" />
-      <Button layoutX="708.0" layoutY="41.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Catalog" />
-      <Button layoutX="863.0" layoutY="41.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="About Us" />
+      <Button layoutX="525.0" layoutY="32.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Account" />
+      <Button layoutX="680.0" layoutY="32.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Catalog" />
+      <Button layoutX="835.0" layoutY="32.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="109.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="About Us" />
       <ImageView fitHeight="59.0" fitWidth="90.0" layoutX="1206.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/Main/cart.png" />
@@ -81,7 +81,10 @@
       <Label layoutX="102.0" layoutY="990.0" text="Hours" />
       <Label layoutX="525.0" layoutY="982.0" text="Contact Us" />
       <Label layoutX="991.0" layoutY="990.0" text="Find Us:" />
-      <TextField layoutX="991.0" layoutY="83.0" prefHeight="25.0" prefWidth="226.0" promptText="Type a title, author, etc. here" />
-      <Button layoutX="1217.0" layoutY="83.0" mnemonicParsing="false" text="Search" />
+      <TextField layoutX="972.0" layoutY="93.0" prefHeight="25.0" prefWidth="226.0" promptText="Type a title, author, etc. here" />
+      <Button layoutX="1198.0" layoutY="93.0" mnemonicParsing="false" text="Search" />
+      <Button layoutX="972.0" layoutY="41.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="98.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Functions" />
+      <Button layoutX="1077.0" layoutY="41.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="74.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Functions" />
+      <Button layoutX="1158.0" layoutY="41.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="74.0" style="-fx-background-color: #FF5A5F; -fx-border-color: #363732;" text="Functions" />
    </children>
 </Pane>
