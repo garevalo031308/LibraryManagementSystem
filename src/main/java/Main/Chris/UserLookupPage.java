@@ -1,5 +1,9 @@
 package Main.Chris;
 
+import Main.AccountPage;
+import Main.Gabriel.CatalogPage;
+import Main.Gabriel.CheckoutPage;
+import Main.Sukeer.LoginPage;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,6 +18,13 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+
+import static Main.HomePage.currentLoggedInUser;
+
+// TODO - Look up a user in the library system
+// TODO - have a table that lists out all users in system
+// TODO - when double click on user, opens up their account page
+// TODO - when click on user, have another table that shows their transactions
 
 public class UserLookupPage extends Application {
     public static void main(String[] args){
@@ -31,31 +42,13 @@ public class UserLookupPage extends Application {
         header.setHeight(132); //set height
         header.setFill(Paint.valueOf("#FF5A5F"));
 
-        //LibraHub logo
-        ImageView logo = new ImageView();
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")));
-        logo.setImage(image);
-        logo.setFitHeight(120);
-        logo.setFitWidth(118);
+        ImageView logo = new ImageView(); //new image view
+        Image logoimg = new Image(Objects.requireNonNull(AccountPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
+        logo.setImage(logoimg); //set image
+        logo.setFitHeight(124);
+        logo.setFitWidth(122);
         logo.setLayoutX(8);
         logo.setLayoutY(6);
-
-        //LibraHub logo
-        ImageView bookPhoto = new ImageView();
-        Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/Books_UserLookupPage.jpeg")));
-        bookPhoto.setImage(image2);
-        bookPhoto.setFitHeight(350);
-        bookPhoto.setFitWidth(700);
-        bookPhoto.setLayoutX(0);
-        bookPhoto.setLayoutY(550);
-
-        ImageView bookPhoto2 = new ImageView();
-        Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/Books_UserLookupPage.jpeg")));
-        bookPhoto2.setImage(image2);
-        bookPhoto2.setFitHeight(350);
-        bookPhoto2.setFitWidth(700);
-        bookPhoto2.setLayoutX(700);
-        bookPhoto2.setLayoutY(550);
 
         Label title = new Label("LibraHub");
         title.setLayoutX(175);
@@ -69,6 +62,13 @@ public class UserLookupPage extends Application {
         account.setPrefHeight(67);
         account.setTextFill(Paint.valueOf("white"));
         account.setStyle("-fx-background-color:  #363732");
+        account.setOnAction(e->{
+            if (currentLoggedInUser.isEmpty()) {
+                LoginPage.loginPage(stage);
+            } else {
+                AccountPage.accountPage(stage, currentLoggedInUser);
+            }
+        });
 
         Button catalog = new Button("Catalog");
         catalog.setStyle("-fx-background-color: #363732");
@@ -77,6 +77,7 @@ public class UserLookupPage extends Application {
         catalog.setPrefHeight(67);
         catalog.setLayoutX(708);
         catalog.setLayoutY(41);
+        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
 
         Button aboutus = new Button("About Us");
         aboutus.setStyle("-fx-background-color: #363732");
@@ -85,12 +86,40 @@ public class UserLookupPage extends Application {
         aboutus.setPrefWidth(109);
         aboutus.setLayoutX(863);
         aboutus.setLayoutY(41);
+        aboutus.setOnAction(e-> AboutUsPage.aboutUsPage(stage));
 
         Label loginLabel = new Label("Log In");
         loginLabel.setLayoutX(1164);
         loginLabel.setLayoutY(6);
         loginLabel.setFont(Font.font(13));
         loginLabel.setUnderline(true);
+        loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
+
+        ImageView cartimage = new ImageView();
+        Image cart = new Image(Objects.requireNonNull(UserLookupPage.class.getResourceAsStream("/Images/Main/cart.png")));
+        cartimage.setImage(cart);
+        cartimage.setFitWidth(90);
+        cartimage.setFitHeight(59);
+        cartimage.setLayoutX(1206);
+        cartimage.setOnMouseClicked(e -> {
+            CheckoutPage.checkoutPage(stage, "4440486");
+        });
+
+        TextField searchBar = new TextField();
+        searchBar.setPromptText("Type a title, author, etc. here");
+        searchBar.setPrefSize(226, 26);
+        searchBar.setLayoutX(991);
+        searchBar.setLayoutY(83);
+
+        Button searchButton = new Button("Search");
+        searchButton.setLayoutX(1217);
+        searchButton.setLayoutY(83);
+        searchButton.setOnAction(e -> {
+            String searchQuery = searchBar.getText();
+            CatalogPage.catalogPage(stage, searchQuery);
+        });
+
+        root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, cartimage, searchBar, searchButton);
 
         Label helpLabel = new Label("Library User Lookup");
         helpLabel.setUnderline(true);
@@ -127,7 +156,7 @@ public class UserLookupPage extends Application {
         searchbuttonTwo.setPrefWidth(130);
 
         stage.setTitle("Library Management System");// sets current scene
-        root.getChildren().addAll(header, logo, bookPhoto, bookPhoto2, title, account, catalog, aboutus, loginLabel, helpLabel, searchbarTwo, searchbar, searchbutton, searchbuttonTwo); //adds header to the root (children are the modules)
+        root.getChildren().addAll(helpLabel, searchbarTwo, searchbar, searchbutton, searchbuttonTwo); //adds header to the root (children are the modules)
         stage.setScene(scene);
         stage.show();
     }

@@ -1,5 +1,6 @@
 package Main;
 
+import Main.Chris.AboutUsPage;
 import Main.Gabriel.CatalogPage;
 import Main.Gabriel.CheckoutPage;
 import Main.Sukeer.LoginPage;
@@ -22,7 +23,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Objects;
 
-// TODO link up all pages together
+// STRIKE link up all pages together
 // TODO log in and save user while they are browsing
 // TODO logout function
 // TODO Remove cart from user when they log out/close application
@@ -42,7 +43,7 @@ import java.util.Objects;
 // TODO - Admin page: create users, have some type of button that allows admins to login with their credentials and open something up
 // TODO - Updating Media Page: allow librarians to update media information (extra button if logged in as librarian?)
 // TODO /\ a functions page that allows them to do certain things depending on their role, then a button that gets added on home page to access it
-// TODO - AboutUs Page: add some extra fluff like a google maps thing or whatever
+// STRIKE - AboutUs Page: add some extra fluff like a google maps thing or whatever
 // TODO - UserLookUp Page: allow librarians to look up users and see what they have checked out
 // STRIKE - User Page: allow users to see what they have checked out (Need to make in scene builder)
 
@@ -105,6 +106,13 @@ public static void main(String[] args){
         account.setPrefHeight(67);
         account.setTextFill(Paint.valueOf("white"));
         account.setStyle("-fx-background-color:  #363732");
+        account.setOnAction(e->{
+            if (currentLoggedInUser.isEmpty()) {
+                LoginPage.loginPage(stage);
+            } else {
+                AccountPage.accountPage(stage, currentLoggedInUser);
+            }
+        });
 
         Button catalog = new Button("Catalog");
         catalog.setStyle("-fx-background-color: #363732");
@@ -113,6 +121,7 @@ public static void main(String[] args){
         catalog.setPrefHeight(67);
         catalog.setLayoutX(708);
         catalog.setLayoutY(41);
+        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
 
         Button aboutus = new Button("About Us");
         aboutus.setStyle("-fx-background-color: #363732");
@@ -121,12 +130,14 @@ public static void main(String[] args){
         aboutus.setPrefWidth(109);
         aboutus.setLayoutX(863);
         aboutus.setLayoutY(41);
+        aboutus.setOnAction(e-> AboutUsPage.aboutUsPage(stage));
 
         Label loginLabel = new Label("Log In");
         loginLabel.setLayoutX(1164);
         loginLabel.setLayoutY(6);
         loginLabel.setFont(Font.font(13));
         loginLabel.setUnderline(true);
+        loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
 
         ImageView cartimage = new ImageView();
         Image cart = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/cart.png")));
@@ -134,6 +145,9 @@ public static void main(String[] args){
         cartimage.setFitWidth(90);
         cartimage.setFitHeight(59);
         cartimage.setLayoutX(1206);
+        cartimage.setOnMouseClicked(e -> {
+            CheckoutPage.checkoutPage(stage, "4440486");
+        });
 
         ImageView banner = new ImageView();
         Image imgbanner = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/HomePage/banner.jpg")));
@@ -164,6 +178,10 @@ public static void main(String[] args){
         searchbutton.setLayoutY(304);
         searchbutton.setPrefHeight(35);
         searchbutton.setPrefWidth(80);
+        searchbutton.setOnAction(e -> {
+            String searchQuery = searchbar.getText();
+            CatalogPage.catalogPage(stage, searchQuery);
+        });
 
         Label popularLabel = new Label("Librarian Selects");
         popularLabel.setFont(Font.font(39));
@@ -215,20 +233,6 @@ public static void main(String[] args){
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-
-
-        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
-
-        searchbutton.setOnAction(e -> {
-            String searchQuery = searchbar.getText();
-            CatalogPage.catalogPage(stage, searchQuery);
-        });
-
-        cartimage.setOnMouseClicked(e -> {
-            CheckoutPage.checkoutPage(stage, "4440486");
-        });
-
-        loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
     }
 
 }

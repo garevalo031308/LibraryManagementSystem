@@ -1,6 +1,11 @@
 package Main.Daniel;
 
+import Main.AccountPage;
+import Main.Chris.AboutUsPage;
+import Main.Gabriel.CatalogPage;
+import Main.Gabriel.CheckoutPage;
 import Main.HomePage;
+import Main.Sukeer.LoginPage;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -24,6 +29,8 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Random;
 
+import static Main.HomePage.currentLoggedInUser;
+
 public class CreateAccountPage {
     public static void createAccountPage(Stage stage){
         Group root = new Group(); //group is groups of module(containers, test fields)
@@ -36,8 +43,8 @@ public class CreateAccountPage {
         header.setFill(Paint.valueOf("#FF5A5F"));
 
         ImageView logo = new ImageView(); //new image view
-        Image img = new Image(Objects.requireNonNull(CreateAccountPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
-        logo.setImage(img); //set image
+        Image logoimg = new Image(Objects.requireNonNull(AccountPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
+        logo.setImage(logoimg); //set image
         logo.setFitHeight(124);
         logo.setFitWidth(122);
         logo.setLayoutX(8);
@@ -48,39 +55,71 @@ public class CreateAccountPage {
         title.setLayoutY(15);
         title.setFont(Font.font(80));
 
-        //Account button
         Button account = new Button("Account");
-        account.setLayoutX(660);
+        account.setLayoutX(553);
         account.setLayoutY(41);
         account.setPrefWidth(109);
         account.setPrefHeight(67);
         account.setTextFill(Paint.valueOf("white"));
         account.setStyle("-fx-background-color:  #363732");
+        account.setOnAction(e->{
+            if (currentLoggedInUser.isEmpty()) {
+                LoginPage.loginPage(stage);
+            } else {
+                AccountPage.accountPage(stage, currentLoggedInUser);
+            }
+        });
 
-        //Catalog button
         Button catalog = new Button("Catalog");
         catalog.setStyle("-fx-background-color: #363732");
         catalog.setTextFill(Paint.valueOf("white"));
         catalog.setPrefWidth(109);
         catalog.setPrefHeight(67);
-        catalog.setLayoutX(815);
+        catalog.setLayoutX(708);
         catalog.setLayoutY(41);
+        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
 
-        //About Us button
         Button aboutus = new Button("About Us");
         aboutus.setStyle("-fx-background-color: #363732");
         aboutus.setTextFill(Paint.valueOf("white"));
         aboutus.setPrefHeight(67);
         aboutus.setPrefWidth(109);
-        aboutus.setLayoutX(970);
+        aboutus.setLayoutX(863);
         aboutus.setLayoutY(41);
+        aboutus.setOnAction(e-> AboutUsPage.aboutUsPage(stage));
 
-        //Log In label
         Label loginLabel = new Label("Log In");
         loginLabel.setLayoutX(1164);
         loginLabel.setLayoutY(6);
         loginLabel.setFont(Font.font(13));
         loginLabel.setUnderline(true);
+        loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
+
+        ImageView cartimage = new ImageView();
+        Image cart = new Image(Objects.requireNonNull(CreateAccountPage.class.getResourceAsStream("/Images/Main/cart.png")));
+        cartimage.setImage(cart);
+        cartimage.setFitWidth(90);
+        cartimage.setFitHeight(59);
+        cartimage.setLayoutX(1206);
+        cartimage.setOnMouseClicked(e -> {
+            CheckoutPage.checkoutPage(stage, "4440486");
+        });
+
+        TextField searchBar = new TextField();
+        searchBar.setPromptText("Type a title, author, etc. here");
+        searchBar.setPrefSize(226, 26);
+        searchBar.setLayoutX(991);
+        searchBar.setLayoutY(83);
+
+        Button searchButton = new Button("Search");
+        searchButton.setLayoutX(1217);
+        searchButton.setLayoutY(83);
+        searchButton.setOnAction(e -> {
+            String searchQuery = searchBar.getText();
+            CatalogPage.catalogPage(stage, searchQuery);
+        });
+
+        root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, cartimage, searchBar, searchButton);
 
 
 
@@ -209,8 +248,7 @@ public class CreateAccountPage {
 
 
         stage.setTitle("Library Management System");// sets current scene
-        root.getChildren().addAll(header, logo, title, account, catalog,
-                                  aboutus, loginLabel, CreateAccountLabel,CreateAccountDescription,emailLabel,
+        root.getChildren().addAll(CreateAccountLabel,CreateAccountDescription,emailLabel,
                                   emailTextField, usernameLabel,usernameTextField, passwordLabel, passwordTextField,
                                   confirmPasswordLabel, confirmPasswordTextField, createAccountButton, lastNameTextField); //adds header to the root (children are the modules)
         root.getChildren().addAll(firstNameLabel, firstNameTextField, lastNameLabel);

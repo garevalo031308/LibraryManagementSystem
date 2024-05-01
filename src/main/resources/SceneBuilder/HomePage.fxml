@@ -81,5 +81,7 @@
       <Label layoutX="102.0" layoutY="990.0" text="Hours" />
       <Label layoutX="525.0" layoutY="982.0" text="Contact Us" />
       <Label layoutX="991.0" layoutY="990.0" text="Find Us:" />
+      <TextField layoutX="991.0" layoutY="83.0" prefHeight="25.0" prefWidth="226.0" promptText="Type a title, author, etc. here" />
+      <Button layoutX="1217.0" layoutY="83.0" mnemonicParsing="false" text="Search" />
    </children>
 </Pane>
