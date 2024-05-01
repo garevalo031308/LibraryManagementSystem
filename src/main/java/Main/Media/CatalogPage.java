@@ -1,10 +1,7 @@
 package Main.Media;
 
 
-import Main.AboutUsPage;
-import Main.User.AccountPage;
-import Main.User.LoginPage;
-import Main.User.CheckoutPage;
+import Main.Header;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -24,8 +20,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-
-import static Main.HomePage.currentLoggedInUser;
 import static Main.HomePage.getConnection;
 
 
@@ -35,88 +29,6 @@ public class CatalogPage {
         Group root = new Group(); //group is groups of module(containers, test fields)
         Scene scene = new Scene(root, 1280,  900); //scene of page, creating width, and height (x,y value)
         scene.setFill(Paint.valueOf("#F4CE90")); //set
-
-        Rectangle header = new Rectangle();//new rectangle within the stage
-        header.setWidth(1280); //set width
-        header.setHeight(132); //set height
-        header.setFill(Paint.valueOf("#FF5A5F"));
-
-        ImageView logo = new ImageView(); //new image view
-        Image logoimg = new Image(Objects.requireNonNull(AccountPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
-        logo.setImage(logoimg); //set image
-        logo.setFitHeight(124);
-        logo.setFitWidth(122);
-        logo.setLayoutX(8);
-        logo.setLayoutY(6);
-
-        Label title = new Label("LibraHub");
-        title.setLayoutX(175);
-        title.setLayoutY(15);
-        title.setFont(Font.font(80));
-
-        Button account = new Button("Account");
-        account.setLayoutX(553);
-        account.setLayoutY(41);
-        account.setPrefWidth(109);
-        account.setPrefHeight(67);
-        account.setTextFill(Paint.valueOf("white"));
-        account.setStyle("-fx-background-color:  #363732");
-        account.setOnAction(e->{
-            if (currentLoggedInUser.isEmpty()) {
-                LoginPage.loginPage(stage);
-            } else {
-                AccountPage.accountPage(stage, currentLoggedInUser);
-            }
-        });
-
-        Button catalog = new Button("Catalog");
-        catalog.setStyle("-fx-background-color: #363732");
-        catalog.setTextFill(Paint.valueOf("white"));
-        catalog.setPrefWidth(109);
-        catalog.setPrefHeight(67);
-        catalog.setLayoutX(708);
-        catalog.setLayoutY(41);
-        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
-
-        Button aboutus = new Button("About Us");
-        aboutus.setStyle("-fx-background-color: #363732");
-        aboutus.setTextFill(Paint.valueOf("white"));
-        aboutus.setPrefHeight(67);
-        aboutus.setPrefWidth(109);
-        aboutus.setLayoutX(863);
-        aboutus.setLayoutY(41);
-        aboutus.setOnAction(e-> AboutUsPage.aboutUsPage(stage));
-
-        Label loginLabel = new Label("Log In");
-        loginLabel.setLayoutX(1164);
-        loginLabel.setLayoutY(6);
-        loginLabel.setFont(Font.font(13));
-        loginLabel.setUnderline(true);
-        loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
-
-        ImageView cartimage = new ImageView();
-        Image cart = new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream("/Images/Main/cart.png")));
-        cartimage.setImage(cart);
-        cartimage.setFitWidth(90);
-        cartimage.setFitHeight(59);
-        cartimage.setLayoutX(1206);
-        cartimage.setOnMouseClicked(e -> CheckoutPage.checkoutPage(stage, "4440486"));
-
-        TextField searchBar = new TextField();
-        searchBar.setPromptText("Type a title, author, etc. here");
-        searchBar.setPrefSize(226, 26);
-        searchBar.setLayoutX(991);
-        searchBar.setLayoutY(83);
-
-        Button searchButton = new Button("Search");
-        searchButton.setLayoutX(1217);
-        searchButton.setLayoutY(83);
-        searchButton.setOnAction(e -> {
-            String searchQuery2 = searchBar.getText();
-            CatalogPage.catalogPage(stage, searchQuery2);
-        });
-
-        root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, cartimage, searchBar, searchButton);
 
         Pane filterPane = new Pane();
         filterPane.setPrefWidth(200);
@@ -177,16 +89,6 @@ public class CatalogPage {
         eBookCheck.setLayoutX(14);
         eBookCheck.setLayoutY(228);
         eBookCheck.setFont(Font.font(16));
-
-        CheckBox videoCheck = new CheckBox("Video");
-        videoCheck.setLayoutX(14);
-        videoCheck.setLayoutY(253);
-        videoCheck.setFont(Font.font(16));
-
-        CheckBox audioCheck = new CheckBox("Audio");
-        audioCheck.setLayoutX(14);
-        audioCheck.setLayoutY(278);
-        audioCheck.setFont(Font.font(16));
 
         Separator mediaSep = new Separator();
         mediaSep.setLayoutY(303);
@@ -256,8 +158,9 @@ public class CatalogPage {
 
         stage.getIcons().add(new Image(Objects.requireNonNull(CatalogPage.class.getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(filterPane,sp); //add all the elements to the root
+        Header.getHeader(stage, root);
         filterPane.getChildren().addAll(sortByLabel, filterButton, titleButton, authorButton, dateNewButton, dateOldButton, sortmediasep);
-        filterPane.getChildren().addAll(mediaLabel, bookCheck, eBookCheck, videoCheck, audioCheck, mediaSep);
+        filterPane.getChildren().addAll(mediaLabel, bookCheck, eBookCheck, mediaSep);
         filterPane.getChildren().addAll(genreLabel, fictionCheck, scienceFictionCheck, fantasyCheck, mysteryCheck, horrorCheck, dramaCheck, MythologyCheck, nonFictionCheck, genreSep);
         stage.setTitle("Catalog");
         stage.setScene(scene);
@@ -279,8 +182,6 @@ public class CatalogPage {
 
             addIfSelected(types, bookCheck, "Book");
             addIfSelected(types, eBookCheck, "E-Book");
-            addIfSelected(types, videoCheck, "Video");
-            addIfSelected(types, audioCheck, "Audio");
 
             if (titleButton.isSelected()) {
                 createBookBox(stage, ap, "Title", genres, types, searchQuery);
@@ -312,6 +213,16 @@ public class CatalogPage {
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
             books.removeIf(book -> !book.title.toLowerCase().contains(searchQuery.toLowerCase()) && !book.author.toLowerCase().contains(searchQuery.toLowerCase()));
+        }
+
+        // Filter books based on selected genres
+        if (!genreFilter.isEmpty()) {
+            books.removeIf(book -> !genreFilter.contains(book.genre));
+        }
+
+        // Filter books based on selected types
+        if (!typeFilter.isEmpty()) {
+            books.removeIf(book -> !typeFilter.contains(book.type));
         }
 
         for (int i = 0; i < books.size(); i++){
