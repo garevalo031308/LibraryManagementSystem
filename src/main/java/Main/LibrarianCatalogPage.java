@@ -1,6 +1,8 @@
 package Main;
 
 import Main.Chris.AboutUsPage;
+import Main.Daniel.AddingMediaPage;
+import Main.Daniel.EditingMediaPage;
 import Main.Gabriel.CatalogPage;
 import Main.Gabriel.CheckoutPage;
 import Main.Sukeer.LoginPage;
@@ -171,7 +173,6 @@ public class LibrarianCatalogPage extends Application {
         addMedia.setLayoutY(750);
         addMedia.setFont(Font.font(35));
         addMedia.setStyle("-fx-background-color:  #6DA6C5");
-        addMedia.setDisable(true);
 
         Button editMedia = new Button("Edit Media");
         editMedia.setPrefSize(277, 75);
@@ -182,7 +183,7 @@ public class LibrarianCatalogPage extends Application {
         editMedia.setDisable(true);
 
         Button removeMedia = new Button("Remove Media");
-        removeMedia.setPrefSize(277, 75);
+        removeMedia.setPrefSize(277.2, 75);
         removeMedia.setLayoutX(899);
         removeMedia.setLayoutY(750);
         removeMedia.setFont(Font.font(35));
@@ -194,6 +195,16 @@ public class LibrarianCatalogPage extends Application {
         stage.setTitle("Library Management System");
         stage.setScene(scene);
         stage.show();
+
+        bookTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                editMedia.setDisable(false);
+                removeMedia.setDisable(false);
+            }
+        });
+
+        addMedia.setOnAction(e-> AddingMediaPage.addingMediaPage(stage));
+        editMedia.setOnAction(e-> EditingMediaPage.editingMediaPage(stage));
     }
 
     private ArrayList<BooksProperty> getAllBooks() {
