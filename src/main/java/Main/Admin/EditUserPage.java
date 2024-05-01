@@ -16,13 +16,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 import static Main.HomePage.currentLoggedInUser;
 
 public class EditUserPage {
 
-    public static void editUserPage(Stage stage, String ID){
+    public static void editUserPage(Stage stage, String ID, String type){
         Group root = new Group();
         Scene scene = new Scene(root, 1280, 900);
         scene.setFill(Paint.valueOf("#F4CE90"));
@@ -147,28 +151,6 @@ public class EditUserPage {
         emailField.setLayoutY(464);
         emailField.setFont(Font.font(35));
 
-        ToggleGroup userType = new ToggleGroup();
-
-        RadioButton customerRadioButton = new RadioButton("Customer");
-        customerRadioButton.setLayoutX(584);
-        customerRadioButton.setLayoutY(621);
-        customerRadioButton.setFont(Font.font(30));
-        customerRadioButton.setToggleGroup(userType);
-
-        RadioButton adminRadioButton = new RadioButton("Admin");
-        adminRadioButton.setLayoutX(827);
-        adminRadioButton.setLayoutY(621);
-        adminRadioButton.setFont(Font.font(30));
-        adminRadioButton.setToggleGroup(userType);
-
-        RadioButton librarianRadioButton = new RadioButton("Librarian");
-        librarianRadioButton.setLayoutX(1055);
-        librarianRadioButton.setLayoutY(621);
-        librarianRadioButton.setFont(Font.font(30));
-        librarianRadioButton.setToggleGroup(userType);
-
-        userType.selectToggle(customerRadioButton);
-
         Button editButton = new Button("Edit User");
         editButton.setPrefSize(277, 75);
         editButton.setLayoutX(446);
@@ -195,12 +177,61 @@ public class EditUserPage {
         Text emailText = new Text(584, 444, "Email");
         emailText.setFont(Font.font(35));
 
-        Text typeText = new Text(584, 586, "Type");
-        typeText.setFont(Font.font(35));
+        populateFields(ID, type, firstNameField, lastNameField, passwordField, emailField);
+
 
         stage.setScene(scene);
         root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, cartimage, searchBar, searchButton);
-        root.getChildren().addAll(addTitle, clickText, idField, firstNameField, lastNameField, passwordField, emailField, customerRadioButton, adminRadioButton, librarianRadioButton, editButton, backButton, idText, firstNameText, lastNameText, passwordText, emailText, typeText);
+        root.getChildren().addAll(addTitle, clickText, idField, firstNameField, lastNameField, passwordField, emailField, editButton, backButton, idText, firstNameText, lastNameText, passwordText, emailText);
         stage.show();
+
+        editButton.setOnAction(e -> {
+            String newFirstName = firstNameField.getText();
+            String newLastName = lastNameField.getText();
+            String newPassword = passwordField.getText();
+            String newEmail = emailField.getText();
+
+            updateUserInDatabase(ID, newFirstName, newLastName, newPassword, newEmail, type);
+
+        });
     }
+
+    public static void populateFields(String id, String type, TextField firstNameField, TextField lastNameField, TextField passwordField, TextField emailField) {
+        try (Connection connection = HomePage.getConnection()){
+            String SQL = "SELECT * FROM " + type.toLowerCase() + " WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()){
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String password = resultSet.getString("password");
+                String email = resultSet.getString("email");
+
+                firstNameField.setText(firstName);
+                lastNameField.setText(lastName);
+                passwordField.setText(password);
+                emailField.setText(email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void updateUserInDatabase(String id, String firstName, String lastName, String password, String email, String type) {
+        try (Connection connection = HomePage.getConnection()){
+            String SQL = "UPDATE " + type + " SET first_name = ?, last_name = ?, password = ?, email = ? WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(SQL);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setString(3, password);
+            statement.setString(4, email);
+            statement.setString(5, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
