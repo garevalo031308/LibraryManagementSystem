@@ -1,17 +1,13 @@
 package Main.Librarian;
 
 import Main.*;
-import Main.Media.CatalogPage;
 import Main.User.*;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -20,9 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import static Main.HomePage.currentLoggedInUser;
 
 // STRIKE - Look up a user in the library system
 // STRIKE - have a table that lists out all users in system
@@ -30,98 +23,14 @@ import static Main.HomePage.currentLoggedInUser;
 // STRIKE - when click on user, have another table that shows their transactions
 // TODO - Fix sizing
 
-public class UserLookupPage extends Application {
-    public static void main(String[] args){
-        Application.launch(args); // needed to launch the application. It will run the code in the "public void start()"
-    }
+public class UserLookupPage {
 
-    @Override
-    public void start(Stage stage) {
+    public static void userLookupPage(Stage stage) {
         Group root = new Group(); //group is groups of module(containers, test fields)
         Scene scene = new Scene(root, 1280,  900); //scene of page, creating width, and height (x,y value)
         scene.setFill(Paint.valueOf("#F4CE90")); //set
 
-        Rectangle header = new Rectangle();//new rectangle within the stage
-        header.setWidth(1280); //set width
-        header.setHeight(132); //set height
-        header.setFill(Paint.valueOf("#FF5A5F"));
-
-        ImageView logo = new ImageView(); //new image view
-        Image logoimg = new Image(Objects.requireNonNull(AccountPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))); //get image from the path
-        logo.setImage(logoimg); //set image
-        logo.setFitHeight(124);
-        logo.setFitWidth(122);
-        logo.setLayoutX(8);
-        logo.setLayoutY(6);
-
-        Label title = new Label("LibraHub");
-        title.setLayoutX(175);
-        title.setLayoutY(15);
-        title.setFont(Font.font(80));
-
-        Button account = new Button("Account");
-        account.setLayoutX(553);
-        account.setLayoutY(41);
-        account.setPrefWidth(109);
-        account.setPrefHeight(67);
-        account.setTextFill(Paint.valueOf("white"));
-        account.setStyle("-fx-background-color:  #363732");
-        account.setOnAction(e->{
-            if (currentLoggedInUser.isEmpty()) {
-                LoginPage.loginPage(stage);
-            } else {
-                AccountPage.accountPage(stage, currentLoggedInUser);
-            }
-        });
-
-        Button catalog = new Button("Catalog");
-        catalog.setStyle("-fx-background-color: #363732");
-        catalog.setTextFill(Paint.valueOf("white"));
-        catalog.setPrefWidth(109);
-        catalog.setPrefHeight(67);
-        catalog.setLayoutX(708);
-        catalog.setLayoutY(41);
-        catalog.setOnAction(e-> CatalogPage.catalogPage(stage, ""));
-
-        Button aboutus = new Button("About Us");
-        aboutus.setStyle("-fx-background-color: #363732");
-        aboutus.setTextFill(Paint.valueOf("white"));
-        aboutus.setPrefHeight(67);
-        aboutus.setPrefWidth(109);
-        aboutus.setLayoutX(863);
-        aboutus.setLayoutY(41);
-        aboutus.setOnAction(e-> AboutUsPage.aboutUsPage(stage));
-
-        Label loginLabel = new Label("Log In");
-        loginLabel.setLayoutX(1164);
-        loginLabel.setLayoutY(6);
-        loginLabel.setFont(Font.font(13));
-        loginLabel.setUnderline(true);
-        loginLabel.setOnMouseClicked(e-> LoginPage.loginPage(stage));
-
-        ImageView cartimage = new ImageView();
-        Image cart = new Image(Objects.requireNonNull(UserLookupPage.class.getResourceAsStream("/Images/Main/cart.png")));
-        cartimage.setImage(cart);
-        cartimage.setFitWidth(90);
-        cartimage.setFitHeight(59);
-        cartimage.setLayoutX(1206);
-        cartimage.setOnMouseClicked(e -> CheckoutPage.checkoutPage(stage, "4440486"));
-
-        TextField searchBar = new TextField();
-        searchBar.setPromptText("Type a title, author, etc. here");
-        searchBar.setPrefSize(226, 26);
-        searchBar.setLayoutX(991);
-        searchBar.setLayoutY(83);
-
-        Button searchButton = new Button("Search");
-        searchButton.setLayoutX(1217);
-        searchButton.setLayoutY(83);
-        searchButton.setOnAction(e -> {
-            String searchQuery = searchBar.getText();
-            CatalogPage.catalogPage(stage, searchQuery);
-        });
-
-        root.getChildren().addAll(header, logo, title, account, catalog, aboutus, loginLabel, cartimage, searchBar, searchButton);
+        Header.getHeader(stage, root);
 
         Label userLookup = new Label("LibraHub User Lookup");
         userLookup.setLayoutX(14);
@@ -265,7 +174,7 @@ public class UserLookupPage extends Application {
         });
     }
 
-    private ArrayList<Transaction> getTransactionsForUser(String userID) {
+    private static ArrayList<Transaction> getTransactionsForUser(String userID) {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         try (Connection connection = HomePage.getConnection()) {
@@ -293,11 +202,11 @@ public class UserLookupPage extends Application {
         return transactions;
     }
 
-    private ArrayList<Customer> getAllCustomers(String email, String id, String name) {
+    private static ArrayList<Customer> getAllCustomers(String email, String id, String name) {
         ArrayList<Customer> customers = new ArrayList<>();
 
         try (Connection connection = HomePage.getConnection()) {
-            String sql = "SELECT * FROM Customer WHERE email LIKE ? AND id LIKE ? AND (first_name LIKE ? OR last_name LIKE ?)";
+            String sql = "SELECT * FROM user WHERE email LIKE ? AND id LIKE ? AND (first_name LIKE ? OR last_name LIKE ?) AND role = 'Customer'";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, "%" + email + "%");
             statement.setString(2, "%" + id + "%");
