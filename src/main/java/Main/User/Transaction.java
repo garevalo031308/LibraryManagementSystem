@@ -8,8 +8,8 @@ public class Transaction {
     private final StringProperty author;
     private final StringProperty dateCheckedOut;
     private final StringProperty dateDue;
-    private final StringProperty bookID;
     private final StringProperty transactionID;
+    private final StringProperty bookID;
     private final StringProperty status;
 
     public Transaction(String title, String author, String dateCheckedOut, String dateDue, StringProperty bookID, StringProperty transactionID, StringProperty status){
@@ -22,26 +22,18 @@ public class Transaction {
         this.status = status;
     }
 
-    public Transaction(String title, String author, String dateCheckedOut, String dateDue, SimpleStringProperty bookID) {
+    public Transaction(String title, String author, String dateCheckedOut, String dateDue, String status, String bookID) {
         this.title = new SimpleStringProperty(title);
         this.author = new SimpleStringProperty(author);
         this.dateCheckedOut = new SimpleStringProperty(dateCheckedOut);
         this.dateDue = new SimpleStringProperty(dateDue);
-        this.bookID = bookID;
         this.transactionID = new SimpleStringProperty("0");
-        this.status = new SimpleStringProperty("0");
-    }
-
-    public String getBookID() {
-        return bookID.get();
+        this.bookID = new SimpleStringProperty(bookID);
+        this.status = new SimpleStringProperty(status);
     }
 
     public StringProperty bookIDProperty() {
         return bookID;
-    }
-
-    public String getTransactionID() {
-        return transactionID.get();
     }
 
     public StringProperty transactionIDProperty() {
@@ -64,25 +56,16 @@ public class Transaction {
         return author;
     }
 
-    public String getDateDue() {
-        return dateDue.get();
-    }
 
     public StringProperty dateDueProperty() {
         return dateDue;
     }
 
-    public String getDateCheckedOut() {
-        return dateCheckedOut.get();
-    }
 
     public StringProperty dateCheckedOutProperty() {
         return dateCheckedOut;
     }
 
-    public String getStatus() {
-        return status.get();
-    }
 
     public StringProperty statusProperty() {
         return status;
