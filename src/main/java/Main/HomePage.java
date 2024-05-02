@@ -25,23 +25,24 @@ import java.util.Objects;
 // STRIKE Remove cart from user when they log out/close application
 // TODO make sure all buttons do something
 // STRIKE search bar on all pages
-// TODO change cart image with each time they add something to cart
+
 // TODO Forget password thingy
 // TODO back buttons on certain pages
 // TODO a way for librarian to create accounts for customers
-// TODO allow librarians to also have a customer account and have same functions as a customer
+// STRIKE allow librarians to also have a customer account and have same functions as a customer
 // TODO stage titles for each page
 // TODO logos for each page
 
-// TODO Fix admin, librarian, and customer database
+// STRIKE Fix admin, librarian, and customer database
 // STRIKE Database for borrowed books that is linked to user that contains the book, return date, etc.
 // STRIKE database that contains transaction history of user
-// TODO make sure books database changes status when book is borrowed
-// TODO make sure books database changes status when book is returned
+// STRIKE make sure books database changes status when book is borrowed
+// STRIKE make sure books database changes status when book is returned
 // TODO possibly change catalog depending on what books are borrowed etc.
 // TODO catalog filter that shows borrowed books, but have them greyed out or something
-// TODO make sure user can return a book
-// TODO Do not allow users to checkout any books if >3 or if they have a book that is overdue
+// TODO books table set status to borrwed as true
+// STRIKE make sure user can return a book
+// STRIKE Do not allow users to checkout any books if >3 or if they have a book that is overdue
 
 // STRIKE - CreateAccountPage: allow users to create an account through application
 // STRIKE - CreateAccountPage: after adding a user go to their account page
