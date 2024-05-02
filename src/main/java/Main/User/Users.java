@@ -37,16 +37,8 @@ public class Users {
         return id;
     }
 
-    public String getFirstname() {
-        return firstname.get();
-    }
-
     public StringProperty firstnameProperty() {
         return firstname;
-    }
-
-    public String getLastname() {
-        return lastname.get();
     }
 
     public StringProperty lastnameProperty() {
