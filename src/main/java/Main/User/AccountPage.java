@@ -99,7 +99,7 @@ public class AccountPage {
         stage.setScene(scene);
         stage.show();
 
-        createBorrowedBooksBox(Header.currentLoggedInUser, root);
+        createBorrowedBooksBox(Header.currentLoggedInUser, root, stage);
     }
 
     public static String[] getUserDetails(String userID) {
@@ -126,7 +126,7 @@ public class AccountPage {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         try (Connection connection = HomePage.getConnection()) {
-            String sql = "SELECT t.borrow_date, t.return_date, t.status, b.title, b.author " +
+            String sql = "SELECT t.borrow_date, t.return_date, t.status, b.title, b.author, b.id " +
                     "FROM transactions t JOIN books b ON t.book_id = b.id " +
                     "WHERE t.user_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -139,8 +139,9 @@ public class AccountPage {
                 String dateCheckedOut = resultSet.getString("borrow_date");
                 String dateDue = resultSet.getString("return_date");
                 String status = resultSet.getString("status");
+                String bookID = resultSet.getString("id");
 
-                transactions.add(new Transaction(title, author, dateCheckedOut, dateDue, new SimpleStringProperty(status)));
+                transactions.add(new Transaction(title, author, dateCheckedOut, dateDue, status, bookID));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,7 +150,7 @@ public class AccountPage {
         return transactions;
     }
 
-    public static void createBorrowedBooksBox(String ID, Group root) {
+    public static void createBorrowedBooksBox(String ID, Group root, Stage stage) {
         ArrayList<Books> books = getBorrowedBooks(ID);
         for (int i = 0; i < books.size(); i++){
 
@@ -174,7 +175,44 @@ public class AccountPage {
             dueDate.setLayoutX(513);
             dueDate.setLayoutY(350 + (i*195));
 
-            root.getChildren().addAll(cover, title, author, dueDate);
+            Button returnButton = new Button("Return");
+            returnButton.setLayoutX(513);
+            returnButton.setLayoutY(318 + (i*195));
+
+            int finalI = i;
+            returnButton.setOnAction(e -> {
+                returnBook(ID, books.get(finalI).getID());
+                // Refresh the page or navigate to a different page
+                AccountPage.accountPage(stage, ID);
+            });
+
+            root.getChildren().addAll(cover, title, author, dueDate, returnButton);
+        }
+    }
+
+    public static void returnBook(String userID, String bookID) {
+        try (Connection connection = HomePage.getConnection()) {
+            // Remove the book from the borrowed_books table
+            String sql = "DELETE FROM borrowed_books WHERE user_id = ? AND book_id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            statement.setString(2, bookID);
+            statement.executeUpdate();
+
+            // Update the book's status in the transactions table to "returned"
+            sql = "UPDATE transactions SET status = 'returned' WHERE user_id = ? AND book_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, userID);
+            statement.setString(2, bookID);
+            statement.executeUpdate();
+
+            // Update the borrowed column in the books table back to false
+            sql = "UPDATE books SET borrowed = false WHERE id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, bookID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
