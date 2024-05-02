@@ -1,11 +1,15 @@
 package Main.Media;
 
 
+import Main.Header;
 import Main.HomePage;
+import Main.User.LoginPage;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -116,7 +120,7 @@ public class BookPopUp {
         popup.show();
         popup.getIcons().add(new Image(String.valueOf(Objects.requireNonNull(BookPopUp.class.getResource("/Images/Main/libgenlogo.png")))));
 
-        addToCartButton.setOnAction(e->addToCheckoutDatabase("4440486", Integer.valueOf(book.id), book.title));
+        addToCartButton.setOnAction(e->addToCheckoutDatabase(Header.currentLoggedInUser, Integer.valueOf(book.id), stage, popup));
 
     }
 
@@ -124,37 +128,44 @@ public class BookPopUp {
     // TODO check to see if customer already has a checkout "document", if so append book to it, else create a new one
     // TODO add book to checkout database
     // TODO remove cart when user logs out/application is closed
-    private static void addToCheckoutDatabase(String ID, Integer BookID, String BookTitle){
-        if (checkIfHasCart(ID)){
-            try (Connection connection = HomePage.getConnection()){
-                String sql = "SELECT media1ID, media2ID, media3ID FROM cart WHERE userID = ?";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, ID);
-                ResultSet resultSet = statement.executeQuery();
+    private static void addToCheckoutDatabase(String ID, Integer BookID, Stage stage, Stage popup){
+        if (ID.isEmpty()){
+            LoginPage.loginPage(stage);
+            popup.close();
+        } else {
+            if (checkIfHasCart(ID)) {
+                try (Connection connection = HomePage.getConnection()) {
+                    String sql = "SELECT media1ID, media2ID, media3ID FROM cart WHERE userID = ?";
+                    PreparedStatement statement = connection.prepareStatement(sql);
+                    statement.setString(1, ID);
+                    ResultSet resultSet = statement.executeQuery();
 
-                if (resultSet.next()) {
-                    String updateSql = null;
-                    if (resultSet.getObject("media1ID") == null) {
-                        updateSql = "UPDATE cart SET media1 = ?, media1ID = ? WHERE userID = ?";
-                    } else if (resultSet.getObject("media2ID") == null) {
-                        updateSql = "UPDATE cart SET media2 = ?, media2ID = ? WHERE userID = ?";
-                    } else if (resultSet.getObject("media3ID") == null) {
-                        updateSql = "UPDATE cart SET media3 = ?, media3ID = ? WHERE userID = ?";
-                    }
+                    if (resultSet.next()) {
+                        String updateSql = null;
+                        if (resultSet.getObject("media1ID") == null) {
+                            updateSql = "UPDATE cart SET media1ID = ? WHERE userID = ?";
+                        } else if (resultSet.getObject("media2ID") == null) {
+                            updateSql = "UPDATE cart SET media2ID = ? WHERE userID = ?";
+                        } else if (resultSet.getObject("media3ID") == null) {
+                            updateSql = "UPDATE cart SET media3ID = ? WHERE userID = ?";
+                        }
 
-                    if (updateSql != null) {
-                        PreparedStatement updateStatement = connection.prepareStatement(updateSql);
-                        updateStatement.setString(1, BookTitle);
-                        updateStatement.setInt(2, BookID);
-                        updateStatement.setString(3, ID);
-                        updateStatement.executeUpdate();
-                        System.out.println("Book added to cart.");
-                    } else {
-                        System.out.println("Cart is full. Cannot add more items.");
+                        if (updateSql != null) {
+                            PreparedStatement updateStatement = connection.prepareStatement(updateSql);
+                            updateStatement.setInt(1, BookID);
+                            updateStatement.setString(2, ID);
+                            updateStatement.executeUpdate();
+                            popup.close();
+
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Book was successfully added to cart", ButtonType.OK);
+                            alert.showAndWait();
+                        } else {
+                            System.out.println("Cart is full. Cannot add more items.");
+                        }
                     }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -169,12 +180,10 @@ public class BookPopUp {
 
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
-                if (count > 0) {
-                    return true;
-                } else {
+                if (count <= 0) {
                     createUserCart(userID);
-                    return true;
                 }
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
