@@ -17,7 +17,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.awt.print.Book;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -138,9 +137,6 @@ public class Header {
                 LoginPage.loginPage(stage);
             } else {
                 if(BookPopUp.checkIfHasCart(currentLoggedInUser)){
-                    CheckoutPage.checkoutPage(stage, currentLoggedInUser);
-                } else {
-                    BookPopUp.createUserCart(currentLoggedInUser);
                     CheckoutPage.checkoutPage(stage, currentLoggedInUser);
                 }
             }
@@ -277,9 +273,6 @@ public class Header {
             } else {
                 if(BookPopUp.checkIfHasCart(currentLoggedInUser)){
                     CheckoutPage.checkoutPage(stage, currentLoggedInUser);
-                } else {
-                    BookPopUp.createUserCart(currentLoggedInUser);
-                    CheckoutPage.checkoutPage(stage, currentLoggedInUser);
                 }
             }
         });
@@ -337,7 +330,7 @@ public class Header {
         }
     }
 
-    private static void removeCart(String userID) {
+    public static void removeCart(String userID) {
         try (Connection connection = HomePage.getConnection()) {
             // Check if the user has a cart
             String sql = "SELECT COUNT(*) AS cart_count FROM cart WHERE userID = ?";
