@@ -1035,7 +1035,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="291" parent="1" name="librahub">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-05-01.19:52:07</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-05-01.23:45:26</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="292" parent="1" name="mysql">
@@ -1168,76 +1168,79 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <RefColNames>id</RefColNames>
       <RefTableName>books</RefTableName>
     </foreign-key>
-    <index id="323" parent="301" name="PRIMARY">
+    <foreign-key id="323" parent="301" name="borrowed_books_user_id_fk">
+      <ColNames>user_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <index id="324" parent="301" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="324" parent="301" name="book_id">
+    <index id="325" parent="301" name="book_id">
       <ColNames>book_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="325" parent="301" name="user_id">
+    <index id="326" parent="301" name="borrowed_books_user_id_fk">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="326" parent="301" name="PRIMARY">
+    <key id="327" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="327" parent="302" name="userid">
-      <DasType>bigint|0s</DasType>
+    <column id="328" parent="302" name="cartid">
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="328" parent="302" name="media1">
-      <DasType>longtext|0s</DasType>
+    <column id="329" parent="302" name="userid">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="329" parent="302" name="media2">
-      <DasType>longtext|0s</DasType>
+    <column id="330" parent="302" name="media1ID">
+      <DasType>int|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="330" parent="302" name="media3">
-      <DasType>longtext|0s</DasType>
+    <column id="331" parent="302" name="media2ID">
+      <DasType>int|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="331" parent="302" name="cartid">
-      <DasType>longtext|0s</DasType>
+    <column id="332" parent="302" name="media3ID">
+      <DasType>int|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="332" parent="302" name="media1ID">
-      <DasType>int|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="333" parent="302" name="media2ID">
-      <DasType>int|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="334" parent="302" name="media3ID">
-      <DasType>int|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <foreign-key id="335" parent="302" name="cart_books_id_fk">
+    <foreign-key id="333" parent="302" name="cart_user_id_fk">
+      <ColNames>userid</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <foreign-key id="334" parent="302" name="cart_books_id_fk">
       <ColNames>media1ID</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>books</RefTableName>
     </foreign-key>
-    <foreign-key id="336" parent="302" name="cart_books_id_fk_2">
+    <foreign-key id="335" parent="302" name="cart_books_id_fk_2">
       <ColNames>media2ID</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>books</RefTableName>
     </foreign-key>
-    <foreign-key id="337" parent="302" name="cart_books_id_fk_3">
+    <foreign-key id="336" parent="302" name="cart_books_id_fk_3">
       <ColNames>media3ID</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>books</RefTableName>
     </foreign-key>
-    <index id="338" parent="302" name="PRIMARY">
-      <ColNames>userid</ColNames>
+    <index id="337" parent="302" name="PRIMARY">
+      <ColNames>cartid</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
+    </index>
+    <index id="338" parent="302" name="cart_user_id_fk">
+      <ColNames>userid</ColNames>
+      <Type>btree</Type>
     </index>
     <index id="339" parent="302" name="cart_books_id_fk">
       <ColNames>media1ID</ColNames>
@@ -1279,68 +1282,74 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Position>5</Position>
     </column>
     <column id="348" parent="303" name="status">
-      <DasType>enum(&apos;BORROWED&apos;, &apos;RETURNED&apos;)|0e</DasType>
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <foreign-key id="349" parent="303" name="transactions_ibfk_2">
+    <foreign-key id="349" parent="303" name="transactions_user_id_fk">
+      <ColNames>user_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>user</RefTableName>
+    </foreign-key>
+    <foreign-key id="350" parent="303" name="transactions_ibfk_2">
       <ColNames>book_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>books</RefTableName>
     </foreign-key>
-    <index id="350" parent="303" name="PRIMARY">
+    <index id="351" parent="303" name="PRIMARY">
       <ColNames>transaction_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="351" parent="303" name="user_id">
+    <index id="352" parent="303" name="transactions_user_id_fk">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="352" parent="303" name="book_id">
+    <index id="353" parent="303" name="book_id">
       <ColNames>book_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="353" parent="303" name="PRIMARY">
+    <key id="354" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="354" parent="304" name="id">
+    <column id="355" parent="304" name="id">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="355" parent="304" name="first_name">
+    <column id="356" parent="304" name="first_name">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="356" parent="304" name="last_name">
+    <column id="357" parent="304" name="last_name">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="357" parent="304" name="email">
+    <column id="358" parent="304" name="email">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="358" parent="304" name="password">
+    <column id="359" parent="304" name="password">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="359" parent="304" name="role">
+    <column id="360" parent="304" name="role">
       <DasType>enum(&apos;Customer&apos;, &apos;Admin&apos;, &apos;Librarian&apos;)|0e</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <index id="360" parent="304" name="PRIMARY">
+    <index id="361" parent="304" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="361" parent="304" name="PRIMARY">
+    <key id="362" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
