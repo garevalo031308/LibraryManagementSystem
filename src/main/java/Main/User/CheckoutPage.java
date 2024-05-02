@@ -20,6 +20,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static Main.Header.removeCart;
+
 public class CheckoutPage {
 
     public static void checkoutPage(Stage stage, String ID){
@@ -46,14 +48,9 @@ public class CheckoutPage {
         forUser.setLayoutX(55.0);
         forUser.setLayoutY(191.0);
 
-        Button exitButton = new Button("Exit");
-        exitButton.setLayoutX(467.0);
-        exitButton.setLayoutY(828.0);
-
-
         stage.setTitle("Cart");// sets current scene
         stage.getIcons().add(new Image(Objects.requireNonNull(CheckoutPage.class.getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
-        root.getChildren().addAll(forUser, exitButton); //adds all the elements to the root
+        root.getChildren().addAll(forUser); //adds all the elements to the root
         root.getChildren().addAll(shoppingCartLabel, checkoutButton);
         stage.setScene(scene); //sets the scene
         stage.show(); //shows the stage
@@ -62,75 +59,23 @@ public class CheckoutPage {
 
         createCart(root, cartItems, ID, stage);
 
-        checkoutButton.setOnAction(e -> checkoutBooks(ID, cartItems, stage));
-    }
-
-    private static void checkoutBooks(String ID, ArrayList<Books> cartItems, Stage stage) {
-        if (!canCheckout(ID)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "You cannot checkout more than 3 books at a time.", ButtonType.OK);
-            alert.showAndWait();
-            return;
-        }
-        try (Connection connection = HomePage.getConnection()) {
-            // Start a transaction
-            connection.setAutoCommit(false);
-
-            // Get the current date
-            LocalDate today = LocalDate.now();
-            // Calculate the return date
-            LocalDate returnDate = today.plusWeeks(2);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String borrowedDate = today.format(formatter);
-            String returnDateStr = returnDate.format(formatter);
-
-            // Iterate over the items in the cart
-            for (Books book : cartItems) {
-                // Insert a new row into the borrowed_books table
-                String sql = "INSERT INTO borrowed_books (book_id, user_id, borrowed_date, return_date) VALUES (?, ?, ?, ?)";
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setInt(1, Integer.parseInt(book.getID()));
-                statement.setInt(2, Integer.parseInt(ID));
-                statement.setString(3, borrowedDate);
-                statement.setString(4, returnDateStr);
-                statement.executeUpdate();
-
-                // Add a new transaction
-                addTransaction(ID, book.getID(), borrowedDate, returnDateStr, "BORROWED");
+        checkoutButton.setOnAction(e -> {
+            if (canCheckout(ID)) {
+                if(checkoutBooks(ID, cartItems)){
+                    HomePage home = new HomePage();
+                    home.start(stage);
+                }
+                // Refresh the page or navigate to a different page
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Checkout Error");
+                alert.setHeaderText(null);
+                alert.setContentText("You cannot checkout at this time. Please try again later.");
+                alert.showAndWait();
             }
-
-            // Delete the user's cart
-            String sql = "DELETE FROM cart WHERE userID = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, ID);
-            statement.executeUpdate();
-
-            // Commit the transaction
-            connection.commit();
-
-            // Set the connection's auto-commit mode back to true
-            connection.setAutoCommit(true);
-
-            // Refresh the page
-            checkoutPage(stage, ID);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        });
     }
 
-    private static void addTransaction(String userID, String bookID, String borrowDate, String returnDate, String status) {
-        try (Connection connection = HomePage.getConnection()) {
-            String sql = "INSERT INTO transactions (user_id, book_id, borrow_date, return_date, status) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, userID);
-            statement.setString(2, bookID);
-            statement.setString(3, borrowDate);
-            statement.setString(4, returnDate);
-            statement.setString(5, status);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private static void createCart(Group root, ArrayList<Books> cartItems, String ID, Stage stage){
 
@@ -253,6 +198,40 @@ public class CheckoutPage {
         return cartItems;
     }
 
+    private static boolean checkoutBooks(String userID, ArrayList<Books> cartItems) {
+        try (Connection connection = HomePage.getConnection()) {
+            for (Books book : cartItems) {
+                // Insert into borrowed_books table
+                String sql = "INSERT INTO borrowed_books (user_id, book_id, borrowed_date, return_date) VALUES (?, ?, ?, ?)";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, userID);
+                statement.setString(2, book.getID());
+                statement.setString(3, LocalDate.now().toString());
+                statement.setString(4, getReturnDate());
+                statement.executeUpdate();
+
+                // Insert into transactions table
+                // Insert into transactions table
+                sql = "INSERT INTO transactions (user_id, book_id, borrow_date, return_date, status) VALUES (?, ?, ?, ?, ?)";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, userID);
+                statement.setString(2, book.getID());
+                statement.setString(3, LocalDate.now().toString());
+                statement.setString(4, getReturnDate());
+                statement.setString(5, "Borrowed");
+                statement.executeUpdate();
+            }
+
+            // Remove the user's cart
+            removeCart(userID);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     private static String getReturnDate(){
         LocalDate today = LocalDate.now();
         LocalDate returnDate = today.plusWeeks(2);
@@ -262,39 +241,29 @@ public class CheckoutPage {
 
     private static void removeBookFromCart(String userID, String bookID) {
         try (Connection connection = HomePage.getConnection()) {
-            // Get the title of the book using the bookID
-            String sql = "SELECT title FROM Books WHERE id = ?";
+            // Get the mediaIDs from the cart
+            String sql = "SELECT media1ID, media2ID, media3ID FROM cart WHERE userID = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, bookID);
+            statement.setString(1, userID);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                String bookTitle = resultSet.getString("title");
+                String media1ID = resultSet.getString("media1ID");
+                String media2ID = resultSet.getString("media2ID");
+                String media3ID = resultSet.getString("media3ID");
 
-                // Get the media and mediaIDs from the cart
-                sql = "SELECT media1, media2, media3, media1ID, media2ID, media3ID FROM cart WHERE userID = ?";
+                // Check if any of the mediaIDs matches the bookID and set it to NULL
+                if (bookID.equals(media1ID)) {
+                    sql = "UPDATE cart SET media1ID = NULL WHERE userID = ?";
+                } else if (bookID.equals(media2ID)) {
+                    sql = "UPDATE cart SET media2ID = NULL WHERE userID = ?";
+                } else if (bookID.equals(media3ID)) {
+                    sql = "UPDATE cart SET media3ID = NULL WHERE userID = ?";
+                }
+
                 statement = connection.prepareStatement(sql);
                 statement.setString(1, userID);
-                resultSet = statement.executeQuery();
-
-                if (resultSet.next()) {
-                    String media1 = resultSet.getString("media1");
-                    String media2 = resultSet.getString("media2");
-                    String media3 = resultSet.getString("media3");
-
-                    // Check if any of the media matches the book title and set it and its corresponding mediaID to NULL
-                    if (bookTitle.equals(media1)) {
-                        sql = "UPDATE cart SET media1 = NULL, media1ID = NULL WHERE userID = ?";
-                    } else if (bookTitle.equals(media2)) {
-                        sql = "UPDATE cart SET media2 = NULL, media2ID = NULL WHERE userID = ?";
-                    } else if (bookTitle.equals(media3)) {
-                        sql = "UPDATE cart SET media3 = NULL, media3ID = NULL WHERE userID = ?";
-                    }
-
-                    statement = connection.prepareStatement(sql);
-                    statement.setString(1, userID);
-                    statement.executeUpdate();
-                }
+                statement.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
