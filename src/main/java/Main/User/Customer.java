@@ -24,16 +24,8 @@ public class Customer {
         return userID;
     }
 
-    public String getFirstName() {
-        return firstName.get();
-    }
-
     public StringProperty firstNameProperty() {
         return firstName;
-    }
-
-    public String getLastName() {
-        return lastName.get();
     }
 
     public StringProperty lastNameProperty() {
