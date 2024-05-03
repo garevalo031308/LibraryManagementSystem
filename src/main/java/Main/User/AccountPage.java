@@ -95,7 +95,8 @@ public class AccountPage {
 
         root.getChildren().addAll(transactions, nameLabel, emailLabel, idLabel, userProfilePic, borrowedBooksLabel, transactionHistoryLabel);
         Header.getHeader(stage, root);
-        stage.setTitle("Account Page");
+        stage.setTitle("Library Management System - Account Page");
+        stage.getIcons().add(new Image(Objects.requireNonNull(AccountPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         stage.setScene(scene);
         stage.show();
 
