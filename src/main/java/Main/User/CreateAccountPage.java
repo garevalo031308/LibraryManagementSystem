@@ -176,6 +176,14 @@ public class CreateAccountPage {
                 alert.showAndWait();
             } else {
                 addCustomerToDatabase(email, username, password, firstName, lastName);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Account Created");
+                alert.setHeaderText(null);
+                alert.setContentText("Your account has been created successfully.");
+                alert.showAndWait();
+                Header.currentLoggedInUser = username;
+                Header.currentLoggedInUserRole = "customer";
+                AccountPage.accountPage(stage, username);
             }
         });
     }
