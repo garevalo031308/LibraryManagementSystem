@@ -162,7 +162,7 @@ public class CatalogPage {
         filterPane.getChildren().addAll(sortByLabel, filterButton, titleButton, authorButton, dateNewButton, dateOldButton, sortmediasep);
         filterPane.getChildren().addAll(mediaLabel, bookCheck, eBookCheck, mediaSep);
         filterPane.getChildren().addAll(genreLabel, fictionCheck, scienceFictionCheck, fantasyCheck, mysteryCheck, horrorCheck, dramaCheck, MythologyCheck, nonFictionCheck, genreSep);
-        stage.setTitle("Catalog");
+        stage.setTitle("Library Management System - Catalog Page");
         stage.setScene(scene);
 
         ArrayList<String> genres = new ArrayList<>();
