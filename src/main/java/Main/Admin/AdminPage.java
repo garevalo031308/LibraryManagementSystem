@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 public class AdminPage {
@@ -80,7 +82,8 @@ public class AdminPage {
 
         
 
-        stage.setTitle("Library Management System");// sets current scene
+        stage.setTitle("Library Management System - Admin Page");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(AdminPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         root.getChildren().addAll(users, addUser, editUser, removeUser);
         stage.setScene(scene);
         stage.show();
@@ -105,8 +108,7 @@ public class AdminPage {
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.isPresent() && result.get() == ButtonType.OK){
                             String userId = selectedUser.getId();
-                            String userType = selectedUser.getType();
-                            removeUserFromDatabase(userId, userType);
+                            removeUserFromDatabase(userId);
                             users.getItems().remove(selectedUser);
                         }
                     }
@@ -146,9 +148,9 @@ public class AdminPage {
         return users;
     }
 
-    private static void removeUserFromDatabase(String userId, String userType) {
+    private static void removeUserFromDatabase(String userId) {
         try (Connection connection = HomePage.getConnection()){
-            String SQL = "DELETE FROM " + userType.toLowerCase() + " WHERE id = ?";
+            String SQL = "DELETE FROM user WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(SQL);
             statement.setString(1, userId);
             statement.executeUpdate();
