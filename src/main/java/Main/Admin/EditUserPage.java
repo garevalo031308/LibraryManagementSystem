@@ -101,7 +101,12 @@ public class EditUserPage {
             String newEmail = emailField.getText();
 
             updateUserInDatabase(ID, newFirstName, newLastName, newPassword, newEmail);
-
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("User was successfully edited!");
+            alert.showAndWait();
+            AdminPage.adminPage(stage);
         });
     }
 
