@@ -1,5 +1,7 @@
 package Main;
 
+import Main.Media.BookPopUp;
+import Main.Media.Books;
 import Main.Media.CatalogPage;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -14,9 +16,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Objects;
 
 // STRIKE link up all pages together
@@ -107,7 +107,6 @@ public static void main(String[] args){
         helpLabel.setLayoutX(31);
         helpLabel.setLayoutY(210);
 
-        // TODO - search bar that looks up title or author when search bar is hit
         TextField searchbar = new TextField();
         searchbar.setPromptText("Type a title, author, etc. here");
         searchbar.setPrefWidth(567);
@@ -176,6 +175,67 @@ public static void main(String[] args){
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+
+        popular1.setOnMouseClicked(e -> {
+            Books book1 = getBookFromDatabase("5225100");
+            if (book1 != null) {
+                BookPopUp.bookPopUp(stage, book1);
+            }
+        });
+
+        popular2.setOnMouseClicked(e -> {
+            Books book1 = getBookFromDatabase("6458744");
+            if (book1 != null) {
+                BookPopUp.bookPopUp(stage, book1);
+            }
+        });
+
+        popular3.setOnMouseClicked(e -> {
+            Books book1 = getBookFromDatabase("1271204");
+            if (book1 != null) {
+                BookPopUp.bookPopUp(stage, book1);
+            }
+        });
+
+        popular4.setOnMouseClicked(e -> {
+            Books book1 = getBookFromDatabase("5587883");
+            if (book1 != null) {
+                BookPopUp.bookPopUp(stage, book1);
+            }
+        });
+
+        popular5.setOnMouseClicked(e -> {
+            Books book1 = getBookFromDatabase("5030003");
+            if (book1 != null) {
+                BookPopUp.bookPopUp(stage, book1);
+            }
+        });
+    }
+
+    public static Books getBookFromDatabase(String bookID) {
+        Books book = null;
+        try (Connection connection = HomePage.getConnection()) {
+            String sql = "SELECT * FROM books WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, bookID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                book = new Books();
+                book.setID(String.valueOf(resultSet.getInt("id")));
+                book.setTitle(resultSet.getString("title"));
+                book.setAuthor(resultSet.getString("author"));
+                book.setDescription(resultSet.getString("description"));
+                book.setGenre(resultSet.getString("genre"));
+                book.setType(resultSet.getString("type"));
+                book.setBorrowed(resultSet.getBoolean("borrowed"));
+                book.setImage(resultSet.getString("image"));
+                book.setDate(resultSet.getString("date"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return book;
     }
 
 }
