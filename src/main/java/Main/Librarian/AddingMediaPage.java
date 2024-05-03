@@ -5,6 +5,7 @@ import Main.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -243,14 +245,12 @@ public class AddingMediaPage {
         typeText.setLayoutY(576);
         typeText.setFont(Font.font(35));
 
-        Button backButton = new Button("Back");
-        backButton.setLayoutX(14);
-        backButton.setLayoutY(137);
         //---End of Body content for Create Account Page---//
 
         root.getChildren().addAll(titleText, subTitle, titleField, titleText2, authorField, authorText, idField, idText, genreText, addMediaButton, booksRadioButton, ebooksRadioButton, publicationDateField, publicationDateText, publisherField, publisherText, descriptionArea, descriptionText, imageLocationField, imageLocationText, nonFictionRadioButton, fictionRadioButton);
-        root.getChildren().addAll(clearSelectionButton, scienceFictionRadioButton, fantasyRadioButton, mysteryRadioButton, horrorRadioButton, dramaRadioButton, mythologyRadioButton, typeText, backButton);
-        stage.setTitle("Library Management System");// sets current scene
+        root.getChildren().addAll(clearSelectionButton, scienceFictionRadioButton, fantasyRadioButton, mysteryRadioButton, horrorRadioButton, dramaRadioButton, mythologyRadioButton, typeText);
+        stage.setTitle("Library Management System - Adding Media Page");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(AddingMediaPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         stage.setScene(scene);
         stage.show();
 
