@@ -48,7 +48,7 @@ public class CheckoutPage {
         forUser.setLayoutX(55.0);
         forUser.setLayoutY(191.0);
 
-        stage.setTitle("Cart");// sets current scene
+        stage.setTitle("Library Management System - Checkout Page");// sets current scene
         stage.getIcons().add(new Image(Objects.requireNonNull(CheckoutPage.class.getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(forUser); //adds all the elements to the root
         root.getChildren().addAll(shoppingCartLabel, checkoutButton);
