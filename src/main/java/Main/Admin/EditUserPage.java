@@ -4,6 +4,7 @@ import Main.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -13,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class EditUserPage {
 
@@ -23,10 +25,10 @@ public class EditUserPage {
 
         Header.getHeader(stage, root);
 
-        Text addTitle = new Text(482, 186, "Add User");
+        Text addTitle = new Text(482, 186, "Edit User");
         addTitle.setFont(Font.font(60));
 
-        Text clickText = new Text(350, 233, "Click the button below to add the user");
+        Text clickText = new Text(350, 233, "Click the button below to edit the user");
         clickText.setFont(Font.font(30));
 
         TextField idField = new TextField();
@@ -91,6 +93,8 @@ public class EditUserPage {
 
 
         stage.setScene(scene);
+        stage.getIcons().add(new Image(Objects.requireNonNull(EditUserPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
+        stage.setTitle("Library Management System - Edit User Page");
         root.getChildren().addAll(addTitle, clickText, idField, firstNameField, lastNameField, passwordField, emailField, editButton, backButton, idText, firstNameText, lastNameText, passwordText, emailText);
         stage.show();
 
