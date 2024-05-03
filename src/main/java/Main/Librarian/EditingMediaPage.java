@@ -298,6 +298,7 @@ public class EditingMediaPage {
             alert.setHeaderText(null);
             alert.setContentText(updateSuccessful ? "Book information updated successfully." : "An error occurred while updating the book information.");
             alert.showAndWait();
+            LibrarianCatalogPage.librarianCatalogPage(stage);
         });
     }
 
