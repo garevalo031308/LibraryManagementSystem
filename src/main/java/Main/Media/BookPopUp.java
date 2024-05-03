@@ -110,11 +110,8 @@ public class BookPopUp {
         addToCartButton.setLayoutX(10.0);
         addToCartButton.setLayoutY(517.0);
 
-        Button backButton = new Button("Back/Exit");
-        backButton.setLayoutX(102.0);
-        backButton.setLayoutY(517.0);
 
-        root.getChildren().addAll(borrowed, date, description, genre, type, bookID, addToCartButton, backButton);
+        root.getChildren().addAll(borrowed, date, description, genre, type, bookID, addToCartButton);
         root.getChildren().addAll(header, logo, title, bookCover, bookTitle, author);
         popup.setScene(scene);
         popup.show();
