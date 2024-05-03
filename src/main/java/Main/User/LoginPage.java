@@ -95,7 +95,8 @@ public class LoginPage{
         createAccount.setLayoutY(656);
         createAccount.setUnderline(true);
 
-        stage.setTitle("Library Management System");// sets current scene
+        stage.setTitle("Library Management System - Login Page");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(LoginPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         root.getChildren().addAll(leftbanner, rightbanner, middle, loginTitle, username, password, login, createAccount, question, logo); //adds header to the root (children are the modules)
         Header.getHeader(stage, root);
         stage.setScene(scene);
