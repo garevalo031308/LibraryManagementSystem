@@ -299,6 +299,12 @@ public class AddingMediaPage {
             String description = descriptionArea.getText();
             String imageLocation = imageLocationField.getText();
             addBookToDatabase(id, title1, author, genre, type, date, publisher, description, imageLocation);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Book was successfully added to the database!");
+            alert.showAndWait();
+            LibrarianCatalogPage.librarianCatalogPage(stage);
         });
 
     }
