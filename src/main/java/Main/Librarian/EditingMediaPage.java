@@ -5,6 +5,7 @@ import Main.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 
 public class EditingMediaPage {
@@ -243,7 +245,8 @@ public class EditingMediaPage {
 
         root.getChildren().addAll(titleText, subTitle, titleField, titleText2, authorField, authorText, idField, idText, genreText, addMediaButton, booksRadioButton, ebooksRadioButton, publicationDateField, publicationDateText, publisherField, publisherText, descriptionArea, descriptionText, imageLocationField, imageLocationText, nonFictionRadioButton, fictionRadioButton);
         root.getChildren().addAll(scienceFictionRadioButton, fantasyRadioButton, mysteryRadioButton, horrorRadioButton, dramaRadioButton, mythologyRadioButton, typeText, backButton);
-        stage.setTitle("Library Management System");// sets current scene
+        stage.setTitle("Library Management System - Editing Media Page");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(EditingMediaPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         stage.setScene(scene);
         stage.show();
 
