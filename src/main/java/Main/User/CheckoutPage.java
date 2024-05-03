@@ -220,6 +220,11 @@ public class CheckoutPage {
                 statement.setString(4, getReturnDate());
                 statement.setString(5, "Borrowed");
                 statement.executeUpdate();
+
+                sql = "UPDATE books SET borrowed = true WHERE id = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, book.getID());
+                statement.executeUpdate();
             }
 
             // Remove the user's cart
