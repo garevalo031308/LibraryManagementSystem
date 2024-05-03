@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 // TODO fix table size
@@ -98,7 +100,8 @@ public class LibrarianCatalogPage {
         removeMedia.setDisable(true);
 
         root.getChildren().addAll(catalogLabel, bookTable, addMedia, editMedia, removeMedia);
-        stage.setTitle("Library Management System");
+        stage.setTitle("Library Management System - Librarian Catalog Page");
+        stage.getIcons().add(new Image(Objects.requireNonNull(LibrarianCatalogPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         stage.setScene(scene);
         stage.show();
 
