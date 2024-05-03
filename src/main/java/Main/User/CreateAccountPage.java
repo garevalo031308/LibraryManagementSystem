@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Random;
 
 public class CreateAccountPage {
@@ -152,7 +154,8 @@ public class CreateAccountPage {
         //---End of Body content for Create Account Page---//
 
 
-        stage.setTitle("Library Management System");// sets current scene
+        stage.setTitle("Library Management System - Create Account Page");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(CreateAccountPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         root.getChildren().addAll(CreateAccountLabel,CreateAccountDescription,emailLabel,
                                   emailTextField, usernameLabel,usernameTextField, passwordLabel, passwordTextField,
                                   confirmPasswordLabel, confirmPasswordTextField, createAccountButton, lastNameTextField); //adds header to the root (children are the modules)
