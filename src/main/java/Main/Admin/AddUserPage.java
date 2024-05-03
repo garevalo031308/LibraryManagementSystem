@@ -127,6 +127,12 @@ public class AddUserPage {
             String type = selectedRadioButton.getText();
 
             addUserToDatabase(id, firstName, lastName, password, email, type);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("User was successfully added!");
+            alert.showAndWait();
+            AdminPage.adminPage(stage);
         });
     }
 
