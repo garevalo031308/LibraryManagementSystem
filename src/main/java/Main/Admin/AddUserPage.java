@@ -4,6 +4,7 @@ import Main.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -13,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Random;
 
 public class AddUserPage {
@@ -114,6 +116,8 @@ public class AddUserPage {
         typeText.setFont(Font.font(35));
 
         stage.setScene(scene);
+        stage.setTitle("Library Management System - Add User Page");
+        stage.getIcons().add(new Image(Objects.requireNonNull(AddUserPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         root.getChildren().addAll(addTitle, clickText, idField, firstNameField, lastNameField, passwordField, emailField, customerRadioButton, adminRadioButton, librarianRadioButton, addButton, backButton, idText, firstNameText, lastNameText, passwordText, emailText, typeText);
         stage.show();
 
