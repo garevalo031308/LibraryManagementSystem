@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -16,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 // STRIKE - Look up a user in the library system
 // STRIKE - have a table that lists out all users in system
@@ -143,7 +145,8 @@ public class UserLookupPage {
 
         transactions.getColumns().addAll(transactionID, bookID, bookTitle, borrowDate, dueDate, status);
 
-        stage.setTitle("Library Management System");// sets current scene
+        stage.setTitle("Library Management System - User Lookup Page");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(UserLookupPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         root.getChildren().addAll(userLookup, searchBy, emailField, emailLabel, idField, idLabel, nameField, nameLabel, searchButton2, usersLabel, transactionsLabel);
         root.getChildren().addAll(users, transactions, resetButton);
         stage.setScene(scene);
@@ -153,6 +156,7 @@ public class UserLookupPage {
             String email = emailField.getText();
             String id = idField.getText();
             String name = nameField.getText();
+            System.out.println(email);
             ArrayList<Customer> customerDataSearch = getAllCustomers(email, id, name);
             users.getItems().clear();
             users.getItems().addAll(customerDataSearch);
