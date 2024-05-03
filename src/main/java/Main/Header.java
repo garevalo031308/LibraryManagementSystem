@@ -115,6 +115,7 @@ public class Header {
                     if (response == ButtonType.OK) {
                         removeCart(currentLoggedInUser);
                         currentLoggedInUser = "";
+                        currentLoggedInUserRole = "";
                         updateLoginLabel();
                         try {
                             home.start(stage);
@@ -244,6 +245,7 @@ public class Header {
                     if (response == ButtonType.OK) {
                         removeCart(currentLoggedInUser);
                         currentLoggedInUser = "";
+                        currentLoggedInUserRole = "";
                         updateLoginLabel();
                         try {
                             home.start(stage);
