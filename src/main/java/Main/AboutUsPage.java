@@ -3,10 +3,13 @@ package Main;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class AboutUsPage{
 
@@ -144,7 +147,8 @@ public class AboutUsPage{
         contactUsTextLabel.setWrapText(true);
         contactUsTextLabel.setFont(new Font(16.0));
 
-        stage.setTitle("Library Management System");// sets current scene
+        stage.setTitle("Library Management System - About Us");// sets current scene
+        stage.getIcons().add(new Image(Objects.requireNonNull(AboutUsPage.class.getResourceAsStream("/Images/Main/libgenlogo.png"))));
         root.getChildren().addAll(welcomeLabel, welcomeTextLabel, missionLabel, missionTextLabel, whatWeDoLabel, whatWeDoTextLabel, visionLabel, visionTextLabel, whyChooseUsLabel, whyChooseUsTextLabel, contactUsRectangle, getInTouchLabel, getInTouchTextLabel, hoursLabel, hoursTextLabel, contactUsLabel, contactUsTextLabel);
         stage.setScene(scene);
         stage.show();
