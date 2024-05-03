@@ -116,6 +116,7 @@ public class BookPopUp {
         popup.setScene(scene);
         popup.show();
         popup.getIcons().add(new Image(String.valueOf(Objects.requireNonNull(BookPopUp.class.getResource("/Images/Main/libgenlogo.png")))));
+        popup.setTitle("Library Manegement System - " + book.title + " by " + book.author + " Page");
 
         addToCartButton.setOnAction(e->addToCheckoutDatabase(Header.currentLoggedInUser, Integer.valueOf(book.id), stage, popup));
 
