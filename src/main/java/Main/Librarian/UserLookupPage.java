@@ -206,7 +206,7 @@ public class UserLookupPage {
         ArrayList<Customer> customers = new ArrayList<>();
 
         try (Connection connection = HomePage.getConnection()) {
-            String sql = "SELECT * FROM user WHERE email LIKE ? AND id LIKE ? AND (first_name LIKE ? OR last_name LIKE ?) AND role = 'Customer'";
+            String sql = "SELECT * FROM user WHERE email LIKE ? AND id LIKE ? AND (first_name LIKE ? OR last_name LIKE ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, "%" + email + "%");
             statement.setString(2, "%" + id + "%");
