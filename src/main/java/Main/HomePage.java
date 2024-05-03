@@ -166,7 +166,7 @@ public static void main(String[] args){
         popular5.setPreserveRatio(true);
 
 
-        stage.setTitle("Library Management System");// sets current scene
+        stage.setTitle("Library Management System - Home Page");// sets current scene
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/Main/libgenlogo.png")))); //sets icon
         root.getChildren().addAll(banner, helpLabel, searchbar, searchbutton); //adds header to the root (children are the modules)
         root.getChildren().addAll(popularLabel);
